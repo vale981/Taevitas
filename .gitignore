@@ -1,4 +1,4 @@
-Makefike
+Makefile
 *.o
 ~*
 moc_*
