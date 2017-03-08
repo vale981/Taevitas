@@ -1,0 +1,4 @@
+Makefike
+*.o
+~*
+moc_*
