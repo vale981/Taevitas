@@ -1,0 +1,5 @@
+#include "camera.h"
+
+using namespace FlyCapture2;
+
+CameraManager::CameraManager(QObject *parent) : QObject(parent) {}

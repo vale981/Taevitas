@@ -4,7 +4,10 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow) {
+    ui(new Ui::MainWindow),
+    cam_man(qobject_cast<QObject*>(this)),
+    recorder(qobject_cast<QObject*>(this))
+{
     ui->setupUi(this);
 
     // Hide Preview Widget
@@ -21,12 +24,17 @@ MainWindow::~MainWindow() {
 
 // Show/Hide Preview
 void MainWindow::toggle_preview(bool checked) {
-    if(checked)
+    if(checked) {
+        ui->preview_widget->setProperty("enabled", true);
         ui->preview_widget->show();
-    else
+    } else {
+        ui->preview_widget->setProperty("enabled", false);
         ui->preview_widget->hide();
+    }
     
     adjustSize();
+
+    // Start Capturing for preview
 }
 
 

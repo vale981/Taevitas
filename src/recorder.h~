@@ -1,0 +1,68 @@
+#ifndef RECORDER_H
+#define RECORDER_H
+
+#include <QObject>
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <QStandardPaths>
+#include <QMessageBox>
+#include <QAbstractButton>
+#include "FlyCapture2.h"
+
+/*
+  This class is a wrapper around the AVIRecorder from PTGrey to abstract and implement signals.
+ */
+
+enum class RecorderError {
+	INVALID_PROJECT_DIRECTORY,
+	INVALID_RECORDING_NAME,
+	CREATION_RECORD_DIRECTORY_FAILED,
+	CANCELED,
+	OK
+};
+
+class Recorder : QObject {
+	Q_OBJECT
+
+public:
+	// Set bitrate to a default of 10Mbit.
+	Recorder(QObject *parent = 0);
+	~Recorder() = default;
+
+	// Start a recording. A recording directory with the avi files and evtl. a frame subfolder will be created.
+	void newRecording(unsigned int bitrate, unsigned int width, unsigned int height, QDir p_dir, QString r_name, bool capture_frames = false);
+
+	void stopRecording();
+
+	QString getRecordingFileName() {		
+		return rec_name;
+	}
+
+	QString getRecName() {
+		return rec_name;
+	}
+
+	bool isRecording() {
+		return is_recording;
+	}
+
+private:
+ 	FlyCapture2::AVIRecorder recorder;
+	FlyCapture2::H264Option options;
+
+	// Basic state Variable, because AVIRecorder doesn't provide it.
+	bool is_recording;
+
+	// append to existing files
+	bool append;
+
+	bool capture_frames;
+	
+	QDir project_dir;
+	QString rec_name;
+
+	// Check if recording directory exists. If it does ask for Overwrite, New Name or Cancel. In case of cancel it returns false.
+	RecorderError verifyRecDir();
+};
+#endif //RECORDER_H

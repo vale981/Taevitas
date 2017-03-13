@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "cameramanager.h"
+#include "recorder.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -17,6 +19,8 @@ public:
 	
 private:
 	Ui::MainWindow *ui;
+	CameraManager cam_man;
+	Recorder recorder;
 
 private slots:
 	void toggle_preview(bool);
