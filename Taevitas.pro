@@ -27,6 +27,10 @@ linux {
  LIBS += -L "third_party/lib/" -lflycapture -Wl,-R -Wl,third_party/lib
 }
 
+windows {
+ LIBS += -lflycapture
+}
+
 SOURCES += src/main.cpp\
         src/mainwindow.cpp\
 	src/cameramanager.cpp\
