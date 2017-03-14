@@ -27,7 +27,7 @@ linux {
  LIBS += -L "third_party/lib/" -lflycapture -Wl,-R -Wl,third_party/lib
 }
 
-windows {
+win32 {
  LIBS += -lflycapture
 }
 
