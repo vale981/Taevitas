@@ -1,9 +1,13 @@
 #include "recorder.h"
 using namespace FlyCapture2;
 
-Recorder::Recorder(QObject* parent) : QObject(parent), frame_number {frame_n}, time_captured {time_c}, frame_n {0}, time_c {0} {
+Recorder::Recorder(QObject* parent) : QObject(parent), frame_number {frame_n}, is_recording {false}, time_captured {time_c}, frame_n {0}, time_c {0} {
 	// No Compression for frame_captures
 	frame_options.compression = frame_options.NONE;
+};
+
+Recorder::~Recorder() {
+	stopRecording();
 };
 
 void Recorder::newRecording(unsigned int framerate, QDir p_dir, QString r_name, bool cap_frames) {

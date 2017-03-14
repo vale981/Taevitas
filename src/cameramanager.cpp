@@ -3,7 +3,12 @@
 
 using namespace FlyCapture2;
 
-CameraManager::CameraManager(QObject *parent) : QObject(parent) {
+CameraManager::CameraManager(QObject *parent) : QObject(parent), is_capturing {false} {
+}
+
+CameraManager::~CameraManager() {
+	stopCapture();
+	camera.Disconnect();
 }
 
 void CameraManager::connectCamera(unsigned int index) {
@@ -18,6 +23,7 @@ void CameraManager::connectCamera(unsigned int index) {
 	Error error; // general purpose error object
 	
 	// get PGRGuid of the Camera
+	BusManager bus_mgr;
 	error = bus_mgr.GetCameraFromIndex(index, &camera_guid);
 	if(error != PGRERROR_OK) {
 		throw error;

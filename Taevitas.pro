@@ -1,3 +1,4 @@
+
 #-------------------------------------------------
 #
 # Project created by QtCreator 2017-03-08T14:48:00
@@ -23,7 +24,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 linux {
- LIBS += -L "third_party/lib/" -lflycapture
+ LIBS += -L "third_party/lib/" -lflycapture -Wl,-R -Wl,third_party/lib
 }
 
 SOURCES += src/main.cpp\

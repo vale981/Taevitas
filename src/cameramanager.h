@@ -18,11 +18,8 @@ class CameraManager : public QObject
 	
 public:
 	explicit CameraManager(QObject *parent = 0);
-	~CameraManager() = default;
-
-	// Pointer to the last image captured by the camera //TODO maybe obsolete
-	FlyCapture2::Image* lastImage;
-
+	~CameraManager();
+	
 	// Starts capturing images. When an image has been captured, the signal frameCaptured is emited.
 	// Throws FlyCapture2::Error
 	void startCapture();
@@ -39,6 +36,7 @@ public:
 
 	// Get the number of connected cameras.
 	unsigned int numCameras() {
+		FlyCapture2::BusManager bus_mgr;
 		bus_mgr.GetNumOfCameras(&num_cameras);
 		return num_cameras;
 	};
@@ -54,7 +52,6 @@ public:
 private:
 	FlyCapture2::Camera camera;
 	
-	FlyCapture2::BusManager bus_mgr;
 	unsigned int num_cameras;
 
 	// GUID of the camera, which is currently being used
