@@ -28,7 +28,7 @@ linux {
 }
 
 win32 {
- LIBS += -L "third_party/lib/" -lflycapture
+ LIBS += -L "third_party/lib/" -lFlyCapture2
 }
 
 SOURCES += src/main.cpp\
