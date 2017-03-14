@@ -55,7 +55,7 @@ public:
 	}
 	
 	const unsigned int& frame_number;
-	const unsigned int& time_captured;
+	const double& time_captured;
 
 private:
  	FlyCapture2::AVIRecorder recorder;

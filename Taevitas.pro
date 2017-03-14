@@ -23,14 +23,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 linux {
- LIBS += bin/libflycapture.so.2
+ LIBS += -L "third_party/lib/" -lflycapture
 }
 
 SOURCES += src/main.cpp\
-        src/mainwindow.cpp
+        src/mainwindow.cpp\
+	src/cameramanager.cpp\
+	src/recorder.cpp
 
 HEADERS  += src/mainwindow.h\
-         include/flycapture/Flycapture2.h
+	src/cameramanager.h\
+        src/recorder.h
+
+INCLUDEPATH += third_party/include/flycapture/
 
 FORMS    += src/forms/mainwindow.ui
 

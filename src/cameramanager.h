@@ -18,7 +18,7 @@ class CameraManager : public QObject
 	
 public:
 	explicit CameraManager(QObject *parent = 0);
-	~CameraManager();
+	~CameraManager() = default;
 
 	// Pointer to the last image captured by the camera //TODO maybe obsolete
 	FlyCapture2::Image* lastImage;

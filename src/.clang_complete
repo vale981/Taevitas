@@ -3,5 +3,5 @@
 -I/usr/include/qt/QtWidgets
 -I/usr/include/qt/QtGui
 -I/usr/include/qt/QtCore
--I../include/flycapture
+-I../third_party/include/flycapture
 --std=c++11
