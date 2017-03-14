@@ -45,7 +45,7 @@ public:
     QPushButton *preview_button;
     QFrame *frame_2;
     QVBoxLayout *verticalLayout_2;
-    QComboBox *comboBox;
+    QComboBox *cameraSelector;
     QPushButton *pushButton_2;
     QGraphicsView *preview_widget;
 
@@ -122,10 +122,10 @@ public:
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setContentsMargins(11, 11, 11, 11);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
-        comboBox = new QComboBox(frame_2);
-        comboBox->setObjectName(QStringLiteral("comboBox"));
+        cameraSelector = new QComboBox(frame_2);
+        cameraSelector->setObjectName(QStringLiteral("cameraSelector"));
 
-        verticalLayout_2->addWidget(comboBox);
+        verticalLayout_2->addWidget(cameraSelector);
 
         pushButton_2 = new QPushButton(frame_2);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
@@ -155,8 +155,8 @@ public:
         label_2->setText(QApplication::translate("MainWindow", "FPS: ", Q_NULLPTR));
         checkBox->setText(QApplication::translate("MainWindow", "Save Frames", Q_NULLPTR));
         preview_button->setText(QApplication::translate("MainWindow", "Preview Camera", Q_NULLPTR));
-        comboBox->clear();
-        comboBox->insertItems(0, QStringList()
+        cameraSelector->clear();
+        cameraSelector->insertItems(0, QStringList()
          << QApplication::translate("MainWindow", "Select Camera", Q_NULLPTR)
         );
         pushButton_2->setText(QApplication::translate("MainWindow", "Output Folder", Q_NULLPTR));

@@ -3,7 +3,7 @@
 
 using namespace FlyCapture2;
 
-CameraManager::CameraManager(QObject *parent) : QObject(parent), is_capturing {false} {
+CameraManager::CameraManager(QObject *parent) : QObject(parent), num_cameras {0}, is_capturing {false} {
 }
 
 CameraManager::~CameraManager() {
@@ -37,6 +37,7 @@ void CameraManager::connectCamera(unsigned int index) {
 		return;
 	}
 
+	
 	camera_index = index;
 }
 

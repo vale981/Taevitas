@@ -8,7 +8,7 @@
 */
 
 // TODO: Exclude inline Implementation
-
+// TODO: implement camera arrival removal
 #include <QObject>
 #include "FlyCapture2.h"
 

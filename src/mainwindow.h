@@ -22,7 +22,7 @@ public:
 private:
 	Ui::MainWindow *ui;
 	CameraManager cam_man;
-	//Recorder recorder;
+	Recorder recorder;
 	QGraphicsScene current_preview_scene;
 
 	void displayPreview(FlyCapture2::Image* image);
