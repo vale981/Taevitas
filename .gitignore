@@ -1,6 +1,7 @@
-Makefile
+Makefile*
 *.o
 ~*
 moc_*
 build
 *#*
+*~
