@@ -27,10 +27,6 @@ linux {
  LIBS += -L "third_party/lib/" -lflycapture -Wl,-R -Wl,third_party/lib
 }
 
-win32 {
- LIBS += -L "third_party/lib/" -lFlyCapture2
-}
-
 SOURCES += src/main.cpp\
         src/mainwindow.cpp\
 	src/cameramanager.cpp\
@@ -38,7 +34,8 @@ SOURCES += src/main.cpp\
 
 HEADERS  += src/mainwindow.h\
 	src/cameramanager.h\
-        src/recorder.h
+        src/recorder.h \
+    src/stdafx.h
 
 INCLUDEPATH += third_party/include/flycapture/
 
@@ -49,3 +46,10 @@ OBJECTS_DIR = $${DESTDIR}/.obj
 MOC_DIR = $${DESTDIR}/.moc
 RCC_DIR = $${DESTDIR}/.rcc
 UI_DIR = src/
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/'../../../Program Files/Point Grey Research/FlyCapture2/lib/' -lFlyCapture2
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/'../../../Program Files/Point Grey Research/FlyCapture2/lib/' -lFlyCapture2d
+else:unix: LIBS += -L$$PWD/'../../../Program Files/Point Grey Research/FlyCapture2/lib/' -lFlyCapture2
+
+INCLUDEPATH += $$PWD/'../../../Program Files/Point Grey Research/FlyCapture2/include'
+DEPENDPATH += $$PWD/'../../../Program Files/Point Grey Research/FlyCapture2/include'
