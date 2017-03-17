@@ -120,8 +120,6 @@ void MainWindow::toggle_preview(bool checked) {
     }
     
     adjustSize();
-
-   
 }
 
 void MainWindow::frame_captured(FlyCapture2::Image* image) {
@@ -139,5 +137,5 @@ void MainWindow::displayPreview(FlyCapture2::Image* image) {
     QImage tmp(image->GetData(), image->GetCols(), image->GetRows(), QImage::Format::Format_RGB16);
     current_preview_scene.addItem(new QGraphicsPixmapItem(QPixmap::fromImage(tmp)));
 
-    ui->preview_widget->setScene(&current_preview_scene);
+    ui->preview_widget->update();
 }
