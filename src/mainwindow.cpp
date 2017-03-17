@@ -60,7 +60,7 @@ void MainWindow::scanAndUpdateCameras() {
     unsigned int num_cameras = cam_man.numCameras();
     updateCameraList(num_cameras);
     if(num_cameras > 0 && !cam_man.isConnected())
-        //camera_selected(0);
+        ;//camera_selected(0);
 };
 
 void MainWindow::disableRecOptions() {
