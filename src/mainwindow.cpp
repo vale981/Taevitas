@@ -109,7 +109,11 @@ void MainWindow::toggle_preview(bool checked) {
         ui->preview_widget->show();
 
         // Start Capturing for preview
-        cam_man.startCapture();
+        try {
+            cam_man.startCapture();
+        } catch (FlyCapture2::Error e) {
+            showError(e);
+        }
     } else {
         ui->preview_widget->setProperty("enabled", false);
         ui->preview_widget->hide();
