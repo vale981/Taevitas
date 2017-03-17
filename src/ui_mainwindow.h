@@ -34,10 +34,17 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
-    QGridLayout *gridLayout;
-    QFrame *frame;
+    QGridLayout *mainLayout;
+    QFrame *frame_2;
+    QGridLayout *gridLayout_2;
+    QComboBox *cameraSelector;
+    QLabel *label;
+    QPushButton *pushButton_2;
+    QPushButton *camScanButton;
+    QGraphicsView *preview_widget;
+    QFrame *recOptions;
     QVBoxLayout *verticalLayout;
-    QLineEdit *lineEdit;
+    QLineEdit *projectName;
     QPushButton *pushButton;
     QFrame *frame_3;
     QHBoxLayout *horizontalLayout;
@@ -45,86 +52,23 @@ public:
     QSpinBox *fps_box;
     QCheckBox *checkBox;
     QPushButton *preview_button;
-    QFrame *frame_2;
-    QGridLayout *gridLayout_2;
-    QComboBox *cameraSelector;
-    QLabel *label;
-    QPushButton *pushButton_2;
-    QGraphicsView *preview_widget;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(648, 423);
+        MainWindow->resize(434, 356);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        gridLayout = new QGridLayout(centralWidget);
-        gridLayout->setSpacing(6);
-        gridLayout->setContentsMargins(11, 11, 11, 11);
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        frame = new QFrame(centralWidget);
-        frame->setObjectName(QStringLiteral("frame"));
-        frame->setEnabled(true);
-        frame->setMinimumSize(QSize(0, 192));
-        frame->setMaximumSize(QSize(150, 16777215));
-        frame->setFrameShape(QFrame::StyledPanel);
-        frame->setFrameShadow(QFrame::Raised);
-        verticalLayout = new QVBoxLayout(frame);
-        verticalLayout->setSpacing(6);
-        verticalLayout->setContentsMargins(11, 11, 11, 11);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        lineEdit = new QLineEdit(frame);
-        lineEdit->setObjectName(QStringLiteral("lineEdit"));
-
-        verticalLayout->addWidget(lineEdit);
-
-        pushButton = new QPushButton(frame);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setFlat(false);
-
-        verticalLayout->addWidget(pushButton);
-
-        frame_3 = new QFrame(frame);
-        frame_3->setObjectName(QStringLiteral("frame_3"));
-        frame_3->setFrameShape(QFrame::StyledPanel);
-        frame_3->setFrameShadow(QFrame::Raised);
-        horizontalLayout = new QHBoxLayout(frame_3);
-        horizontalLayout->setSpacing(6);
-        horizontalLayout->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        label_2 = new QLabel(frame_3);
-        label_2->setObjectName(QStringLiteral("label_2"));
-
-        horizontalLayout->addWidget(label_2);
-
-        fps_box = new QSpinBox(frame_3);
-        fps_box->setObjectName(QStringLiteral("fps_box"));
-        fps_box->setValue(18);
-
-        horizontalLayout->addWidget(fps_box);
-
-
-        verticalLayout->addWidget(frame_3);
-
-        checkBox = new QCheckBox(frame);
-        checkBox->setObjectName(QStringLiteral("checkBox"));
-
-        verticalLayout->addWidget(checkBox);
-
-        preview_button = new QPushButton(frame);
-        preview_button->setObjectName(QStringLiteral("preview_button"));
-        preview_button->setCheckable(true);
-
-        verticalLayout->addWidget(preview_button);
-
-
-        gridLayout->addWidget(frame, 1, 0, 1, 1);
-
+        mainLayout = new QGridLayout(centralWidget);
+        mainLayout->setSpacing(6);
+        mainLayout->setContentsMargins(11, 11, 11, 11);
+        mainLayout->setObjectName(QStringLiteral("mainLayout"));
+        mainLayout->setSizeConstraint(QLayout::SetFixedSize);
         frame_2 = new QFrame(centralWidget);
         frame_2->setObjectName(QStringLiteral("frame_2"));
-        frame_2->setMinimumSize(QSize(0, 102));
-        frame_2->setMaximumSize(QSize(150, 107));
+        frame_2->setMinimumSize(QSize(160, 0));
+        frame_2->setMaximumSize(QSize(160, 128));
         frame_2->setFrameShape(QFrame::StyledPanel);
         frame_2->setFrameShadow(QFrame::Raised);
         gridLayout_2 = new QGridLayout(frame_2);
@@ -145,16 +89,80 @@ public:
         pushButton_2 = new QPushButton(frame_2);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
 
-        gridLayout_2->addWidget(pushButton_2, 1, 0, 1, 2);
+        gridLayout_2->addWidget(pushButton_2, 2, 0, 1, 2);
+
+        camScanButton = new QPushButton(frame_2);
+        camScanButton->setObjectName(QStringLiteral("camScanButton"));
+
+        gridLayout_2->addWidget(camScanButton, 1, 0, 1, 2);
 
 
-        gridLayout->addWidget(frame_2, 0, 0, 1, 1);
+        mainLayout->addWidget(frame_2, 0, 0, 1, 1);
 
         preview_widget = new QGraphicsView(centralWidget);
         preview_widget->setObjectName(QStringLiteral("preview_widget"));
         preview_widget->setEnabled(false);
 
-        gridLayout->addWidget(preview_widget, 0, 1, 3, 1);
+        mainLayout->addWidget(preview_widget, 0, 1, 4, 1);
+
+        recOptions = new QFrame(centralWidget);
+        recOptions->setObjectName(QStringLiteral("recOptions"));
+        recOptions->setEnabled(true);
+        recOptions->setMinimumSize(QSize(160, 0));
+        recOptions->setMaximumSize(QSize(160, 210));
+        recOptions->setFrameShape(QFrame::StyledPanel);
+        recOptions->setFrameShadow(QFrame::Raised);
+        verticalLayout = new QVBoxLayout(recOptions);
+        verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        projectName = new QLineEdit(recOptions);
+        projectName->setObjectName(QStringLiteral("projectName"));
+
+        verticalLayout->addWidget(projectName);
+
+        pushButton = new QPushButton(recOptions);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setFlat(false);
+
+        verticalLayout->addWidget(pushButton);
+
+        frame_3 = new QFrame(recOptions);
+        frame_3->setObjectName(QStringLiteral("frame_3"));
+        frame_3->setMinimumSize(QSize(134, 48));
+        frame_3->setFrameShape(QFrame::StyledPanel);
+        frame_3->setFrameShadow(QFrame::Raised);
+        horizontalLayout = new QHBoxLayout(frame_3);
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        label_2 = new QLabel(frame_3);
+        label_2->setObjectName(QStringLiteral("label_2"));
+
+        horizontalLayout->addWidget(label_2);
+
+        fps_box = new QSpinBox(frame_3);
+        fps_box->setObjectName(QStringLiteral("fps_box"));
+        fps_box->setValue(18);
+
+        horizontalLayout->addWidget(fps_box);
+
+
+        verticalLayout->addWidget(frame_3);
+
+        checkBox = new QCheckBox(recOptions);
+        checkBox->setObjectName(QStringLiteral("checkBox"));
+
+        verticalLayout->addWidget(checkBox);
+
+        preview_button = new QPushButton(recOptions);
+        preview_button->setObjectName(QStringLiteral("preview_button"));
+        preview_button->setCheckable(true);
+
+        verticalLayout->addWidget(preview_button);
+
+
+        mainLayout->addWidget(recOptions, 1, 0, 1, 1);
 
         MainWindow->setCentralWidget(centralWidget);
 
@@ -166,14 +174,15 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Taevitas", Q_NULLPTR));
-        lineEdit->setPlaceholderText(QApplication::translate("MainWindow", "Project Name", Q_NULLPTR));
+        cameraSelector->setCurrentText(QString());
+        label->setText(QApplication::translate("MainWindow", "Camera:", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("MainWindow", "Output Folder", Q_NULLPTR));
+        camScanButton->setText(QApplication::translate("MainWindow", "Rescan Cameras", Q_NULLPTR));
+        projectName->setPlaceholderText(QApplication::translate("MainWindow", "Project Name", Q_NULLPTR));
         pushButton->setText(QApplication::translate("MainWindow", "Start", Q_NULLPTR));
         label_2->setText(QApplication::translate("MainWindow", "FPS: ", Q_NULLPTR));
         checkBox->setText(QApplication::translate("MainWindow", "Save Frames", Q_NULLPTR));
         preview_button->setText(QApplication::translate("MainWindow", "Preview Camera", Q_NULLPTR));
-        cameraSelector->setCurrentText(QString());
-        label->setText(QApplication::translate("MainWindow", "Camera:", Q_NULLPTR));
-        pushButton_2->setText(QApplication::translate("MainWindow", "Output Folder", Q_NULLPTR));
     } // retranslateUi
 
 };

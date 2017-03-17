@@ -26,8 +26,18 @@ private:
 	QGraphicsScene current_preview_scene;
 
 	void displayPreview(FlyCapture2::Image* image);
+	void disableRecOptions();
+	void enableRecOptions();
 
+	void showError(FlyCapture2::Error err);
+	void showError(QString error);
+
+	void updateCameraList(unsigned int num_cameras);
+			      
 private slots:
+	// Fills Camera Combobox with Cameras
+	void scanAndUpdateCameras();
+
 	void toggle_preview(bool);
 	void frame_captured(FlyCapture2::Image* image);
 	void camera_selected(int index);
