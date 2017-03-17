@@ -134,12 +134,12 @@ void MainWindow::frame_captured(FlyCapture2::Image* image) {
 
 void MainWindow::displayPreview(FlyCapture2::Image* image) {
     // Convert Pixel Format to RGB
-    FlyCapture2::Image conv_img;
+    /*FlyCapture2::Image conv_img;
     image->Convert(FlyCapture2::PixelFormat::PIXEL_FORMAT_RGB16, &conv_img);
 
     current_preview_scene.clear();
     QImage tmp(image->GetData(), image->GetCols(), image->GetRows(), QImage::Format::Format_RGB16);
     current_preview_scene.addItem(new QGraphicsPixmapItem(QPixmap::fromImage(tmp)));
 
-    ui->preview_widget->update();
+    ui->preview_widget->update();*/
 }
