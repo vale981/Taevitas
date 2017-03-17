@@ -34,8 +34,7 @@ SOURCES += src/main.cpp\
 
 HEADERS  += src/mainwindow.h\
 	src/cameramanager.h\
-        src/recorder.h \
-    src/stdafx.h
+        src/recorder.h 
 
 INCLUDEPATH += third_party/include/flycapture/
 
@@ -47,9 +46,3 @@ MOC_DIR = $${DESTDIR}/.moc
 RCC_DIR = $${DESTDIR}/.rcc
 UI_DIR = src/
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/'../../../Program Files/Point Grey Research/FlyCapture2/lib/' -lFlyCapture2
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/'../../../Program Files/Point Grey Research/FlyCapture2/lib/' -lFlyCapture2d
-else:unix: LIBS += -L$$PWD/'../../../Program Files/Point Grey Research/FlyCapture2/lib/' -lFlyCapture2
-
-INCLUDEPATH += $$PWD/'../../../Program Files/Point Grey Research/FlyCapture2/include'
-DEPENDPATH += $$PWD/'../../../Program Files/Point Grey Research/FlyCapture2/include'

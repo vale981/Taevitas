@@ -3,6 +3,7 @@
 #include <QPushButton>
 #include <QImage>
 #include <QGraphicsItem>
+#include <QDebug>
 
 // TODO: Handle Errors!!
 
@@ -20,19 +21,24 @@ MainWindow::MainWindow(QWidget *parent) :
     adjustSize();
 
     // Fill Combo Box with cameras
-    unsigned int num_cameras = cam_man.numCameras();
+    unsigned int num_cameras = 10; //cam_man.numCameras();
     for (unsigned int i = 0; i < num_cameras; i++) {
         ui->cameraSelector->addItem(QString(i+'0'));
     }
         
     // Connect Events
     connect(ui->preview_button, &QPushButton::clicked, this, &MainWindow::toggle_preview);
+    connect(ui->cameraSelector, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), this, &MainWindow::camera_selected);
     connect(&cam_man, &CameraManager::frameCaptured, this, &MainWindow::frame_captured);
 }
 
 MainWindow::~MainWindow() {
     delete ui;
 }
+
+void MainWindow::camera_selected(int index) {
+    qDebug() << index;
+};
 
 // Show/Hide Preview
 void MainWindow::toggle_preview(bool checked) {

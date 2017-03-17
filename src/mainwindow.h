@@ -30,6 +30,7 @@ private:
 private slots:
 	void toggle_preview(bool);
 	void frame_captured(FlyCapture2::Image* image);
+	void camera_selected(int index);
 };
 
 #endif // MAINWINDOW_H
