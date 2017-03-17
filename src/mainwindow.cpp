@@ -138,4 +138,6 @@ void MainWindow::displayPreview(FlyCapture2::Image* image) {
     current_preview_scene.clear();
     QImage tmp(image->GetData(), image->GetCols(), image->GetRows(), QImage::Format::Format_RGB16);
     current_preview_scene.addItem(new QGraphicsPixmapItem(QPixmap::fromImage(tmp)));
+
+    ui->preview_widget->setScene(&current_preview_scene);
 }
