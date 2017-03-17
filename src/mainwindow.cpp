@@ -22,14 +22,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->preview_widget->hide();
     adjustSize();
     
+    disableRecOptions();
+    
     // Try to connect to first cam
     scanAndUpdateCameras();
     
     // Set default name
     ui->projectName->setText("Taevitas_Rec_" + QDateTime::currentDateTime().toString("dd_MM_yyyy_hh_mm_ss"));
 
-    disableRecOptions();
-    
     // Connect Events
     connect(ui->preview_button, &QPushButton::clicked, this, &MainWindow::toggle_preview);
 
@@ -83,7 +83,7 @@ void MainWindow::showError(FlyCapture2::Error error) {
 }
 
 void MainWindow::camera_selected(int index) {
-    if(recorder.isRecording())
+    if(recorder.isRecording() || index < 0)
         return;
     
     try {
