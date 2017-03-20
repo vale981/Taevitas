@@ -51,6 +51,7 @@ public:
 
 private:
 	FlyCapture2::Camera camera;
+    FlyCapture2::FC2Config *cam_config;
 	
 	unsigned int num_cameras;
 
