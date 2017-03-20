@@ -18,7 +18,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     // Set Scene and Hide Preview Widget
-    ui->preview_widget->setScene(&current_preview_scene);
     ui->preview_widget->hide();
     adjustSize();
     
@@ -135,12 +134,9 @@ void MainWindow::frame_captured(FlyCapture2::Image* image) {
 
 void MainWindow::displayPreview(FlyCapture2::Image* image) {
     // Convert Pixel Format to RGB
-    /*FlyCapture2::Image conv_img;
-    image->Convert(FlyCapture2::PixelFormat::PIXEL_FORMAT_RGB16, &conv_img);
+    image->Convert(FlyCapture2::PixelFormat::PIXEL_FORMAT_RGB16, &last_capture);
+    QImage tmp(last_capture->GetData(), last_capture->GetCols(), last_capture->GetRows(), QImage::Format::Format_RGB16);
 
-    current_preview_scene.clear();
-    QImage tmp(image->GetData(), image->GetCols(), image->GetRows(), QImage::Format::Format_RGB16);
-    current_preview_scene.addItem(new QGraphicsPixmapItem(QPixmap::fromImage(tmp)));
-
-    ui->preview_widget->update();*/
+    last_preview.convertFromImage(tmp);
+    ui->preview_widget->setPixmap(last_preview);
 }

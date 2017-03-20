@@ -6,6 +6,7 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include "FlyCapture2.h"
+#include <QPixmap>
 
 namespace Ui {
 	class MainWindow;
@@ -23,7 +24,8 @@ private:
 	Ui::MainWindow *ui;
 	CameraManager cam_man;
 	Recorder recorder;
-	QGraphicsScene current_preview_scene;
+    FlyCapture2::Image last_capture;
+    QPixmap last_preview;
 
 	void displayPreview(FlyCapture2::Image* image);
 	void disableRecOptions();

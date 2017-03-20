@@ -23,10 +23,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-linux {
- LIBS += -L "third_party/lib/" -lflycapture -Wl,-R -Wl,third_party/lib
-}
-
 SOURCES += src/main.cpp\
         src/mainwindow.cpp\
 	src/cameramanager.cpp\
@@ -35,8 +31,6 @@ SOURCES += src/main.cpp\
 HEADERS  += src/mainwindow.h\
 	src/cameramanager.h\
         src/recorder.h 
-
-INCLUDEPATH += third_party/include/flycapture/
 
 FORMS    += src/forms/mainwindow.ui
 
@@ -53,3 +47,8 @@ win32 {
 	INCLUDEPATH += $$PWD/'../../../Program Files/Point Grey Research/FlyCapture2/include'
 	DEPENDPATH += $$PWD/'../../../Program Files/Point Grey Research/FlyCapture2/include'
 }
+
+unix: LIBS += -L$$PWD/third_party/lib/ -lflycapture
+
+INCLUDEPATH += $$PWD/third_party/include/flycapture
+DEPENDPATH += $$PWD/third_party/include/flycapture
