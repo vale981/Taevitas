@@ -135,7 +135,7 @@ void MainWindow::frame_captured(FlyCapture2::Image* image) {
 void MainWindow::displayPreview(FlyCapture2::Image* image) {
     // Convert Pixel Format to RGB
     qDebug() << 1;
-    image->Convert(FlyCapture2::PixelFormat::PIXEL_FORMAT_RGB16, &last_capture);
+    //image->Convert(FlyCapture2::PixelFormat::PIXEL_FORMAT_RGB16, &last_capture);
     qDebug() << 2;
 
     QImage tmp(last_capture.GetData(), last_capture.GetCols(), last_capture.GetRows(), QImage::Format::Format_RGB16);
