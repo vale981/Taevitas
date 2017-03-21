@@ -139,7 +139,7 @@ void MainWindow::displayPreview(FlyCapture2::Image* last_capture) {
     qDebug() << 1;
 
     FlyCapture2::Image tmp_i;
-    qDebug() << image->GetCols();
+    qDebug() << last_capture->GetCols();
 
     //FlyCapture2::Error e = last_capture->Convert(FlyCapture2::PixelFormat::PIXEL_FORMAT_RGB16, &tmp_i);
 
