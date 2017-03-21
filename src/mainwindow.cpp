@@ -88,7 +88,8 @@ void MainWindow::camera_selected(int index) {
     try {
         cam_man.connectCamera(index);
     } catch (FlyCapture2::Error e) {
-	showError(e);
+        qDebug << e.GetDescription();
+        showError(e);
         return;
     }
     
