@@ -1,7 +1,6 @@
 #ifndef RECORDER_H
 #define RECORDER_H
 
-#include <String>
 #include <QObject>
 #include <QDir>
 #include <QFile>

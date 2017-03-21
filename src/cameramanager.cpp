@@ -44,15 +44,16 @@ void CameraManager::connectCamera(unsigned int index) {
     cam_config.highPerformanceRetrieveBuffer = true;
 	camera_index = index;
 
-    camera.SetConfiguration(cam_config);
+    camera.SetConfiguration(&cam_config);
 }
 
 // The capture callback is a wrapper to emit the frameCaptured signal.
-inline void CameraManager::captureCallback(FlyCapture2::Image* image, const void *camManager) {
+void CameraManager::captureCallback(FlyCapture2::Image* image, const void *camManager) {
     if(camManager) {
-        static_cast<const CameraManager*>(camManager)->setCurrentImage(image);
-        static_cast<const CameraManager*>(camManager)->frameCaptured();
+        static_cast<const CameraManager*>(camManager)->frameCaptured(image);
     }
+    qDebug() << "done";
+    return;
 }
 
 void CameraManager::stopCapture() {

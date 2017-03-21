@@ -26,7 +26,7 @@ private:
 	Recorder recorder;
     QPixmap last_preview;
 
-	void displayPreview(FlyCapture2::Image* image);
+    void displayPreview(FlyCapture2::Image *last_capture);
 	void disableRecOptions();
 	void enableRecOptions();
 
@@ -40,7 +40,7 @@ private slots:
 	void scanAndUpdateCameras();
 
 	void toggle_preview(bool);
-    void frame_captured();
+    void frame_captured(FlyCapture2::Image *image);
 	void camera_selected(int index);
 };
 

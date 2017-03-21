@@ -125,30 +125,28 @@ void MainWindow::toggle_preview(bool checked) {
     adjustSize();
 }
 
-void MainWindow::frame_captured() {
+void MainWindow::frame_captured(FlyCapture2::Image* image) {
     qDebug() << "Image Captured!";
     // If preview is activated...
     if(ui->preview_widget->isVisible())
-        displayPreview();
+        displayPreview(image);
 }
 
-void MainWindow::displayPreview() {
+void MainWindow::displayPreview(FlyCapture2::Image* last_capture) {
     // Convert Pixel Format to RGB
     qDebug() << 1;
 
-    qDebug() << image;
     FlyCapture2::Image tmp_i;
-    FlyCapture2::Image &last_capture = cam_man.getCurrentImage();
 
     FlyCapture2::Error e = last_capture->Convert(FlyCapture2::PixelFormat::PIXEL_FORMAT_RGB16, &tmp_i);
     qDebug() << e.GetDescription();
 
 
     qDebug() << 2;
-    QImage tmp(tmp_i.GetData(), last_capture.GetCols(), last_capture.GetRows(), QImage::Format::Format_RGB16);
+    QImage tmp(tmp_i.GetData(), last_capture->GetCols(), last_capture->GetRows(), QImage::Format::Format_RGB16);
     qDebug() << 3;
 
-    ui->preview_widget->setFixedSize(last_capture.GetCols(), image->GetRows());
+    ui->preview_widget->setFixedSize(last_capture->GetCols(), last_capture->GetRows());
     qDebug() << 4;
 
     last_preview.convertFromImage(tmp);

@@ -49,18 +49,9 @@ public:
 		return is_capturing;
 	}
 
-    FlyCapture2::Image& getCurrentImage() {
-        return &current_image;
-    }
-
-    void setCurrentImage(FlyCapture2::Image image) {
-        current_image.DeepCopy(image);
-    }
-
 private:
     FlyCapture2::Camera camera;
     FlyCapture2::FC2Config cam_config;
-    FlyCapture2::Image current_image;
 	
 	unsigned int num_cameras;
 
@@ -77,7 +68,7 @@ private:
 	bool is_capturing;
 	
 signals:
-	void frameCaptured(FlyCapture2::Image*) const;
+    void frameCaptured(FlyCapture2::Image* image) const;
 };
 	
 #endif // CAMERAMANAGER_H
