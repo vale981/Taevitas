@@ -8,6 +8,7 @@
 #include <QStandardPaths>
 #include <QMessageBox>
 #include <QAbstractButton>
+#include <QMutex>
 #include "FlyCapture2.h"
 
 /*
@@ -89,5 +90,8 @@ private:
 
 	// reset Status, only if not recording (is_recording == false).
 	void cleanup();
+
+    // lock the appendFrame function.
+    QMutex write_lock;
 };
 #endif //RECORDER_H

@@ -134,12 +134,14 @@ void Recorder::cleanup() {
 };
 
 void Recorder::appendFrame(FlyCapture2::Image *image) {
+    write_lock.lock();
 	// If not recording, just stop.
 	if(!is_recording)
 		return;
 	
 	Error app_err = recorder.AVIAppend(image);
 	if(app_err != PGRERROR_OK) {
+        write_lock.unlock();
 		throw app_err;
 		return;
 	}
@@ -148,6 +150,7 @@ void Recorder::appendFrame(FlyCapture2::Image *image) {
 	if(capture_frames) {
 		app_err = image->Save((record_dir.path() + "frames/" + frame_n).toStdString().c_str(), &frame_options);
 		if(app_err != PGRERROR_OK) {
+            write_lock.unlock();
 			throw app_err;
 			return;
 		}
@@ -155,4 +158,5 @@ void Recorder::appendFrame(FlyCapture2::Image *image) {
 
 	frame_n++;
 	time_c = frame_n / options.frameRate;
+    write_lock.unlock();
 }
