@@ -11,7 +11,6 @@
 // TODO: implement camera arrival removal
 #include <QObject>
 #include "FlyCapture2.h"
-#include <QMutex>
 
 class CameraManager : public QObject
 {
@@ -67,9 +66,6 @@ private:
 
 	// State Variable
 	bool is_capturing;
-	
-    // Make captureCallback thread safe
-    static QMutex lock;
 
 signals:
     void frameCaptured(FlyCapture2::Image* image) const;
