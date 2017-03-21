@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>200</width>
-    <height>394</height>
+    <width>652</width>
+    <height>455</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -130,13 +130,6 @@
       </property>
      </spacer>
     </item>
-    <item row="0" column="1" rowspan="2">
-     <widget class="QLabel" name="preview_widget">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="0">
      <widget class="QFrame" name="frame_2">
       <property name="sizePolicy">
@@ -196,6 +189,13 @@
         </widget>
        </item>
       </layout>
+     </widget>
+    </item>
+    <item row="0" column="1" rowspan="2">
+     <widget class="QLabel" name="preview_widget">
+      <property name="text">
+       <string/>
+      </property>
      </widget>
     </item>
    </layout>
