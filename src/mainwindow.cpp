@@ -105,7 +105,6 @@ void MainWindow::toggle_preview(bool checked) {
         
     if(checked) {
         ui->preview_widget->setProperty("enabled", true);
-        ui->preview_widget->show();
 
         // Start Capturing for preview
         try {
@@ -134,11 +133,13 @@ void MainWindow::frame_captured(FlyCapture2::Image* image) {
 }
 
 void MainWindow::displayPreview(FlyCapture2::Image* last_capture) {
-    // Convert Pixel Format to RGB
+    ui->preview_widget->show();
+
     FlyCapture2::Image last_image;
     QImage last_preview_image;
     QPixmap last_preview;
 
+    // Convert Pixel Format to RGB
     FlyCapture2::Error e = last_capture->Convert(FlyCapture2::PIXEL_FORMAT_RGB, &last_image);
 
     last_preview_image = QImage(last_image.GetData(), last_image.GetCols(), last_image.GetRows(), QImage::Format_RGB888);
