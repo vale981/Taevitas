@@ -24,7 +24,6 @@ private:
 	Ui::MainWindow *ui;
 	CameraManager cam_man;
 	Recorder recorder;
-    FlyCapture2::Image last_capture;
     QPixmap last_preview;
 
 	void displayPreview(FlyCapture2::Image* image);
@@ -41,7 +40,7 @@ private slots:
 	void scanAndUpdateCameras();
 
 	void toggle_preview(bool);
-	void frame_captured(FlyCapture2::Image* image);
+    void frame_captured();
 	void camera_selected(int index);
 };
 

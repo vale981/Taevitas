@@ -7,7 +7,6 @@ CameraManager::CameraManager(QObject *parent) : QObject(parent), num_cameras {0}
 }
 
 CameraManager::~CameraManager() {
-    delete cam_config;
 	stopCapture();
 	camera.Disconnect();
 }
@@ -39,10 +38,10 @@ void CameraManager::connectCamera(unsigned int index) {
 	}
 
     // Do not drop frames! //TODO Flexible Buffer size
-    cam_config = new FlyCapture2::FC2Config();
-    cam_config->grabMode = GrabMode::BUFFER_FRAMES;
-    cam_config->numBuffers = 50;
-
+    cam_config = FlyCapture2::FC2Config();
+    cam_config.grabMode = GrabMode::BUFFER_FRAMES;
+    cam_config.numBuffers= 50;
+    cam_config.highPerformanceRetrieveBuffer = true;
 	camera_index = index;
 
     camera.SetConfiguration(cam_config);
@@ -50,8 +49,10 @@ void CameraManager::connectCamera(unsigned int index) {
 
 // The capture callback is a wrapper to emit the frameCaptured signal.
 inline void CameraManager::captureCallback(FlyCapture2::Image* image, const void *camManager) {
-	if(camManager)
-		static_cast<const CameraManager*>(camManager)->frameCaptured(image);
+    if(camManager) {
+        static_cast<const CameraManager*>(camManager)->setCurrentImage(image);
+        static_cast<const CameraManager*>(camManager)->frameCaptured();
+    }
 }
 
 void CameraManager::stopCapture() {
