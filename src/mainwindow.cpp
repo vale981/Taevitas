@@ -142,7 +142,7 @@ void MainWindow::displayPreview(FlyCapture2::Image* last_capture) {
 
 
     last_preview_image.scaledToWidth(500);
-    ui->preview_widget->setFixedSize(last_preview_image.width(), last_preview_image.height());
+    //ui->preview_widget->setFixedSize(last_preview_image.width(), last_preview_image.height());
 
     last_preview.convertFromImage(last_preview_image);
     ui->preview_widget->setPixmap(last_preview);
