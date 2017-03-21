@@ -4,7 +4,7 @@
 
 using namespace FlyCapture2;
 
-CameraManager::CameraManager(QObject *parent) : QObject(parent), num_cameras {0}, is_capturing {false} {
+CameraManager::CameraManager(QObject *parent) : QObject(parent), num_cameras {0}, camera_index {-1}, is_capturing {false} {
 }
 
 CameraManager::~CameraManager() {
@@ -17,11 +17,16 @@ void CameraManager::connectCamera(unsigned int index) {
 	if(camera_index == index)
 		return;
 
-	if(camera.IsConnected())
-		camera.Disconnect();
-	
+    Error error; // general purpose error object
+    if(camera.IsConnected()){
+        error = camera.Disconnect();
+        if(error != PGRERROR_OK) {
+            throw error;
+            return;
+         }
+    }
+
 	qDebug() << "Connecting to camera: " << index << '\n';	
-	Error error; // general purpose error object
 	
 	// get PGRGuid of the Camera
 	BusManager bus_mgr;

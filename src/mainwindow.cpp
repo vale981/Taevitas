@@ -91,8 +91,6 @@ void MainWindow::camera_selected(int index) {
         showError(e);
         return;
     }
-
-    qDebug() << cam_man.isConnected();
     
     enableRecOptions();
 };
