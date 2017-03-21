@@ -59,7 +59,7 @@ private:
 	FlyCapture2::PGRGuid camera_guid;
 
 	// Index of the current camera
-	unsigned int camera_index;
+    int camera_index;
 	
 	// Just a littile wrapper function around the callback function for the camera capture to emit signals.
     static inline void captureCallback(FlyCapture2::Image*, const void *);
