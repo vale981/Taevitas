@@ -135,18 +135,11 @@ void MainWindow::frame_captured(FlyCapture2::Image* image) {
 
 void MainWindow::displayPreview(FlyCapture2::Image* last_capture) {
     // Convert Pixel Format to RGB
-    qDebug() << 1;
+    FlyCapture2::Error e = last_capture->Convert(FlyCapture2::PixelFormat::PIXEL_FORMAT_RGB16, &last_image);
 
-    FlyCapture2::Image tmp_i;
-
-    FlyCapture2::Error e = last_capture->Convert(FlyCapture2::PixelFormat::PIXEL_FORMAT_RGB16, &tmp_i);
-
-    qDebug() << 2;
-    QImage tmp(tmp_i.GetData(), last_capture->GetCols(), last_capture->GetRows(), QImage::Format::Format_RGB16);
-    qDebug() << 3;
+    QImage tmp(last_image.GetData(), last_capture->GetCols(), last_capture->GetRows(), QImage::Format::Format_RGB16);
 
     ui->preview_widget->setFixedSize(last_capture->GetCols(), last_capture->GetRows());
-    qDebug() << 4;
 
     last_preview.convertFromImage(tmp);
 
