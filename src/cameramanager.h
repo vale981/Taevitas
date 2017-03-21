@@ -62,7 +62,7 @@ private:
 	unsigned int camera_index;
 	
 	// Just a littile wrapper function around the callback function for the camera capture to emit signals.
-	static inline void captureCallback(FlyCapture2::Image*, const void*);
+    static inline void captureCallback(FlyCapture2::Image*, const void *);
 
 	// State Variable
 	bool is_capturing;
