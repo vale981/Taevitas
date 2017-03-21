@@ -138,12 +138,10 @@ void MainWindow::displayPreview(FlyCapture2::Image* last_capture) {
     qDebug() << 1;
 
     FlyCapture2::Image tmp_i;
-    qDebug() << last_capture->GetCols();
 
-    //FlyCapture2::Error e = last_capture->Convert(FlyCapture2::PixelFormat::PIXEL_FORMAT_RGB16, &tmp_i);
+    FlyCapture2::Error e = last_capture->Convert(FlyCapture2::PixelFormat::PIXEL_FORMAT_RGB16, &tmp_i);
 
-
-    /*qDebug() << 2;
+    qDebug() << 2;
     QImage tmp(tmp_i.GetData(), last_capture->GetCols(), last_capture->GetRows(), QImage::Format::Format_RGB16);
     qDebug() << 3;
 
@@ -153,5 +151,4 @@ void MainWindow::displayPreview(FlyCapture2::Image* last_capture) {
     last_preview.convertFromImage(tmp);
 
     ui->preview_widget->setPixmap(last_preview);
-    */
 }

@@ -50,7 +50,8 @@ void CameraManager::connectCamera(unsigned int index) {
 
 // The capture callback is a wrapper to emit the frameCaptured signal.
 void CameraManager::captureCallback(FlyCapture2::Image* image, const void *camManager) {
-    QMutex mutex;
+    //thread Safe
+    static QMutex mutex;
     mutex.lock();
 
     if(camManager) {
