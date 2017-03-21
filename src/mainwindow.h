@@ -24,8 +24,6 @@ private:
 	Ui::MainWindow *ui;
 	CameraManager cam_man;
 	Recorder recorder;
-    QPixmap last_preview;
-    QImage last_preview_image;
 
     void displayPreview(FlyCapture2::Image *last_capture);
 	void disableRecOptions();
