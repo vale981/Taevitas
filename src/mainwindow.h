@@ -26,7 +26,6 @@ private:
 	Recorder recorder;
     QPixmap last_preview;
     QImage last_preview_image;
-    FlyCapture2::Image last_image;
 
     void displayPreview(FlyCapture2::Image *last_capture);
 	void disableRecOptions();
