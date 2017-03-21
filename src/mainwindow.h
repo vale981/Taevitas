@@ -1,12 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QMainWindow>
+#include <QImage>
+#include <QPixmap>
+#include "FlyCapture2.h"
 #include "cameramanager.h"
 #include "recorder.h"
-#include <QMainWindow>
-#include <QGraphicsScene>
-#include "FlyCapture2.h"
-#include <QPixmap>
 
 namespace Ui {
 	class MainWindow;
