@@ -135,7 +135,7 @@ void Recorder::cleanup() {
 
 void Recorder::appendFrame(FlyCapture2::Image *image) {
     write_lock.lock();
-	// If not recording, just stop.
+    // If not recording, just stop.
 	if(!is_recording)
 		return;
 	

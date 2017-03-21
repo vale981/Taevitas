@@ -49,10 +49,12 @@ void CameraManager::connectCamera(unsigned int index) {
 
 // The capture callback is a wrapper to emit the frameCaptured signal.
 void CameraManager::captureCallback(FlyCapture2::Image* image, const void *camManager) {
+    lock.lock();
     if(camManager) {
         static_cast<const CameraManager*>(camManager)->frameCaptured(image);
     }
     qDebug() << "here";
+    lock.unlock();
     return;
 }
 
