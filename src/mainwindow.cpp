@@ -137,11 +137,11 @@ void MainWindow::displayPreview(FlyCapture2::Image* last_capture) {
     // Convert Pixel Format to RGB
     FlyCapture2::Error e = last_capture->Convert(FlyCapture2::PixelFormat::PIXEL_FORMAT_RGB16, &last_image);
 
-    QImage tmp(last_image.GetData(), last_capture->GetCols(), last_capture->GetRows(), QImage::Format::Format_RGB16);
+    last_preview_image = QImage(last_image.GetData(), last_capture->GetCols(), last_capture->GetRows(), QImage::Format::Format_RGB16);
 
     ui->preview_widget->setFixedSize(last_capture->GetCols(), last_capture->GetRows());
 
-    last_preview.convertFromImage(tmp);
+    last_preview.convertFromImage(last_preview_image);
 
     ui->preview_widget->setPixmap(last_preview);
 }
