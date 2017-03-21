@@ -140,10 +140,10 @@ void MainWindow::displayPreview(FlyCapture2::Image* last_capture) {
     qDebug() << *last_capture->GetData();
     last_preview_image = QImage(last_image.GetData(), last_capture->GetCols(), last_capture->GetRows(), QImage::Format_BGR30);
 
-    ui->preview_widget->setFixedSize(last_capture->GetCols(), last_capture->GetRows());
 
     last_preview_image.scaledToWidth(500);
-    last_preview.convertFromImage(last_preview_image);
+    ui->preview_widget->setFixedSize(last_preview_image.width(), last_preview_image.height());
 
+    last_preview.convertFromImage(last_preview_image);
     ui->preview_widget->setPixmap(last_preview);
 }
