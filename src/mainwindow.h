@@ -34,7 +34,7 @@ private:
 	void showError(QString error);
 
 	void updateCameraList(unsigned int num_cameras);
-			      
+    QMutex test;
 private slots:
 	// Fills Camera Combobox with Cameras
 	void scanAndUpdateCameras();

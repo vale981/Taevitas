@@ -52,7 +52,6 @@ void CameraManager::captureCallback(FlyCapture2::Image* image, const void *camMa
     if(camManager) {
         static_cast<const CameraManager*>(camManager)->frameCaptured(image);
     }
-    qDebug() << "here";
     return;
 }
 
