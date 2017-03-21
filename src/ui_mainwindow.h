@@ -46,7 +46,6 @@ public:
     QCheckBox *checkBox;
     QPushButton *preview_button;
     QSpacerItem *verticalSpacer;
-    QLabel *preview_widget;
     QFrame *frame_2;
     QVBoxLayout *verticalLayout_2;
     QFrame *frame;
@@ -55,12 +54,13 @@ public:
     QComboBox *cameraSelector;
     QPushButton *camScanButton;
     QPushButton *pushButton_2;
+    QLabel *preview_widget;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(200, 394);
+        MainWindow->resize(579, 354);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -136,14 +136,9 @@ public:
 
         gridLayout->addWidget(recOptions, 1, 0, 1, 1);
 
-        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        verticalSpacer = new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         gridLayout->addItem(verticalSpacer, 2, 0, 1, 1);
-
-        preview_widget = new QLabel(centralWidget);
-        preview_widget->setObjectName(QStringLiteral("preview_widget"));
-
-        gridLayout->addWidget(preview_widget, 0, 1, 2, 1);
 
         frame_2 = new QFrame(centralWidget);
         frame_2->setObjectName(QStringLiteral("frame_2"));
@@ -190,6 +185,14 @@ public:
 
         gridLayout->addWidget(frame_2, 0, 0, 1, 1);
 
+        preview_widget = new QLabel(centralWidget);
+        preview_widget->setObjectName(QStringLiteral("preview_widget"));
+        preview_widget->setEnabled(false);
+        preview_widget->setFrameShape(QFrame::StyledPanel);
+        preview_widget->setFrameShadow(QFrame::Raised);
+
+        gridLayout->addWidget(preview_widget, 0, 1, 2, 1);
+
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
@@ -205,11 +208,11 @@ public:
         label_2->setText(QApplication::translate("MainWindow", "FPS: ", Q_NULLPTR));
         checkBox->setText(QApplication::translate("MainWindow", "  Save Frames", Q_NULLPTR));
         preview_button->setText(QApplication::translate("MainWindow", "Preview Camera", Q_NULLPTR));
-        preview_widget->setText(QString());
         label->setText(QApplication::translate("MainWindow", "Camera:", Q_NULLPTR));
         cameraSelector->setCurrentText(QString());
         camScanButton->setText(QApplication::translate("MainWindow", "Rescan Cameras", Q_NULLPTR));
         pushButton_2->setText(QApplication::translate("MainWindow", "Output Folder", Q_NULLPTR));
+        preview_widget->setText(QString());
     } // retranslateUi
 
 };

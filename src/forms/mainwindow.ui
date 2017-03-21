@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>652</width>
-    <height>455</height>
+    <width>579</width>
+    <height>354</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -124,8 +124,8 @@
       </property>
       <property name="sizeHint" stdset="0">
        <size>
-        <width>20</width>
-        <height>40</height>
+        <width>0</width>
+        <height>0</height>
        </size>
       </property>
      </spacer>
@@ -193,6 +193,15 @@
     </item>
     <item row="0" column="1" rowspan="2">
      <widget class="QLabel" name="preview_widget">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
       <property name="text">
        <string/>
       </property>
