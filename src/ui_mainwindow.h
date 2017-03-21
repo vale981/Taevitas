@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.8.0
+** Created by: Qt User Interface Compiler version 5.7.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -58,7 +58,12 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(478, 334);
+        MainWindow->resize(180, 374);
+        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
+        MainWindow->setSizePolicy(sizePolicy);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -68,9 +73,6 @@ public:
         recOptions = new QFrame(centralWidget);
         recOptions->setObjectName(QStringLiteral("recOptions"));
         recOptions->setEnabled(true);
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(recOptions->sizePolicy().hasHeightForWidth());
         recOptions->setSizePolicy(sizePolicy);
         recOptions->setFrameShape(QFrame::StyledPanel);
@@ -81,6 +83,7 @@ public:
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         projectName = new QLineEdit(recOptions);
         projectName->setObjectName(QStringLiteral("projectName"));
+        projectName->setAlignment(Qt::AlignCenter);
 
         verticalLayout->addWidget(projectName);
 
@@ -183,7 +186,7 @@ public:
         projectName->setPlaceholderText(QApplication::translate("MainWindow", "Project Name", Q_NULLPTR));
         pushButton->setText(QApplication::translate("MainWindow", "Start", Q_NULLPTR));
         label_2->setText(QApplication::translate("MainWindow", "FPS: ", Q_NULLPTR));
-        checkBox->setText(QApplication::translate("MainWindow", "Save Frames", Q_NULLPTR));
+        checkBox->setText(QApplication::translate("MainWindow", "  Save Frames", Q_NULLPTR));
         preview_button->setText(QApplication::translate("MainWindow", "Preview Camera", Q_NULLPTR));
         cameraSelector->setCurrentText(QString());
         label->setText(QApplication::translate("MainWindow", "Camera:", Q_NULLPTR));

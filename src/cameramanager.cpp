@@ -4,10 +4,6 @@
 using namespace FlyCapture2;
 
 CameraManager::CameraManager(QObject *parent) : QObject(parent), num_cameras {0}, is_capturing {false} {
-    // Do not drop frames!
-    cam_config = new FlyCapture2::FC2Config();
-    cam_config->grabMode = GrabMode::BUFFER_FRAMES;
-    cam_config->numBuffers = 10;
 }
 
 CameraManager::~CameraManager() {
@@ -41,6 +37,11 @@ void CameraManager::connectCamera(unsigned int index) {
 		throw error;
 		return;
 	}
+
+    // Do not drop frames! //TODO Flexible Buffer size
+    cam_config = new FlyCapture2::FC2Config();
+    cam_config->grabMode = GrabMode::BUFFER_FRAMES;
+    cam_config->numBuffers = 50;
 
 	camera_index = index;
 
