@@ -128,9 +128,10 @@ void MainWindow::toggle_preview(bool checked) {
 void MainWindow::frame_captured(FlyCapture2::Image* image) {
     qDebug() << "Image Captured!";
     // If preview is activated...
-    qDebug() << image->GetCols();
     if(ui->preview_widget->isVisible())
         displayPreview(image);
+
+    return;
 }
 
 void MainWindow::displayPreview(FlyCapture2::Image* last_capture) {
@@ -138,6 +139,7 @@ void MainWindow::displayPreview(FlyCapture2::Image* last_capture) {
     qDebug() << 1;
 
     FlyCapture2::Image tmp_i;
+    qDebug() << image->GetCols();
 
     //FlyCapture2::Error e = last_capture->Convert(FlyCapture2::PixelFormat::PIXEL_FORMAT_RGB16, &tmp_i);
 
