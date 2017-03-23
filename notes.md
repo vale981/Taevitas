@@ -5,3 +5,5 @@ Recorder:
 Maybe Split Recorder and Manager UP -> DONE
 
  Flexible buffer size, options for serial
+
+Make image grabber nicer

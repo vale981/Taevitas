@@ -26,11 +26,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += src/main.cpp\
         src/mainwindow.cpp\
 	src/cameramanager.cpp\
-	src/recorder.cpp
+	src/recorder.cpp \
+    src/imagegrabber.cpp
 
 HEADERS  += src/mainwindow.h\
 	src/cameramanager.h\
-        src/recorder.h 
+        src/recorder.h \ 
+    src/imagegrabber.h
 
 FORMS    += src/forms/mainwindow.ui
 

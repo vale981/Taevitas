@@ -10,7 +10,10 @@
 // TODO: Exclude inline Implementation
 // TODO: implement camera arrival removal
 #include <QObject>
+#include <QVector>
+#include <QThread>
 #include "FlyCapture2.h"
+#include "imagegrabber.h"
 
 class CameraManager : public QObject
 {
@@ -43,7 +46,7 @@ public:
 
 	// Connect camera from index. Once successfull it emits the cameraConnected signal.
 	// Emits Error signal in case of an error.
-	void connectCamera(unsigned int);
+    void connectCamera(int);
 
 	bool isCapturing() {
 		return is_capturing;
@@ -61,11 +64,16 @@ private:
 	// Index of the current camera
     int camera_index;
 	
-	// Just a littile wrapper function around the callback function for the camera capture to emit signals.
-    static inline void captureCallback(FlyCapture2::Image*, const void *);
-
 	// State Variable
 	bool is_capturing;
+
+    QVector<FlyCapture2::Image *> *image_buffer;
+
+    // Capture Thread
+    ImageGrabber *grabber;
+
+private slots:
+    void imageGrabbed(FlyCapture2::Image *image);
 
 signals:
     void frameCaptured(FlyCapture2::Image* image) const;
