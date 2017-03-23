@@ -9,6 +9,7 @@
 #include <QFileDialog>
 
 // TODO: Handle Errors!!
+// TODO: Status Label!!
 
 MainWindow::MainWindow( QWidget * parent ) :
     QMainWindow( parent ),
@@ -203,6 +204,7 @@ void MainWindow::startStopRecording() {
             recorder.newRecording( ui->projectName->text() );
         } catch ( RecorderError ) {
             showError( "Could not start Recording!" );
+            stopCapture();
             return;
         }
 
@@ -216,15 +218,19 @@ void MainWindow::startStopRecording() {
         }
 
         // If no preview
-        if( !ui->preview_button->isChecked() ) {
-            try {
-                camMan.stopCapture();
-            } catch ( FlyCapture2::Error e ) {
-                showError( e );
-                return;
-            }
-        }
+        stopCapture();
 
         ui->startButton->setText( "Start" );
+    }
+}
+
+void MainWindow::stopCapture() {
+    if( !ui->preview_button->isChecked() ) {
+        try {
+            camMan.stopCapture();
+        } catch ( FlyCapture2::Error e ) {
+            showError( e );
+            return;
+        }
     }
 }
