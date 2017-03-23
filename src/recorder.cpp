@@ -46,11 +46,14 @@ void Recorder::newRecording( QString r_name ) {
     }
 
     // get Status file
-    QFile stat_file(  record_dir.path() + "/" + ".stat" );
+    stat_file = QFile(  record_dir.path() + "/" + ".stat" );
     if( !stat_file.open( QIODevice::ReadWrite | QIODevice::Text ) ) {
         throw RecorderError::CANT_OPEN_STATFILE;
         return;
     }
+
+    if(!stat_file.canReadLine())
+        stat_file.write("0\n");
 
     // If append, figure out Frame count etc...
     if( append ) {
