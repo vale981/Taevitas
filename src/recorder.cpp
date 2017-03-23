@@ -1,6 +1,6 @@
 #include "recorder.h"
 #include <QDebug>
-
+// FIXME: Dir Set...
 using namespace FlyCapture2;
 
 Recorder::Recorder( QObject * parent, unsigned int frame_rate, bool cap_frames ) : QObject( parent ), is_recording {false}, frame_number {frame_n}, time_captured {time_c}, frame_n {0}, time_c {0}, project_dir( "" ) {
@@ -64,7 +64,7 @@ void Recorder::newRecording( QString r_name ) {
 
     qDebug() << ( record_dir.path() + "/" + rec_name ).toStdString().c_str();
     // open AVI in recorder
-    f_err = recorder.AVIOpen( ( record_dir.path() + "/" + rec_name ).toStdString().c_str(), &options );
+    f_err = recorder.AVIOpen( ( record_dir.path() + "/" + rec_name + ".avi" ).toStdString().c_str(), &options );
     if ( f_err != PGRERROR_OK ) {
         throw f_err;
         return;
