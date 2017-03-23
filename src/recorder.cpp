@@ -60,6 +60,7 @@ void Recorder::newRecording( QString r_name ) {
 
     Error f_err;
 
+    qDebug() << ( record_dir.path() + "/" + rec_name ).toStdString().c_str();
     // open AVI in recorder
     f_err = recorder.AVIOpen( ( record_dir.path() + "/" + rec_name ).toStdString().c_str(), &options );
     if ( f_err != PGRERROR_OK ) {

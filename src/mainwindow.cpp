@@ -208,6 +208,8 @@ void MainWindow::startStopRecording() {
             return;
         }
 
+        // TODO: Maybe allow dynamic setting...
+        ui->saveFrames->setProperty("enabled", false);
         ui->startButton->setText( "Stop" );
     } else {
         try {
@@ -220,6 +222,7 @@ void MainWindow::startStopRecording() {
         // If no preview
         stopCapture();
 
+        ui->saveFrames->setProperty("enabled", true);
         ui->startButton->setText( "Start" );
     }
 }
