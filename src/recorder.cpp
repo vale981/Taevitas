@@ -48,14 +48,14 @@ void Recorder::newRecording( QString r_name ) {
     bool statExists = QFile(record_dir.path() + "/" + ".stat").exists();
 
     // get Status file
-    QFile stat_file(  record_dir.path() + "/" + ".stat" );
-    if( !stat_file.open( QIODevice::ReadWrite | QIODevice::Text ) ) {
+    stat_file = new QFile(  record_dir.path() + "/" + ".stat" );
+    if( !stat_file->open( QIODevice::ReadWrite | QIODevice::Text ) ) {
         throw RecorderError::CANT_OPEN_STATFILE;
         return;
     }
 
     if( !statExists)
-        stat_file.write( "0\n" );
+        stat_file->write( "0\n" );
 
     frame_n = 0;
     time_c = 0;
@@ -84,7 +84,7 @@ void Recorder::newRecording( QString r_name ) {
 bool Recorder::restoreRecording() {
     bool ok;
     qDebug() << "reading statfile";
-    qDebug() << QString( stat_file.readLine() );
+    frame_n = QString( stat_file->readLine() ).toUInt( &ok, 10 );
     qDebug() << "red statfile";
     return ok;
 }
@@ -145,6 +145,7 @@ void Recorder::cleanup() {
         rec_name = "";
         capture_frames = false;
         append = false;
+        delete stat_file;
     }
 };
 
