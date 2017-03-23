@@ -1,4 +1,6 @@
 #include "recorder.h"
+#include <QDebug>
+
 using namespace FlyCapture2;
 
 Recorder::Recorder( QObject * parent, unsigned int frame_rate, bool cap_frames ) : QObject( parent ), is_recording {false}, frame_number {frame_n}, time_captured {time_c}, frame_n {0}, time_c {0}, project_dir( "" ) {
