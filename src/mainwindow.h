@@ -39,7 +39,7 @@ private slots:
 	void scanAndUpdateCameras();
 
 	void toggle_preview(bool);
-    void frame_captured(FlyCapture2::Image *image);
+    void frameCaptured(FlyCapture2::Image *image);
 	void camera_selected(int index);
 };
 

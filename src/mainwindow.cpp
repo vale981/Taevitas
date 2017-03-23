@@ -39,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->cameraSelector, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::camera_selected);
     
     // Frame Captured
-    connect(&cam_man, &CameraManager::frameCaptured, this, &MainWindow::frame_captured, Qt::DirectConnection);
+    connect(&cam_man, &CameraManager::frameCaptured, this, &MainWindow::frameCaptured, Qt::DirectConnection);
 }
 
 MainWindow::~MainWindow() {
@@ -124,8 +124,9 @@ void MainWindow::toggle_preview(bool checked) {
     adjustSize();
 }
 
-void MainWindow::frame_captured(FlyCapture2::Image* image) {
+void MainWindow::frameCaptured(FlyCapture2::Image* image) {
     qDebug() << "Image Captured!";
+
     // If preview is activated...
     if(ui->preview_widget->isEnabled())
         displayPreview(image);
