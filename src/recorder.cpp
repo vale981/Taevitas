@@ -55,6 +55,9 @@ void Recorder::newRecording( QString r_name ) {
     if( !stat_file.canReadLine() )
         stat_file.write( "0\n" );
 
+    frame_n = 0;
+    time_c = 0;
+
     // If append, figure out Frame count etc...
     if( append ) {
         if( !restoreRecording() ) {
