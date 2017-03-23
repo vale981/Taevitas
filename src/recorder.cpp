@@ -84,7 +84,7 @@ void Recorder::newRecording( QString r_name ) {
 bool Recorder::restoreRecording() {
     bool ok;
     qDebug() << "reading statfile";
-    frame_n = QString( stat_file.readLine() ).toUInt( &ok, 10 );
+    cout << QString( stat_file.readLine() );
     qDebug() << "red statfile";
     return ok;
 }
