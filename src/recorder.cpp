@@ -46,14 +46,14 @@ void Recorder::newRecording( QString r_name ) {
     }
 
     // get Status file
-    stat_file = QFile(  record_dir.path() + "/" + ".stat" );
+    QFile stat_file(  record_dir.path() + "/" + ".stat" );
     if( !stat_file.open( QIODevice::ReadWrite | QIODevice::Text ) ) {
         throw RecorderError::CANT_OPEN_STATFILE;
         return;
     }
 
-    if(!stat_file.canReadLine())
-        stat_file.write("0\n");
+    if( !stat_file.canReadLine() )
+        stat_file.write( "0\n" );
 
     // If append, figure out Frame count etc...
     if( append ) {
@@ -67,7 +67,7 @@ void Recorder::newRecording( QString r_name ) {
 
     qDebug() << ( record_dir.path() + "/" + rec_name ).toStdString().c_str();
     // open AVI in recorder
-    f_err = recorder.AVIOpen( ( record_dir.path() + "/" + rec_name + ".avi" ).toStdString().c_str(), &options );
+    f_err = recorder.AVIOpen( ( record_dir.path() + "/" + rec_name + "_" + QString::number( frame_n ) + ".avi" ).toStdString().c_str(), &options );
     if ( f_err != PGRERROR_OK ) {
         throw f_err;
         return;
