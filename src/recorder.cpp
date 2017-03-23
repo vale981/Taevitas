@@ -22,6 +22,7 @@ void Recorder::setProjectDir( QString &p_dir ) {
     project_dir = QDir( p_dir );
 }
 
+// TODO: Write to statfile!
 void Recorder::newRecording( QString r_name ) {
     stopRecording();
 
@@ -35,6 +36,7 @@ void Recorder::newRecording( QString r_name ) {
 
     // Verify Recdir... create directories...
     record_dir = QDir( project_dir.path() + "/" + rec_name );
+    // Change to try/catch
     RecorderError err = verifyRecDir();
     if( err != RecorderError::OK ) {
         throw err;
@@ -42,7 +44,7 @@ void Recorder::newRecording( QString r_name ) {
     }
 
     // get Status file
-    QFile stat_file( project_dir.path() + "/" + rec_name + "/" + ".stat" );
+    QFile stat_file(  record_dir.path() + "/" + ".stat" );
     if( !stat_file.open( QIODevice::ReadWrite | QIODevice::Text ) ) {
         throw RecorderError::CANT_OPEN_STATFILE;
         return;
@@ -59,7 +61,7 @@ void Recorder::newRecording( QString r_name ) {
     Error f_err;
 
     // open AVI in recorder
-    f_err = recorder.AVIOpen( ( record_dir.path() + "/" + rec_name + "/" + rec_name ).toStdString().c_str(), &options );
+    f_err = recorder.AVIOpen( ( record_dir.path() + "/" + rec_name ).toStdString().c_str(), &options );
     if ( f_err != PGRERROR_OK ) {
         throw f_err;
         return;

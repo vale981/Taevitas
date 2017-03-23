@@ -150,6 +150,10 @@ void MainWindow::frameCaptured( FlyCapture2::Image * image ) {
     // If preview is activated...
     if( ui->preview_widget->isEnabled() )
         displayPreview( image );
+
+    if( recorder.isRecording() )
+        recorder.appendFrame( image );
+
     return;
 }
 
