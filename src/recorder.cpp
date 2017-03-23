@@ -3,7 +3,7 @@
 // FIXME: Dir Set...
 using namespace FlyCapture2;
 
-Recorder::Recorder( QObject * parent, unsigned int frame_rate, bool cap_frames ) : QObject( parent ), is_recording {false}, frame_number {frame_n}, time_captured {time_c}, frame_n {0}, time_c {0}, project_dir( "" ) {
+Recorder::Recorder( QObject * parent, unsigned int frame_rate, bool cap_frames ) : QObject( parent ), is_recording {false}, frame_number {frame_n}, time_captured {time_c}, frame_n {0}, time_c {0}, baseDir( "" ) {
     // No Compression for frame_captures
     frame_options.compression = frame_options.NONE;
     options.frameRate = frame_rate;
@@ -21,7 +21,7 @@ void Recorder::setProjectDir( QString &p_dir ) {
         return;
     }
 
-    project_dir = QDir( p_dir );
+    baseDir = QDir( p_dir );
 }
 
 // TODO: Write to statfile!
@@ -37,7 +37,7 @@ void Recorder::newRecording( QString r_name ) {
     rec_name = r_name;
 
     // Verify Recdir... create directories...
-    record_dir = QDir( project_dir.path() + "/" + rec_name );
+    record_dir = QDir( baseDir.path() + "/" + rec_name );
     // Change to try/catch
     RecorderError err = verifyRecDir();
     if( err != RecorderError::OK ) {
@@ -119,7 +119,11 @@ RecorderError Recorder::verifyRecDir() {
         }
     }
 
-    project_dir.mkdir( rec_name );
+    baseDir.mkdir( rec_name );
+
+    if(capture_frames)
+        record_dir.mkdir( "frames" );
+
     return RecorderError::OK;
 }
 

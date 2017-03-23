@@ -43,7 +43,7 @@ class Recorder : public QObject {
         void stopRecording();
 
         QString getProjectDir() {
-            return project_dir.absolutePath();
+            return baseDir.absolutePath();
         }
 
         QString getRecName() {
@@ -64,7 +64,7 @@ class Recorder : public QObject {
         }
 
         bool dirSet() {
-            return ( project_dir.path() != "" );
+            return ( baseDir.path() != "" );
         }
 
         bool captureFrames() {
@@ -97,7 +97,7 @@ class Recorder : public QObject {
         unsigned int frame_n;
         double time_c;
 
-        QDir project_dir;
+        QDir baseDir;
         QDir record_dir;
         QString rec_name;
 
