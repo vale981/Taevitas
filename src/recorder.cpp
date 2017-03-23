@@ -121,12 +121,13 @@ RecorderError Recorder::verifyRecDir() {
 
     baseDir.mkdir( rec_name );
 
-    if(capture_frames)
+    if( capture_frames )
         record_dir.mkdir( "frames" );
 
     return RecorderError::OK;
 }
 
+// TODO: Capture Status...
 void Recorder::stopRecording() {
     if( is_recording ) {
         // Stop Recorder
@@ -166,9 +167,9 @@ void Recorder::appendFrame( FlyCapture2::Image * image ) {
 
     // save image as frame
     if( capture_frames ) {
-        app_err = image->Save( ( record_dir.path() + "/frames/" + frame_n ).toStdString().c_str(), &frame_options );
+        app_err = image->Save( ( ( record_dir.path() + "/" + rec_name + "_" + QString::number( frame_n ) + ".tiff"  ).toStdString().c_str(), &frame_options );
         if( app_err != PGRERROR_OK ) {
-            write_lock.unlock();
+        write_lock.unlock();
             throw app_err;
             return;
         }
