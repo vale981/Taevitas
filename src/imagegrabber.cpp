@@ -10,8 +10,9 @@ void ImageGrabber::run() {
 
         qDebug() << "Image Captured";
         cam->RetrieveBuffer(tmp);
-        tmp->DeepCopy(stored_img);
+        stored_img->DeepCopy(tmp);
         emit imageCaptured(stored_img);
+        delete tmp;
     }
 }
 
