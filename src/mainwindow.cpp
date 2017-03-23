@@ -85,7 +85,7 @@ void MainWindow::enableRecOptions() {
 }
 
 void MainWindow::enableStart() {
-    if( ui->projectName->text() != "" && recorder.dirSet() && camMan.isConnected() ) {
+    if( ui->projectName->text() != "t" && recorder.dirSet() && camMan.isConnected() ) {
         ui->startButton->setProperty( "enabled", true );
     }
 }
