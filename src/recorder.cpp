@@ -45,7 +45,7 @@ void Recorder::newRecording( QString r_name ) {
         return;
     }
 
-    bool statExists = QFile(record_dir.path() + "/" + ".stat").exists();
+    bool statExists = QFile( record_dir.path() + "/" + ".stat" ).exists();
 
     // get Status file
     stat_file = new QFile(  record_dir.path() + "/" + ".stat" );
@@ -54,7 +54,7 @@ void Recorder::newRecording( QString r_name ) {
         return;
     }
 
-    if( !statExists)
+    if( !statExists )
         stat_file->write( "0" );
 
     frame_n = 0;
@@ -83,13 +83,10 @@ void Recorder::newRecording( QString r_name ) {
 
 bool Recorder::restoreRecording() {
     bool ok;
-    qDebug() << "reading statfile";
 
     QByteArray tmp = stat_file->readLine();
-    qDebug() << tmp;
-    frame_n = QString(tmp).toUInt(&ok);
-    //frame_n = QString( stat_file->readLine() ).toUInt( &ok, 10 );
-    qDebug() << "red statfile";
+    frame_n = QString( tmp ).toUInt( &ok );
+
     return ok;
 }
 
@@ -178,5 +175,6 @@ void Recorder::appendFrame( FlyCapture2::Image * image ) {
 
     frame_n++;
     time_c = frame_n / options.frameRate;
+    stat_file->write( QByteArray::number( frame_n ) );
     write_lock.unlock();
 }
