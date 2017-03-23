@@ -84,7 +84,7 @@ void Recorder::newRecording( QString r_name ) {
 bool Recorder::restoreRecording() {
     bool ok;
     qDebug() << "reading statfile";
-    cout << QString( stat_file.readLine() );
+    qDebug() << QString( stat_file.readLine() );
     qDebug() << "red statfile";
     return ok;
 }
