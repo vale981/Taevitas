@@ -8,6 +8,7 @@ void ImageGrabber::run() {
         FlyCapture2::Image* tmp = new FlyCapture2::Image();
         FlyCapture2::Image* stored_img = new FlyCapture2::Image();
 
+        // TODO: Errors
         cam->RetrieveBuffer(tmp);
         qDebug() << "Image Grabbed!";
 

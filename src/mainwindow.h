@@ -22,25 +22,28 @@ public:
 	
 private:
 	Ui::MainWindow *ui;
-	CameraManager cam_man;
+    CameraManager camMan;
 	Recorder recorder;
 
     void displayPreview(FlyCapture2::Image *last_capture);
 	void disableRecOptions();
 	void enableRecOptions();
+    void enableStart();
 
 	void showError(FlyCapture2::Error err);
 	void showError(QString error);
 
 	void updateCameraList(unsigned int num_cameras);
-    QMutex test;
+
 private slots:
 	// Fills Camera Combobox with Cameras
 	void scanAndUpdateCameras();
 
-	void toggle_preview(bool);
+    void togglePreview(bool);
     void frameCaptured(FlyCapture2::Image *image);
-	void camera_selected(int index);
+    void cameraSelected(int index);
+    void directorySelection();
+    void startStopRecording();
 };
 
 #endif // MAINWINDOW_H

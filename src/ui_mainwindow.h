@@ -38,12 +38,12 @@ public:
     QFrame *recOptions;
     QVBoxLayout *verticalLayout;
     QLineEdit *projectName;
-    QPushButton *pushButton;
+    QPushButton *startButton;
     QFrame *frame_3;
     QHBoxLayout *horizontalLayout;
     QLabel *label_2;
     QSpinBox *fps_box;
-    QCheckBox *checkBox;
+    QCheckBox *saveFrames;
     QPushButton *preview_button;
     QSpacerItem *verticalSpacer;
     QFrame *frame_2;
@@ -53,7 +53,7 @@ public:
     QLabel *label;
     QComboBox *cameraSelector;
     QPushButton *camScanButton;
-    QPushButton *pushButton_2;
+    QPushButton *directorySelector;
     QLabel *preview_widget;
 
     void setupUi(QMainWindow *MainWindow)
@@ -93,11 +93,12 @@ public:
 
         verticalLayout->addWidget(projectName);
 
-        pushButton = new QPushButton(recOptions);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setFlat(false);
+        startButton = new QPushButton(recOptions);
+        startButton->setObjectName(QStringLiteral("startButton"));
+        startButton->setEnabled(false);
+        startButton->setFlat(false);
 
-        verticalLayout->addWidget(pushButton);
+        verticalLayout->addWidget(startButton);
 
         frame_3 = new QFrame(recOptions);
         frame_3->setObjectName(QStringLiteral("frame_3"));
@@ -122,10 +123,10 @@ public:
 
         verticalLayout->addWidget(frame_3);
 
-        checkBox = new QCheckBox(recOptions);
-        checkBox->setObjectName(QStringLiteral("checkBox"));
+        saveFrames = new QCheckBox(recOptions);
+        saveFrames->setObjectName(QStringLiteral("saveFrames"));
 
-        verticalLayout->addWidget(checkBox);
+        verticalLayout->addWidget(saveFrames);
 
         preview_button = new QPushButton(recOptions);
         preview_button->setObjectName(QStringLiteral("preview_button"));
@@ -177,10 +178,10 @@ public:
 
         verticalLayout_2->addWidget(camScanButton);
 
-        pushButton_2 = new QPushButton(frame_2);
-        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+        directorySelector = new QPushButton(frame_2);
+        directorySelector->setObjectName(QStringLiteral("directorySelector"));
 
-        verticalLayout_2->addWidget(pushButton_2);
+        verticalLayout_2->addWidget(directorySelector);
 
 
         gridLayout->addWidget(frame_2, 0, 0, 1, 1);
@@ -204,14 +205,14 @@ public:
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Taevitas", Q_NULLPTR));
         projectName->setPlaceholderText(QApplication::translate("MainWindow", "Project Name", Q_NULLPTR));
-        pushButton->setText(QApplication::translate("MainWindow", "Start", Q_NULLPTR));
+        startButton->setText(QApplication::translate("MainWindow", "Start", Q_NULLPTR));
         label_2->setText(QApplication::translate("MainWindow", "FPS: ", Q_NULLPTR));
-        checkBox->setText(QApplication::translate("MainWindow", "  Save Frames", Q_NULLPTR));
+        saveFrames->setText(QApplication::translate("MainWindow", "  Save Frames", Q_NULLPTR));
         preview_button->setText(QApplication::translate("MainWindow", "Preview Camera", Q_NULLPTR));
         label->setText(QApplication::translate("MainWindow", "Camera:", Q_NULLPTR));
         cameraSelector->setCurrentText(QString());
         camScanButton->setText(QApplication::translate("MainWindow", "Rescan Cameras", Q_NULLPTR));
-        pushButton_2->setText(QApplication::translate("MainWindow", "Output Folder", Q_NULLPTR));
+        directorySelector->setText(QApplication::translate("MainWindow", "Working Directory", Q_NULLPTR));
         preview_widget->setText(QString());
     } // retranslateUi
 

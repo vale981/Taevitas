@@ -16,82 +16,104 @@
  */
 
 enum class RecorderError {
-	INVALID_PROJECT_DIRECTORY,
-	INVALID_RECORDING_NAME,
-	CREATION_RECORD_DIRECTORY_FAILED,
-	CANCELED,
-	CANT_OPEN_STATFILE,
-	STATFILE_ERROR,
-	OK
+    INVALID_PROJECT_DIRECTORY,
+    INVALID_RECORDING_NAME,
+    CREATION_RECORD_DIRECTORY_FAILED,
+    CANCELED,
+    CANT_OPEN_STATFILE,
+    STATFILE_ERROR,
+    OK
 };
 
-class Recorder : QObject {
-	Q_OBJECT
+class Recorder : public QObject {
+        Q_OBJECT
 
-public:
-	// Set bitrate to a default of 10Mbit.
-	Recorder(QObject *parent = 0);
-	~Recorder();
+    public:
+        // Set bitrate to a default of 10Mbit.
+        Recorder( QObject * parent = 0, unsigned int frame_rate = 18, bool cap_frames = false );
+        ~Recorder();
 
-	// Start a recording. A recording directory with the avi files and evtl. a frame subfolder will be created. Throws RecorderError or FlyCapture2::Error
-	void newRecording(unsigned int framerate, QDir p_dir, QString r_name, bool capture_frames = false);
+        // Start a recording. A recording directory with the avi files and evtl. a frame subfolder will be created. Throws RecorderError or FlyCapture2::Error
+        void newRecording(QString r_name );
 
-	// Append a frame to the recording,
-	void appendFrame(FlyCapture2::Image *image);
-	
-	// stops the recording, cleans up, throws FlyCapture2::Error
-	void stopRecording();
+        // Append a frame to the recording,
+        void appendFrame( FlyCapture2::Image * image );
 
-	QString getRecordingFileName() {		
-		return rec_name;
-	}
+        // stops the recording, cleans up, throws FlyCapture2::Error
+        void stopRecording();
 
-	QString getRecName() {
-		return rec_name;
-	}
+        QString getProjectDir() {
+            return project_dir.absolutePath();
+        }
 
-	bool isRecording() {
-		return is_recording;
-	}
-	
-	const unsigned int& frame_number;
-	const double& time_captured;
+        QString getRecName() {
+            return rec_name;
+        }
 
-private:
- 	FlyCapture2::AVIRecorder recorder;
-	FlyCapture2::AVIOption options;
-	FlyCapture2::TIFFOption frame_options;
+        bool isRecording() {
+            return is_recording;
+        }
 
-	// Basic state Variable, because AVIRecorder doesn't provide it.
-	bool is_recording;
+        unsigned int getFrameRate() {
+            return options.frameRate;
+        }
 
-	// append to existing files
-	bool append;
+        void setProjectDir( QString &p_dir );
+        void setFrameRate( unsigned int frame_rate ) {
+            options.frameRate = frame_rate;
+        }
 
-	// save individual frames as image files
-	bool capture_frames;
+        bool dirSet() {
+            return ( project_dir.path() != "" );
+        }
 
-	// number of frames captured
-	unsigned int frame_n;
-	double time_c;
-	
-	QDir project_dir;
-	QDir record_dir;
-	QString rec_name;
+        bool captureFrames() {
+            return capture_frames;
+        }
 
-	// status file for frame count
-	QFile stat_file;
+        const unsigned int &frame_number;
+        const double &time_captured;
 
-	// Check if recording directory exists. If it does ask for Overwrite or cancelation.
-	RecorderError verifyRecDir();
+    public slots:
+        void setCaptureFrames( bool set ) {
+            capture_frames = set;
+        }
 
-	// If appending, check if there are any information about existing frames...
-	bool restoreRecording();
+    private:
+        FlyCapture2::AVIRecorder recorder;
+        FlyCapture2::AVIOption options;
+        FlyCapture2::TIFFOption frame_options;
 
-	// reset Status, only if not recording (is_recording == false).
-	void cleanup();
+        // Basic state Variable, because AVIRecorder doesn't provide it.
+        bool is_recording;
 
-    // lock the appendFrame function.
-    QMutex write_lock;
+        // append to existing files
+        bool append;
+
+        // save individual frames as image files
+        bool capture_frames;
+
+        // number of frames captured
+        unsigned int frame_n;
+        double time_c;
+
+        QDir project_dir;
+        QDir record_dir;
+        QString rec_name;
+
+        // status file for frame count
+        QFile stat_file;
+
+        // Check if recording directory exists. If it does ask for Overwrite or cancelation.
+        RecorderError verifyRecDir();
+
+        // If appending, check if there are any information about existing frames...
+        bool restoreRecording();
+
+        // reset Status, only if not recording (is_recording == false).
+        void cleanup();
+
+        // lock the appendFrame function.
+        QMutex write_lock;
 };
 #endif //RECORDER_H
