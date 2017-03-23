@@ -142,9 +142,6 @@ void Recorder::cleanup() {
     if( !is_recording ) {
         frame_n = 0;
         time_c =  0;
-        project_dir = "";
-        rec_name = "";
-        capture_frames = false;
         append = false;
         delete stat_file;
     }
