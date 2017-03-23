@@ -34,7 +34,7 @@ void Recorder::newRecording( QString r_name ) {
     rec_name = r_name;
 
     // Verify Recdir... create directories...
-    QDir record_dir( project_dir.path() + "/" + rec_name );
+    record_dir = QDir( project_dir.path() + "/" + rec_name );
     RecorderError err = verifyRecDir();
     if( err != RecorderError::OK ) {
         throw err;
@@ -42,7 +42,7 @@ void Recorder::newRecording( QString r_name ) {
     }
 
     // get Status file
-    QFile stat_file( project_dir.path() + "/" + rec_name + ".stat" );
+    QFile stat_file( project_dir.path() + "/" + rec_name + "/" + ".stat" );
     if( !stat_file.open( QIODevice::ReadWrite | QIODevice::Text ) ) {
         throw RecorderError::CANT_OPEN_STATFILE;
         return;
