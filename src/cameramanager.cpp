@@ -62,12 +62,10 @@ void CameraManager::imageGrabbed(FlyCapture2::Image *image) {
     static QMutex mutex;
     mutex.lock();
 
-    qDebug() << "Loading Image";
     image_buffer->append(image);
     emit frameCaptured(image_buffer->front());
     delete image_buffer->front();
 
-    qDebug() << "Deleting Image!";
     image_buffer->removeFirst();
 
     mutex.unlock();

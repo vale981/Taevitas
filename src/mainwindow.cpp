@@ -126,7 +126,7 @@ void MainWindow::toggle_preview(bool checked) {
 
 void MainWindow::frameCaptured(FlyCapture2::Image* image) {
     qDebug() << "Image Captured!";
-    QThread::sleep(5);
+
     // If preview is activated...
     if(ui->preview_widget->isEnabled())
         displayPreview(image);
