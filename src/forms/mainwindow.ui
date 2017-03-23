@@ -102,6 +102,9 @@
        </item>
        <item>
         <widget class="QCheckBox" name="saveFrames">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="text">
           <string>  Save Frames</string>
          </property>

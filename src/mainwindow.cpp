@@ -185,7 +185,7 @@ void MainWindow::directorySelection() {
 
 void MainWindow::startStopRecording() {
     // TODO: Errors
-    if( recorder.isRecording() ) {
+    if( !recorder.isRecording() ) {
         if( !camMan.isCapturing() ) {
             try {
                 camMan.startCapture();
@@ -197,7 +197,7 @@ void MainWindow::startStopRecording() {
 
         try {
             recorder.newRecording( ui->projectName->text() );
-        } catch ( RecorderError e ) {
+        } catch ( RecorderError ) {
             showError( "Could not start Recording!" );
             return;
         }
