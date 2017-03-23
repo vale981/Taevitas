@@ -34,7 +34,7 @@ void Recorder::newRecording( QString r_name ) {
     rec_name = r_name;
 
     // Verify Recdir... create directories...
-    QDir record_dir( project_dir.path() + rec_name );
+    QDir record_dir( project_dir.path() + "/" + rec_name );
     RecorderError err = verifyRecDir();
     if( err != RecorderError::OK ) {
         throw err;
@@ -42,7 +42,7 @@ void Recorder::newRecording( QString r_name ) {
     }
 
     // get Status file
-    QFile stat_file( project_dir.path() + rec_name + ".stat" );
+    QFile stat_file( project_dir.path() + "/" + rec_name + ".stat" );
     if( !stat_file.open( QIODevice::ReadWrite | QIODevice::Text ) ) {
         throw RecorderError::CANT_OPEN_STATFILE;
         return;
@@ -59,7 +59,7 @@ void Recorder::newRecording( QString r_name ) {
     Error f_err;
 
     // open AVI in recorder
-    f_err = recorder.AVIOpen( ( record_dir.path() + rec_name ).toStdString().c_str(), &options );
+    f_err = recorder.AVIOpen( ( record_dir.path() + "/" + rec_name + "/" + rec_name ).toStdString().c_str(), &options );
     if ( f_err != PGRERROR_OK ) {
         throw f_err;
         return;
@@ -149,7 +149,7 @@ void Recorder::appendFrame( FlyCapture2::Image * image ) {
 
     // save image as frame
     if( capture_frames ) {
-        app_err = image->Save( ( record_dir.path() + "frames/" + frame_n ).toStdString().c_str(), &frame_options );
+        app_err = image->Save( ( record_dir.path() + "/frames/" + frame_n ).toStdString().c_str(), &frame_options );
         if( app_err != PGRERROR_OK ) {
             write_lock.unlock();
             throw app_err;

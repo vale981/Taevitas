@@ -220,5 +220,7 @@ void MainWindow::startStopRecording() {
                 return;
             }
         }
+
+        ui->startButton->setText( "Start" );
     }
 }
