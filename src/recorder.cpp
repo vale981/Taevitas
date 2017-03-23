@@ -55,7 +55,7 @@ void Recorder::newRecording( QString r_name ) {
     }
 
     if( !statExists)
-        stat_file->write( "0\n" );
+        stat_file->write( "0" );
 
     frame_n = 0;
     time_c = 0;
@@ -84,7 +84,10 @@ void Recorder::newRecording( QString r_name ) {
 bool Recorder::restoreRecording() {
     bool ok;
     qDebug() << "reading statfile";
-    qDebug() << stat_file->readLine();
+
+    QByteArray tmp = stat_file->readLine();
+    qDebug() << tmp;
+    frame_n = QString(tmp).toUInt(&ok);
     //frame_n = QString( stat_file->readLine() ).toUInt( &ok, 10 );
     qDebug() << "red statfile";
     return ok;
