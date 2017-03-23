@@ -45,6 +45,8 @@ void Recorder::newRecording( QString r_name ) {
         return;
     }
 
+    bool statExists = QFile(record_dir.path() + "/" + ".stat").exists();
+
     // get Status file
     QFile stat_file(  record_dir.path() + "/" + ".stat" );
     if( !stat_file.open( QIODevice::ReadWrite | QIODevice::Text ) ) {
@@ -52,7 +54,7 @@ void Recorder::newRecording( QString r_name ) {
         return;
     }
 
-    if( !stat_file.canReadLine() )
+    if( !statExists)
         stat_file.write( "0\n" );
 
     frame_n = 0;
