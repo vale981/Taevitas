@@ -45,7 +45,7 @@ MainWindow::MainWindow( QWidget * parent ) :
     connect( &camMan, &CameraManager::frameCaptured, this, &MainWindow::frameCaptured, Qt::DirectConnection );
 
     // Change Project Name
-    connect( ui->projectName, &QLineEdit::editingFinished, this, &MainWindow::enableStart );
+    connect( ui->projectName, &QLineEdit::textChanged, this, &MainWindow::enableStart );
 
     // Change Record Frames
     connect( ui->saveFrames, &QCheckBox::toggled, &recorder, &Recorder::setCaptureFrames );
@@ -72,7 +72,7 @@ void MainWindow::scanAndUpdateCameras() {
     updateCameraList( num_cameras );
     if( num_cameras > 0 && !camMan.isConnected() )
         cameraSelected( 0 );
-};
+}
 
 void MainWindow::disableRecOptions() {
     ui->recOptions->setProperty( "enabled", false );
