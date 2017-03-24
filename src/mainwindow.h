@@ -45,6 +45,8 @@ class MainWindow : public QMainWindow {
 
         void setStatus(STATUS status);
 
+        bool resize;
+
 private slots:
         // Fills Camera Combobox with Cameras
         void scanAndUpdateCameras();

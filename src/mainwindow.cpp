@@ -171,7 +171,7 @@ void MainWindow::togglePreview( bool checked ) {
 
     if ( checked ) {
         ui->preview_widget->setProperty( "enabled", true );
-        ui->preview_widget->setProperty( "resize", true );
+        resize = true;
 
         // Start Capturing for preview
         try {
@@ -186,7 +186,7 @@ void MainWindow::togglePreview( bool checked ) {
         //Stop capture
         if ( !recorder.isRecording() )
             camMan.stopCapture();
-    }    
+    }
 }
 
 void MainWindow::frameCaptured( FlyCapture2::Image * image ) {
@@ -221,9 +221,9 @@ void MainWindow::displayPreview( FlyCapture2::Image * last_capture ) {
     last_preview.convertFromImage( last_preview_image );
     ui->preview_widget->setPixmap( last_preview );
 
-    if(ui->preview_widget->property("resize")){
+    if ( resize ) {
         fit();
-        ui->preview_widget->setProperty( "resize", false );
+        resize = false;
     }
 }
 
