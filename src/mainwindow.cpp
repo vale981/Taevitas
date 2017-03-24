@@ -31,6 +31,15 @@ MainWindow::MainWindow( QWidget * parent ) :
     // Set default name
     ui->projectName->setText( "Taevitas_Rec_" + QDateTime::currentDateTime().toString( "dd_MM_yyyy_hh_mm_ss" ) );
 
+    // Set status
+    setStatus( WAITING );
+
+    // Connect Frame Counts, Time Captured LCD
+    connect( &recorder, &Recorder::frameSaved, this, [this] {
+        ui->framesCaptured->display( recorder.frameNumber() );
+        ui->timeCaptured->display( QString( "%1:%2" ).arg( ( recorder.timeCaptured() / 60 ) ).arg( ( int )recorder.timeCaptured() % 60 ) );
+    } );
+
     // Connect Events
     connect( ui->preview_button, &QPushButton::clicked, this, &MainWindow::togglePreview );
 
@@ -60,8 +69,28 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
+void MainWindow::setStatus( STATUS status ) {
+    switch ( status ) {
+        case WAITING:
+            ui->statusLabel->setText( "Waiting..." );
+            ui->recStats->hide();
+            break;
+        case CONNECTED:
+            ui->statusLabel->setText( "Connected." );
+            ui->startButton->setText( "Stop" );
+            ui->recStats->hide();
+            break;
+        case RECORDING:
+            ui->statusLabel->setText( "Recording!" );
+            ui->startButton->setText( "Start" );
+            ui->recStats->show();
+            break;
+
+    }
+}
+
 void MainWindow::fit() {
-    setMinimumSize( 0,0 );
+    setMinimumSize( 0, 0 );
     setMaximumSize( 5000, 500 );
     adjustSize();
     setFixedSize( this->size() );
@@ -72,14 +101,14 @@ void MainWindow::updateCameraList( unsigned int num_cameras ) {
 
     // Fill Combo Box with cameras
     for ( unsigned int i = 0; i < num_cameras; i++ ) {
-        ui->cameraSelector->addItem( QString( i+'0' ) );
+        ui->cameraSelector->addItem( QString( i + '0' ) );
     }
 }
 
 void MainWindow::scanAndUpdateCameras() {
     unsigned int num_cameras = camMan.numCameras();
     updateCameraList( num_cameras );
-    if( num_cameras > 0 && !camMan.isConnected() )
+    if ( num_cameras > 0 && !camMan.isConnected() )
         cameraSelected( 0 );
 }
 
@@ -94,7 +123,7 @@ void MainWindow::enableRecOptions() {
 }
 
 void MainWindow::enableStart() {
-    if( ui->projectName->text() != "t" && recorder.dirSet() && camMan.isConnected() ) {
+    if ( ui->projectName->text() != "t" && recorder.dirSet() && camMan.isConnected() ) {
         ui->startButton->setProperty( "enabled", true );
     } else {
         ui->startButton->setProperty( "enabled", true );
@@ -103,8 +132,8 @@ void MainWindow::enableStart() {
 
 void MainWindow::showError( QString error ) {
     QMessageBox errBox;
-    errBox.critical( 0,"Error", "An Error has occured:\n" + error );
-    errBox.setFixedSize( 500,200 );
+    errBox.critical( 0, "Error", "An Error has occured:\n" + error );
+    errBox.setFixedSize( 500, 200 );
     errBox.show();
 }
 
@@ -113,7 +142,7 @@ void MainWindow::showError( FlyCapture2::Error error ) {
 }
 
 void MainWindow::cameraSelected( int index ) {
-    if( recorder.isRecording() || index < 0 )
+    if ( recorder.isRecording() || index < 0 )
         return;
 
     try {
@@ -124,17 +153,18 @@ void MainWindow::cameraSelected( int index ) {
     }
 
     enableRecOptions();
+    setStatus( CONNECTED );
 }
 
 // Show/Hide Preview
 void MainWindow::togglePreview( bool checked ) {
     // skip if there is no camera
-    if( !camMan.isConnected() ) {
+    if ( !camMan.isConnected() ) {
         ui->preview_button->setProperty( "checked", false );
         return;
     }
 
-    if( checked ) {
+    if ( checked ) {
         ui->preview_widget->setProperty( "enabled", true );
 
         // Start Capturing for preview
@@ -148,7 +178,7 @@ void MainWindow::togglePreview( bool checked ) {
         ui->preview_widget->hide();
 
         //Stop capture
-        if( !recorder.isRecording() )
+        if ( !recorder.isRecording() )
             camMan.stopCapture();
     }
 
@@ -160,10 +190,10 @@ void MainWindow::frameCaptured( FlyCapture2::Image * image ) {
     qDebug() << "Image Captured!";
 
     // If preview is activated...
-    if( ui->preview_widget->isEnabled() )
+    if ( ui->preview_widget->isEnabled() )
         displayPreview( image );
 
-    if( recorder.isRecording() )
+    if ( recorder.isRecording() )
         recorder.appendFrame( image );
 
     return;
@@ -200,12 +230,12 @@ void MainWindow::directorySelection() {
 }
 
 void MainWindow::startStopRecording() {
-    ui->saveFrames->setProperty( "enabled", false );
     // TODO: Errors
-    if( !recorder.isRecording() ) {
+    if ( !recorder.isRecording() ) {
         // TODO: Maybe allow dynamic setting...
+        ui->saveFrames->setProperty( "enabled", false );
 
-        if( !camMan.isCapturing() ) {
+        if ( !camMan.isCapturing() ) {
             try {
                 camMan.startCapture();
             } catch ( FlyCapture2::Error e ) {
@@ -225,7 +255,7 @@ void MainWindow::startStopRecording() {
             return;
         }
 
-        ui->startButton->setText( "Stop" );
+        setStatus( RECORDING );
     } else {
         // Stop Capture!
         try {
@@ -243,7 +273,7 @@ void MainWindow::startStopRecording() {
         }
 
         // Restart Preview
-        if( ui->preview_button->isChecked() ) {
+        if ( ui->preview_button->isChecked() ) {
             try {
                 camMan.startCapture();
             } catch ( FlyCapture2::Error e ) {
@@ -252,12 +282,12 @@ void MainWindow::startStopRecording() {
         }
 
         ui->saveFrames->setProperty( "enabled", true );
-        ui->startButton->setText( "Start" );
+        setStatus( CONNECTED );
     }
 }
 
 void MainWindow::stopCapture() {
-    if( !ui->preview_button->isChecked() ) {
+    if ( !ui->preview_button->isChecked() ) {
         try {
             camMan.stopCapture();
         } catch ( FlyCapture2::Error e ) {

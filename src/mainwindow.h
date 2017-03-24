@@ -37,6 +37,14 @@ class MainWindow : public QMainWindow {
 
         void fit();
 
+        enum STATUS {
+            WAITING,
+            CONNECTED,
+            RECORDING
+        };
+
+        void setStatus(STATUS status);
+
 private slots:
         // Fills Camera Combobox with Cameras
         void scanAndUpdateCameras();

@@ -34,7 +34,7 @@ class Recorder : public QObject {
         ~Recorder();
 
         // Start a recording. A recording directory with the avi files and evtl. a frame subfolder will be created. Throws RecorderError or FlyCapture2::Error
-        void newRecording(QString r_name );
+        void newRecording( QString r_name );
 
         // Append a frame to the recording,
         void appendFrame( FlyCapture2::Image * image );
@@ -71,10 +71,15 @@ class Recorder : public QObject {
             return capture_frames;
         }
 
-        const unsigned int &frame_number;
-        const double &time_captured;
+        int frameNumber() const {
+            return frame_n;
+        }
 
-    public slots:
+        double timeCaptured() const {
+            return time_c;
+        }
+
+public slots:
         void setCaptureFrames( bool set ) {
             capture_frames = set;
         }
@@ -94,7 +99,7 @@ class Recorder : public QObject {
         bool capture_frames;
 
         // number of frames captured
-        unsigned int frame_n;
+        int frame_n;
         double time_c;
 
         QDir baseDir;
@@ -102,7 +107,7 @@ class Recorder : public QObject {
         QString rec_name;
 
         // status file for frame count
-        QFile* statFile;
+        QFile * statFile;
 
         // Check if recording directory exists. If it does ask for Overwrite or cancelation.
         RecorderError verifyRecDir();
@@ -115,5 +120,8 @@ class Recorder : public QObject {
 
         // lock the appendFrame function.
         QMutex write_lock;
+
+    signals:
+        void frameSaved();
 };
 #endif //RECORDER_H

@@ -3,7 +3,7 @@
 // FIXME: Dir Set...
 using namespace FlyCapture2;
 
-Recorder::Recorder( QObject * parent, unsigned int frame_rate, bool cap_frames ) : QObject( parent ), is_recording {false}, frame_number {frame_n}, time_captured {time_c}, frame_n {0}, time_c {0}, baseDir( "" ) {
+Recorder::Recorder( QObject * parent, unsigned int frame_rate, bool cap_frames ) : QObject( parent ), is_recording {false}, frame_n {0}, time_c {0}, baseDir( "" ) {
     // No Compression for frame_captures
     frame_options.compression = frame_options.NONE;
     options.frameRate = frame_rate;
@@ -177,6 +177,7 @@ void Recorder::appendFrame( FlyCapture2::Image * image ) {
 
     frame_n++;
     time_c = frame_n / options.frameRate;
+    emit frameSaved();
 
     // Go to begining.
     statFile->seek(0);

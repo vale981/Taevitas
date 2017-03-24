@@ -18,7 +18,9 @@
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLCDNumber>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
@@ -35,8 +37,6 @@ class Ui_MainWindow
 public:
     QWidget *centralWidget;
     QGridLayout *gridLayout;
-    QSpacerItem *verticalSpacer;
-    QGroupBox *groupBox_2;
     QLabel *preview_widget;
     QGroupBox *groupBox;
     QVBoxLayout *verticalLayout;
@@ -54,12 +54,20 @@ public:
     QCheckBox *saveFrames;
     QPushButton *startButton;
     QPushButton *preview_button;
+    QGroupBox *groupBox_2;
+    QVBoxLayout *verticalLayout_2;
+    QLabel *statusLabel;
+    QWidget *recStats;
+    QHBoxLayout *horizontalLayout;
+    QLCDNumber *framesCaptured;
+    QLCDNumber *timeCaptured;
+    QSpacerItem *verticalSpacer;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(465, 584);
+        MainWindow->resize(614, 750);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -71,22 +79,13 @@ public:
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        verticalSpacer = new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        gridLayout->addItem(verticalSpacer, 2, 0, 1, 1);
-
-        groupBox_2 = new QGroupBox(centralWidget);
-        groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
-
-        gridLayout->addWidget(groupBox_2, 3, 0, 1, 1);
-
         preview_widget = new QLabel(centralWidget);
         preview_widget->setObjectName(QStringLiteral("preview_widget"));
         preview_widget->setEnabled(false);
         preview_widget->setFrameShape(QFrame::StyledPanel);
         preview_widget->setFrameShadow(QFrame::Raised);
 
-        gridLayout->addWidget(preview_widget, 1, 1, 3, 1);
+        gridLayout->addWidget(preview_widget, 1, 1, 2, 1);
 
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QStringLiteral("groupBox"));
@@ -172,7 +171,7 @@ public:
         saveFrames->setObjectName(QStringLiteral("saveFrames"));
         saveFrames->setEnabled(true);
 
-        verticalLayout_4->addWidget(saveFrames);
+        verticalLayout_4->addWidget(saveFrames, 0, Qt::AlignHCenter);
 
         startButton = new QPushButton(recOptions);
         startButton->setObjectName(QStringLiteral("startButton"));
@@ -197,6 +196,43 @@ public:
 
         gridLayout->addWidget(groupBox, 0, 0, 1, 1);
 
+        groupBox_2 = new QGroupBox(centralWidget);
+        groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
+        verticalLayout_2 = new QVBoxLayout(groupBox_2);
+        verticalLayout_2->setSpacing(6);
+        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        statusLabel = new QLabel(groupBox_2);
+        statusLabel->setObjectName(QStringLiteral("statusLabel"));
+
+        verticalLayout_2->addWidget(statusLabel);
+
+        recStats = new QWidget(groupBox_2);
+        recStats->setObjectName(QStringLiteral("recStats"));
+        horizontalLayout = new QHBoxLayout(recStats);
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        framesCaptured = new QLCDNumber(recStats);
+        framesCaptured->setObjectName(QStringLiteral("framesCaptured"));
+
+        horizontalLayout->addWidget(framesCaptured);
+
+        timeCaptured = new QLCDNumber(recStats);
+        timeCaptured->setObjectName(QStringLiteral("timeCaptured"));
+
+        horizontalLayout->addWidget(timeCaptured);
+
+
+        verticalLayout_2->addWidget(recStats);
+
+
+        gridLayout->addWidget(groupBox_2, 2, 0, 1, 1);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout->addItem(verticalSpacer, 1, 0, 1, 1);
+
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
@@ -207,7 +243,6 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Taevitas", Q_NULLPTR));
-        groupBox_2->setTitle(QApplication::translate("MainWindow", "Status", Q_NULLPTR));
         preview_widget->setText(QString());
         groupBox->setTitle(QApplication::translate("MainWindow", "Settings", Q_NULLPTR));
         cameraSelector->setCurrentText(QString());
@@ -220,6 +255,8 @@ public:
         saveFrames->setText(QApplication::translate("MainWindow", "  Save Frames", Q_NULLPTR));
         startButton->setText(QApplication::translate("MainWindow", "Start", Q_NULLPTR));
         preview_button->setText(QApplication::translate("MainWindow", "Preview Camera", Q_NULLPTR));
+        groupBox_2->setTitle(QApplication::translate("MainWindow", "Status", Q_NULLPTR));
+        statusLabel->setText(QApplication::translate("MainWindow", "Waiting.", Q_NULLPTR));
     } // retranslateUi
 
 };
