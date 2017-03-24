@@ -191,6 +191,7 @@ void MainWindow::directorySelection() {
 }
 
 void MainWindow::startStopRecording() {
+    ui->saveFrames->setProperty( "enabled", false );
     // TODO: Errors
     if( !recorder.isRecording() ) {
         // TODO: Maybe allow dynamic setting...
@@ -209,15 +210,22 @@ void MainWindow::startStopRecording() {
             recorder.newRecording( ui->projectName->text() );
         } catch ( RecorderError ) {
             showError( "Could not start Recording!" );
-            // TODO: Helper Method
+            // TODO: Helper Method for cleanup
             ui->saveFrames->setProperty( "enabled", true );
             stopCapture();
             return;
         }
 
-        ui->saveFrames->setProperty( "enabled", false );
         ui->startButton->setText( "Stop" );
     } else {
+        // Stop Capture!
+        try {
+            camMan.stopCapture();
+        } catch ( FlyCapture2::Error e ) {
+            showError( e );
+            return;
+        }
+
         try {
             recorder.stopRecording();
         } catch ( FlyCapture2::Error e ) {
@@ -225,15 +233,21 @@ void MainWindow::startStopRecording() {
             return;
         }
 
-        // If no preview
-        stopCapture();
+        // Restart Preview
+        if( ui->preview_button->isChecked() ) {
+            try {
+                camMan.startCapture();
+            } catch ( FlyCapture2::Error e ) {
+                showError( e );
+            }
+        }
 
         ui->saveFrames->setProperty( "enabled", true );
         ui->startButton->setText( "Start" );
     }
 }
 
-void MainWindow::stopCapture() {
+void MainWindow::stopCapture( bool force ) {
     if( !ui->preview_button->isChecked() ) {
         try {
             camMan.stopCapture();

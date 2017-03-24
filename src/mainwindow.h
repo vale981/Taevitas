@@ -9,42 +9,41 @@
 #include "recorder.h"
 
 namespace Ui {
-	class MainWindow;
+class MainWindow;
 }
 
-class MainWindow : public QMainWindow
-{
-	Q_OBJECT
-	
-public:
-	explicit MainWindow(QWidget *parent = 0);
-	~MainWindow();
-	
-private:
-	Ui::MainWindow *ui;
-    CameraManager camMan;
-	Recorder recorder;
+class MainWindow : public QMainWindow {
+        Q_OBJECT
 
-    void displayPreview(FlyCapture2::Image *last_capture);
-	void disableRecOptions();
-	void enableRecOptions();
-    void enableStart();
+    public:
+        explicit MainWindow( QWidget * parent = 0 );
+        ~MainWindow();
 
-	void showError(FlyCapture2::Error err);
-	void showError(QString error);
+    private:
+        Ui::MainWindow * ui;
+        CameraManager camMan;
+        Recorder recorder;
 
-	void updateCameraList(unsigned int num_cameras);
-    void stopCapture();
+        void displayPreview( FlyCapture2::Image * last_capture );
+        void disableRecOptions();
+        void enableRecOptions();
+        void enableStart();
 
-private slots:
-	// Fills Camera Combobox with Cameras
-	void scanAndUpdateCameras();
+        void showError( FlyCapture2::Error err );
+        void showError( QString error );
 
-    void togglePreview(bool);
-    void frameCaptured(FlyCapture2::Image *image);
-    void cameraSelected(int index);
-    void directorySelection();
-    void startStopRecording();
+        void updateCameraList( unsigned int num_cameras );
+        void stopCapture( bool force );
+
+    private slots:
+        // Fills Camera Combobox with Cameras
+        void scanAndUpdateCameras();
+
+        void togglePreview( bool );
+        void frameCaptured( FlyCapture2::Image * image );
+        void cameraSelected( int index );
+        void directorySelection();
+        void startStopRecording();
 };
 
 #endif // MAINWINDOW_H
