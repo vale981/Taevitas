@@ -171,6 +171,7 @@ void MainWindow::togglePreview( bool checked ) {
 
     if ( checked ) {
         ui->preview_widget->setProperty( "enabled", true );
+        ui->preview_widget->setProperty( "resize", true );
 
         // Start Capturing for preview
         try {
@@ -220,8 +221,10 @@ void MainWindow::displayPreview( FlyCapture2::Image * last_capture ) {
     last_preview.convertFromImage( last_preview_image );
     ui->preview_widget->setPixmap( last_preview );
 
-    if(ui->preview_widget->width() == 0)
+    if(ui->preview_widget->property("resize")){
         fit();
+        ui->preview_widget->setProperty( "resize", false );
+    }
 }
 
 void MainWindow::directorySelection() {
