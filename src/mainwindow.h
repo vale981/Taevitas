@@ -33,7 +33,7 @@ class MainWindow : public QMainWindow {
         void showError( QString error );
 
         void updateCameraList( unsigned int num_cameras );
-        void stopCapture( bool force = false );
+        void stopCapture();
 
     private slots:
         // Fills Camera Combobox with Cameras
