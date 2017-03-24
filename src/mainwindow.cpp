@@ -10,7 +10,6 @@
 
 // TODO: Handle Errors!!
 // TODO: Status Label!!
-// TODO: Maybe Resize...
 
 MainWindow::MainWindow( QWidget * parent ) :
     QMainWindow( parent ),
@@ -18,11 +17,10 @@ MainWindow::MainWindow( QWidget * parent ) :
     camMan( this ),
     recorder( this, 18, false ) {
     ui->setupUi( this );
+    setFixedSize( this->size() );
 
     // Set Scene and Hide Preview Widget
     ui->preview_widget->hide();
-    adjustSize();
-    ui->centralWidget->setFixedSize(ui->centralWidget->size());
 
     disableRecOptions();
 
@@ -59,6 +57,13 @@ MainWindow::MainWindow( QWidget * parent ) :
 
 MainWindow::~MainWindow() {
     delete ui;
+}
+
+void MainWindow::fit() {
+    setMinimumSize( 0,0 );
+    setMaximumSize( 5000, 500 );
+    adjustSize();
+    setFixedSize( this->size() );
 }
 
 void MainWindow::updateCameraList( unsigned int num_cameras ) {
@@ -146,8 +151,8 @@ void MainWindow::togglePreview( bool checked ) {
             camMan.stopCapture();
     }
 
-    adjustSize();
-    ui->centralWidget->setFixedSize(ui->centralWidget->size());
+    fit();
+    ui->centralWidget->setFixedSize( ui->centralWidget->size() );
 }
 
 void MainWindow::frameCaptured( FlyCapture2::Image * image ) {

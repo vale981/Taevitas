@@ -35,7 +35,9 @@ class MainWindow : public QMainWindow {
         void updateCameraList( unsigned int num_cameras );
         void stopCapture();
 
-    private slots:
+        void fit();
+
+private slots:
         // Fills Camera Combobox with Cameras
         void scanAndUpdateCameras();
 

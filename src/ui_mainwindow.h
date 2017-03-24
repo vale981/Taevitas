@@ -15,8 +15,8 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
+#include <QtWidgets/QFormLayout>
 #include <QtWidgets/QFrame>
-#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
@@ -34,157 +34,169 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
-    QGridLayout *gridLayout;
-    QFrame *recOptions;
+    QHBoxLayout *horizontalLayout_3;
+    QVBoxLayout *verticalLayout_3;
+    QFrame *frame;
     QVBoxLayout *verticalLayout;
+    QFormLayout *formLayout;
+    QComboBox *cameraSelector;
+    QLabel *label;
+    QPushButton *camScanButton;
+    QPushButton *directorySelector;
+    QFrame *recOptions;
+    QVBoxLayout *verticalLayout_4;
     QLineEdit *projectName;
-    QPushButton *startButton;
-    QFrame *frame_3;
-    QHBoxLayout *horizontalLayout;
+    QFormLayout *formLayout_2;
     QLabel *label_2;
     QSpinBox *fps_box;
     QCheckBox *saveFrames;
+    QPushButton *startButton;
     QPushButton *preview_button;
     QSpacerItem *verticalSpacer;
-    QFrame *frame_2;
-    QVBoxLayout *verticalLayout_2;
-    QFrame *frame;
-    QHBoxLayout *horizontalLayout_2;
-    QLabel *label;
-    QComboBox *cameraSelector;
-    QPushButton *camScanButton;
-    QPushButton *directorySelector;
     QLabel *preview_widget;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(579, 354);
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        MainWindow->resize(431, 532);
+        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
         MainWindow->setSizePolicy(sizePolicy);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        gridLayout = new QGridLayout(centralWidget);
-        gridLayout->setSpacing(6);
-        gridLayout->setContentsMargins(11, 11, 11, 11);
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        recOptions = new QFrame(centralWidget);
-        recOptions->setObjectName(QStringLiteral("recOptions"));
-        recOptions->setEnabled(true);
-        QSizePolicy sizePolicy1(QSizePolicy::Maximum, QSizePolicy::Fixed);
+        horizontalLayout_3 = new QHBoxLayout(centralWidget);
+        horizontalLayout_3->setSpacing(6);
+        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        horizontalLayout_3->setSizeConstraint(QLayout::SetDefaultConstraint);
+        verticalLayout_3 = new QVBoxLayout();
+        verticalLayout_3->setSpacing(6);
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        verticalLayout_3->setSizeConstraint(QLayout::SetFixedSize);
+        frame = new QFrame(centralWidget);
+        frame->setObjectName(QStringLiteral("frame"));
+        QSizePolicy sizePolicy1(QSizePolicy::Maximum, QSizePolicy::Maximum);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(recOptions->sizePolicy().hasHeightForWidth());
-        recOptions->setSizePolicy(sizePolicy1);
-        recOptions->setMinimumSize(QSize(176, 0));
-        recOptions->setFrameShape(QFrame::StyledPanel);
-        recOptions->setFrameShadow(QFrame::Raised);
-        verticalLayout = new QVBoxLayout(recOptions);
+        sizePolicy1.setHeightForWidth(frame->sizePolicy().hasHeightForWidth());
+        frame->setSizePolicy(sizePolicy1);
+        frame->setFrameShape(QFrame::StyledPanel);
+        frame->setFrameShadow(QFrame::Raised);
+        verticalLayout = new QVBoxLayout(frame);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        projectName = new QLineEdit(recOptions);
-        projectName->setObjectName(QStringLiteral("projectName"));
-        projectName->setAlignment(Qt::AlignCenter);
-
-        verticalLayout->addWidget(projectName);
-
-        startButton = new QPushButton(recOptions);
-        startButton->setObjectName(QStringLiteral("startButton"));
-        startButton->setEnabled(false);
-        startButton->setFlat(false);
-
-        verticalLayout->addWidget(startButton);
-
-        frame_3 = new QFrame(recOptions);
-        frame_3->setObjectName(QStringLiteral("frame_3"));
-        frame_3->setMinimumSize(QSize(134, 48));
-        frame_3->setFrameShape(QFrame::StyledPanel);
-        frame_3->setFrameShadow(QFrame::Raised);
-        horizontalLayout = new QHBoxLayout(frame_3);
-        horizontalLayout->setSpacing(6);
-        horizontalLayout->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        label_2 = new QLabel(frame_3);
-        label_2->setObjectName(QStringLiteral("label_2"));
-
-        horizontalLayout->addWidget(label_2);
-
-        fps_box = new QSpinBox(frame_3);
-        fps_box->setObjectName(QStringLiteral("fps_box"));
-        fps_box->setValue(18);
-
-        horizontalLayout->addWidget(fps_box);
-
-
-        verticalLayout->addWidget(frame_3);
-
-        saveFrames = new QCheckBox(recOptions);
-        saveFrames->setObjectName(QStringLiteral("saveFrames"));
-
-        verticalLayout->addWidget(saveFrames);
-
-        preview_button = new QPushButton(recOptions);
-        preview_button->setObjectName(QStringLiteral("preview_button"));
-        preview_button->setCheckable(true);
-
-        verticalLayout->addWidget(preview_button);
-
-
-        gridLayout->addWidget(recOptions, 1, 0, 1, 1);
-
-        verticalSpacer = new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        gridLayout->addItem(verticalSpacer, 2, 0, 1, 1);
-
-        frame_2 = new QFrame(centralWidget);
-        frame_2->setObjectName(QStringLiteral("frame_2"));
-        sizePolicy.setHeightForWidth(frame_2->sizePolicy().hasHeightForWidth());
-        frame_2->setSizePolicy(sizePolicy);
-        frame_2->setFrameShape(QFrame::StyledPanel);
-        frame_2->setFrameShadow(QFrame::Raised);
-        verticalLayout_2 = new QVBoxLayout(frame_2);
-        verticalLayout_2->setSpacing(6);
-        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
-        frame = new QFrame(frame_2);
-        frame->setObjectName(QStringLiteral("frame"));
-        frame->setFrameShape(QFrame::StyledPanel);
-        frame->setFrameShadow(QFrame::Raised);
-        horizontalLayout_2 = new QHBoxLayout(frame);
-        horizontalLayout_2->setSpacing(6);
-        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        label = new QLabel(frame);
-        label->setObjectName(QStringLiteral("label"));
-
-        horizontalLayout_2->addWidget(label);
-
+        formLayout = new QFormLayout();
+        formLayout->setSpacing(6);
+        formLayout->setObjectName(QStringLiteral("formLayout"));
+        formLayout->setVerticalSpacing(0);
         cameraSelector = new QComboBox(frame);
         cameraSelector->setObjectName(QStringLiteral("cameraSelector"));
         cameraSelector->setEditable(false);
 
-        horizontalLayout_2->addWidget(cameraSelector);
+        formLayout->setWidget(0, QFormLayout::FieldRole, cameraSelector);
+
+        label = new QLabel(frame);
+        label->setObjectName(QStringLiteral("label"));
+
+        formLayout->setWidget(0, QFormLayout::LabelRole, label);
 
 
-        verticalLayout_2->addWidget(frame);
+        verticalLayout->addLayout(formLayout);
 
-        camScanButton = new QPushButton(frame_2);
+        camScanButton = new QPushButton(frame);
         camScanButton->setObjectName(QStringLiteral("camScanButton"));
+        QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Preferred);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(camScanButton->sizePolicy().hasHeightForWidth());
+        camScanButton->setSizePolicy(sizePolicy2);
 
-        verticalLayout_2->addWidget(camScanButton);
+        verticalLayout->addWidget(camScanButton);
 
-        directorySelector = new QPushButton(frame_2);
+        directorySelector = new QPushButton(frame);
         directorySelector->setObjectName(QStringLiteral("directorySelector"));
+        sizePolicy2.setHeightForWidth(directorySelector->sizePolicy().hasHeightForWidth());
+        directorySelector->setSizePolicy(sizePolicy2);
 
-        verticalLayout_2->addWidget(directorySelector);
+        verticalLayout->addWidget(directorySelector);
+
+        recOptions = new QFrame(frame);
+        recOptions->setObjectName(QStringLiteral("recOptions"));
+        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(recOptions->sizePolicy().hasHeightForWidth());
+        recOptions->setSizePolicy(sizePolicy3);
+        recOptions->setFrameShape(QFrame::StyledPanel);
+        recOptions->setFrameShadow(QFrame::Raised);
+        verticalLayout_4 = new QVBoxLayout(recOptions);
+        verticalLayout_4->setSpacing(6);
+        verticalLayout_4->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
+        projectName = new QLineEdit(recOptions);
+        projectName->setObjectName(QStringLiteral("projectName"));
+        projectName->setAlignment(Qt::AlignCenter);
+
+        verticalLayout_4->addWidget(projectName);
+
+        formLayout_2 = new QFormLayout();
+        formLayout_2->setSpacing(6);
+        formLayout_2->setObjectName(QStringLiteral("formLayout_2"));
+        label_2 = new QLabel(recOptions);
+        label_2->setObjectName(QStringLiteral("label_2"));
+
+        formLayout_2->setWidget(0, QFormLayout::LabelRole, label_2);
+
+        fps_box = new QSpinBox(recOptions);
+        fps_box->setObjectName(QStringLiteral("fps_box"));
+        sizePolicy2.setHeightForWidth(fps_box->sizePolicy().hasHeightForWidth());
+        fps_box->setSizePolicy(sizePolicy2);
+        fps_box->setValue(18);
+
+        formLayout_2->setWidget(0, QFormLayout::FieldRole, fps_box);
 
 
-        gridLayout->addWidget(frame_2, 0, 0, 1, 1);
+        verticalLayout_4->addLayout(formLayout_2);
+
+        saveFrames = new QCheckBox(recOptions);
+        saveFrames->setObjectName(QStringLiteral("saveFrames"));
+        saveFrames->setEnabled(true);
+
+        verticalLayout_4->addWidget(saveFrames);
+
+        startButton = new QPushButton(recOptions);
+        startButton->setObjectName(QStringLiteral("startButton"));
+        startButton->setEnabled(false);
+        sizePolicy2.setHeightForWidth(startButton->sizePolicy().hasHeightForWidth());
+        startButton->setSizePolicy(sizePolicy2);
+        startButton->setFlat(false);
+
+        verticalLayout_4->addWidget(startButton);
+
+        preview_button = new QPushButton(recOptions);
+        preview_button->setObjectName(QStringLiteral("preview_button"));
+        sizePolicy2.setHeightForWidth(preview_button->sizePolicy().hasHeightForWidth());
+        preview_button->setSizePolicy(sizePolicy2);
+        preview_button->setCheckable(true);
+
+        verticalLayout_4->addWidget(preview_button);
+
+
+        verticalLayout->addWidget(recOptions);
+
+
+        verticalLayout_3->addWidget(frame);
+
+        verticalSpacer = new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_3->addItem(verticalSpacer);
+
+
+        horizontalLayout_3->addLayout(verticalLayout_3);
 
         preview_widget = new QLabel(centralWidget);
         preview_widget->setObjectName(QStringLiteral("preview_widget"));
@@ -192,7 +204,7 @@ public:
         preview_widget->setFrameShape(QFrame::StyledPanel);
         preview_widget->setFrameShadow(QFrame::Raised);
 
-        gridLayout->addWidget(preview_widget, 0, 1, 2, 1);
+        horizontalLayout_3->addWidget(preview_widget);
 
         MainWindow->setCentralWidget(centralWidget);
 
@@ -204,15 +216,15 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Taevitas", Q_NULLPTR));
-        projectName->setPlaceholderText(QApplication::translate("MainWindow", "Project Name", Q_NULLPTR));
-        startButton->setText(QApplication::translate("MainWindow", "Start", Q_NULLPTR));
-        label_2->setText(QApplication::translate("MainWindow", "FPS: ", Q_NULLPTR));
-        saveFrames->setText(QApplication::translate("MainWindow", "  Save Frames", Q_NULLPTR));
-        preview_button->setText(QApplication::translate("MainWindow", "Preview Camera", Q_NULLPTR));
-        label->setText(QApplication::translate("MainWindow", "Camera:", Q_NULLPTR));
         cameraSelector->setCurrentText(QString());
+        label->setText(QApplication::translate("MainWindow", "Camera:", Q_NULLPTR));
         camScanButton->setText(QApplication::translate("MainWindow", "Rescan Cameras", Q_NULLPTR));
         directorySelector->setText(QApplication::translate("MainWindow", "Working Directory", Q_NULLPTR));
+        projectName->setPlaceholderText(QApplication::translate("MainWindow", "Project Name", Q_NULLPTR));
+        label_2->setText(QApplication::translate("MainWindow", "FPS: ", Q_NULLPTR));
+        saveFrames->setText(QApplication::translate("MainWindow", "  Save Frames", Q_NULLPTR));
+        startButton->setText(QApplication::translate("MainWindow", "Start", Q_NULLPTR));
+        preview_button->setText(QApplication::translate("MainWindow", "Preview Camera", Q_NULLPTR));
         preview_widget->setText(QString());
     } // retranslateUi
 
