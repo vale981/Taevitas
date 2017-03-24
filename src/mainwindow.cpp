@@ -10,6 +10,7 @@
 
 // TODO: Handle Errors!!
 // TODO: Status Label!!
+// TODO: Maybe Resize...
 
 MainWindow::MainWindow( QWidget * parent ) :
     QMainWindow( parent ),
@@ -21,6 +22,7 @@ MainWindow::MainWindow( QWidget * parent ) :
     // Set Scene and Hide Preview Widget
     ui->preview_widget->hide();
     adjustSize();
+    ui->centralWidget->setFixedSize(ui->centralWidget->size());
 
     disableRecOptions();
 
@@ -116,7 +118,7 @@ void MainWindow::cameraSelected( int index ) {
     }
 
     enableRecOptions();
-};
+}
 
 // Show/Hide Preview
 void MainWindow::togglePreview( bool checked ) {
@@ -145,6 +147,7 @@ void MainWindow::togglePreview( bool checked ) {
     }
 
     adjustSize();
+    ui->centralWidget->setFixedSize(ui->centralWidget->size());
 }
 
 void MainWindow::frameCaptured( FlyCapture2::Image * image ) {
