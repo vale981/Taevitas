@@ -23,8 +23,6 @@ MainWindow::MainWindow( QWidget * parent ) :
 
     fit();
 
-    disableRecOptions();
-
     // Try to connect to first cam
     scanAndUpdateCameras();
 
@@ -72,17 +70,20 @@ MainWindow::~MainWindow() {
 void MainWindow::setStatus( STATUS status ) {
     switch ( status ) {
         case WAITING:
+            disableRecOptions();
             ui->statusLabel->setText( "Waiting..." );
+            ui->startButton->setText( "Start" );
             ui->recStats->hide();
             break;
         case CONNECTED:
             ui->statusLabel->setText( "Connected." );
             ui->startButton->setText( "Start" );
             ui->recStats->hide();
+            enableRecOptions();
             break;
         case RECORDING:
             ui->statusLabel->setText( "Recording!" );
-            ui->startButton->setText( "Start" );
+            ui->startButton->setText( "Stop" );
             ui->recStats->show();
             break;
 
@@ -152,7 +153,6 @@ void MainWindow::cameraSelected( int index ) {
         return;
     }
 
-    enableRecOptions();
     setStatus( CONNECTED );
 }
 
