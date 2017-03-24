@@ -102,7 +102,7 @@ class Recorder : public QObject {
         QString rec_name;
 
         // status file for frame count
-        QFile* stat_file;
+        QFile* statFile;
 
         // Check if recording directory exists. If it does ask for Overwrite or cancelation.
         RecorderError verifyRecDir();
