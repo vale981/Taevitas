@@ -10,6 +10,7 @@
 
 // TODO: Handle Errors!!
 // TODO: Status Label!!
+// TODO: Handle Disconnect!!
 
 MainWindow::MainWindow( QWidget * parent ) :
     QMainWindow( parent ),
@@ -35,7 +36,7 @@ MainWindow::MainWindow( QWidget * parent ) :
     // Connect Frame Counts, Time Captured LCD
     connect( &recorder, &Recorder::frameSaved, this, [this] {
         ui->framesCaptured->display( recorder.frameNumber() );
-        ui->timeCaptured->display( QString( "%1:%2" ).arg( ( recorder.timeCaptured() / 60 ) ).arg( ( int )recorder.timeCaptured() % 60 ) );
+        ui->timeCaptured->display( QString( "%1:%2" ).arg( ( ( ( int )recorder.timeCaptured() ) / 60 ) ).arg( ( int )recorder.timeCaptured() % 60 ) );
     } );
 
     // Connect Events
@@ -83,7 +84,7 @@ void MainWindow::setStatus( STATUS status ) {
             qDebug( "Connected...." );
             break;
         case RECORDING:
-            ui->timeCaptured->display( QString("00:00") );
+            ui->timeCaptured->display( QString( "00:00" ) );
             ui->framesCaptured->display( 0 );
 
             ui->statusLabel->setText( "Recording!" );
