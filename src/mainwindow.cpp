@@ -77,7 +77,7 @@ void MainWindow::setStatus( STATUS status ) {
             break;
         case CONNECTED:
             ui->statusLabel->setText( "Connected." );
-            ui->startButton->setText( "Stop" );
+            ui->startButton->setText( "Start" );
             ui->recStats->hide();
             break;
         case RECORDING:
