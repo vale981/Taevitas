@@ -78,11 +78,12 @@ public:
         verticalLayout_3->setSizeConstraint(QLayout::SetFixedSize);
         frame = new QFrame(centralWidget);
         frame->setObjectName(QStringLiteral("frame"));
-        QSizePolicy sizePolicy1(QSizePolicy::Maximum, QSizePolicy::Maximum);
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(frame->sizePolicy().hasHeightForWidth());
         frame->setSizePolicy(sizePolicy1);
+        frame->setMaximumSize(QSize(190, 16777215));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
         verticalLayout = new QVBoxLayout(frame);
@@ -126,11 +127,8 @@ public:
 
         recOptions = new QFrame(frame);
         recOptions->setObjectName(QStringLiteral("recOptions"));
-        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(recOptions->sizePolicy().hasHeightForWidth());
-        recOptions->setSizePolicy(sizePolicy3);
+        sizePolicy1.setHeightForWidth(recOptions->sizePolicy().hasHeightForWidth());
+        recOptions->setSizePolicy(sizePolicy1);
         recOptions->setFrameShape(QFrame::StyledPanel);
         recOptions->setFrameShadow(QFrame::Raised);
         verticalLayout_4 = new QVBoxLayout(recOptions);
