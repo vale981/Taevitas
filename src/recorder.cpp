@@ -24,7 +24,6 @@ void Recorder::setProjectDir( QString &p_dir ) {
     baseDir = QDir( p_dir );
 }
 
-// TODO: Write to statfile!
 void Recorder::newRecording( QString r_name ) {
     stopRecording();
 
@@ -54,8 +53,11 @@ void Recorder::newRecording( QString r_name ) {
         return;
     }
 
-    if( !statExists )
+    if( !statExists ) {
+        // Go to begining.
+        stat_file->seek(0);
         stat_file->write( "0" );
+    }
 
     frame_n = 0;
     time_c = 0;
