@@ -37,6 +37,7 @@ MainWindow::MainWindow( QWidget * parent ) :
     // Connect Frame Counts, Time Captured LCD
     connect( &recorder, &Recorder::frameSaved, this, [this] {
         ui->framesCaptured->display( recorder.frameNumber() );
+        qDebug(recorder.timeCaptured());
         ui->timeCaptured->display( QString( "%1:%2" ).arg( ( ( ( int )recorder.timeCaptured() ) / 60 ) ).arg( ( int )recorder.timeCaptured() % 60 ) );
     } );
 
@@ -92,10 +93,10 @@ void MainWindow::setStatus( STATUS status ) {
             ui->startButton->setText( "Stop" );
             ui->recStats->show();
             break;
-
     }
 }
 
+// FIXME
 void MainWindow::fit() {
     setMinimumSize( 0, 0 );
     setMaximumSize( 5000, 5000 );

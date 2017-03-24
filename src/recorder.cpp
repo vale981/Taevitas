@@ -150,7 +150,7 @@ void Recorder::cleanup() {
         append = false;
         delete statFile;
     }
-};
+}
 
 void Recorder::appendFrame( FlyCapture2::Image * image ) {
     write_lock.lock();
