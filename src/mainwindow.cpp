@@ -247,7 +247,7 @@ void MainWindow::startStopRecording() {
     }
 }
 
-void MainWindow::stopCapture( bool force ) {
+void MainWindow::stopCapture() {
     if( !ui->preview_button->isChecked() ) {
         try {
             camMan.stopCapture();
