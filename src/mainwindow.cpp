@@ -223,6 +223,7 @@ void MainWindow::displayPreview( FlyCapture2::Image * last_capture ) {
     ui->preview_widget->setPixmap( last_preview );
 
     if ( resize ) {
+        qDebug() << "re";
         fit();
         resize = false;
     }
