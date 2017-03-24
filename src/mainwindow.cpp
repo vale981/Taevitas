@@ -23,14 +23,14 @@ MainWindow::MainWindow( QWidget * parent ) :
 
     fit();
 
+    // Set status
+    setStatus( WAITING );
+
     // Try to connect to first cam
     scanAndUpdateCameras();
 
     // Set default name
     ui->projectName->setText( "Taevitas_Rec_" + QDateTime::currentDateTime().toString( "dd_MM_yyyy_hh_mm_ss" ) );
-
-    // Set status
-    setStatus( WAITING );
 
     // Connect Frame Counts, Time Captured LCD
     connect( &recorder, &Recorder::frameSaved, this, [this] {
