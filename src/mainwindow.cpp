@@ -98,7 +98,7 @@ void MainWindow::setStatus( STATUS status ) {
 
 void MainWindow::fit() {
     setMinimumSize( 0, 0 );
-    setMaximumSize( 5000, 500 );
+    setMaximumSize( 5000, 5000 );
     adjustSize();
     setFixedSize( this->size() );
 }
@@ -223,7 +223,6 @@ void MainWindow::displayPreview( FlyCapture2::Image * last_capture ) {
     ui->preview_widget->setPixmap( last_preview );
 
     if ( resize ) {
-        qDebug() << "re";
         fit();
         resize = false;
     }
