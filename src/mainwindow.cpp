@@ -17,10 +17,11 @@ MainWindow::MainWindow( QWidget * parent ) :
     camMan( this ),
     recorder( this, 18, false ) {
     ui->setupUi( this );
-    setFixedSize( this->size() );
 
     // Set Scene and Hide Preview Widget
     ui->preview_widget->hide();
+
+    fit();
 
     disableRecOptions();
 
