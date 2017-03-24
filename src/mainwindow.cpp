@@ -200,7 +200,7 @@ void MainWindow::startStopRecording() {
                 camMan.startCapture();
             } catch ( FlyCapture2::Error e ) {
                 showError( e );
-                ui->saveFrames->setProperty("enabled", false);
+                ui->saveFrames->setProperty( "enabled", true );
                 return;
             }
         }
@@ -210,11 +210,12 @@ void MainWindow::startStopRecording() {
         } catch ( RecorderError ) {
             showError( "Could not start Recording!" );
             // TODO: Helper Method
-            ui->saveFrames->setProperty("enabled", false);
+            ui->saveFrames->setProperty( "enabled", true );
             stopCapture();
             return;
         }
 
+        ui->saveFrames->setProperty( "enabled", false );
         ui->startButton->setText( "Stop" );
     } else {
         try {
@@ -227,7 +228,7 @@ void MainWindow::startStopRecording() {
         // If no preview
         stopCapture();
 
-        ui->saveFrames->setProperty("enabled", true);
+        ui->saveFrames->setProperty( "enabled", true );
         ui->startButton->setText( "Start" );
     }
 }
