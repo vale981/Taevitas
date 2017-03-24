@@ -37,7 +37,7 @@ MainWindow::MainWindow( QWidget * parent ) :
     // Connect Frame Counts, Time Captured LCD
     connect( &recorder, &Recorder::frameSaved, this, [this] {
         ui->framesCaptured->display( recorder.frameNumber() );
-        qDebug(recorder.timeCaptured());
+        qDebug << recorder.timeCaptured();
         ui->timeCaptured->display( QString( "%1:%2" ).arg( ( ( ( int )recorder.timeCaptured() ) / 60 ) ).arg( ( int )recorder.timeCaptured() % 60 ) );
     } );
 
