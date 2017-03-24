@@ -99,7 +99,7 @@ void MainWindow::fit() {
     setMinimumSize( 0, 0 );
     setMaximumSize( 5000, 500 );
     adjustSize();
-    //setFixedSize( this->size() );
+    setFixedSize( this->size() );
 }
 
 void MainWindow::updateCameraList( unsigned int num_cameras ) {
@@ -185,9 +185,7 @@ void MainWindow::togglePreview( bool checked ) {
         //Stop capture
         if ( !recorder.isRecording() )
             camMan.stopCapture();
-    }
-
-    fit();
+    }    
 }
 
 void MainWindow::frameCaptured( FlyCapture2::Image * image ) {
@@ -221,6 +219,9 @@ void MainWindow::displayPreview( FlyCapture2::Image * last_capture ) {
 
     last_preview.convertFromImage( last_preview_image );
     ui->preview_widget->setPixmap( last_preview );
+
+    if(ui->preview_widget->width() == 0)
+        fit();
 }
 
 void MainWindow::directorySelection() {
