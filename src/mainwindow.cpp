@@ -76,10 +76,11 @@ void MainWindow::setStatus( STATUS status ) {
             ui->recStats->hide();
             break;
         case CONNECTED:
+            enableRecOptions();
             ui->statusLabel->setText( "Connected." );
             ui->startButton->setText( "Start" );
             ui->recStats->hide();
-            enableRecOptions();
+            qDebug("Connected....");
             break;
         case RECORDING:
             ui->statusLabel->setText( "Recording!" );
