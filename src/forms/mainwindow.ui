@@ -30,7 +30,7 @@
        <enum>QLayout::SetFixedSize</enum>
       </property>
       <item>
-       <widget class="QFrame" name="frame">
+       <widget class="QGroupBox" name="groupBox">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -43,11 +43,8 @@
           <height>16777215</height>
          </size>
         </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
+        <property name="title">
+         <string>Settings</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
@@ -101,18 +98,15 @@
           </widget>
          </item>
          <item>
-          <widget class="QFrame" name="recOptions">
+          <widget class="QGroupBox" name="recOptions">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
+           <property name="title">
+            <string>Recorder Settings</string>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_4">
             <item>
