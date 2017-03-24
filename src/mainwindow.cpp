@@ -188,7 +188,6 @@ void MainWindow::togglePreview( bool checked ) {
     }
 
     fit();
-    ui->centralWidget->setFixedSize( ui->centralWidget->size() );
 }
 
 void MainWindow::frameCaptured( FlyCapture2::Image * image ) {
