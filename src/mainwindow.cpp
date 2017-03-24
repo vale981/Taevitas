@@ -38,6 +38,8 @@ MainWindow::MainWindow( QWidget * parent ) :
         ui->timeCaptured->display( QString( "%1:%2" ).arg( ( recorder.timeCaptured() / 60 ) ).arg( ( int )recorder.timeCaptured() % 60 ) );
     } );
 
+    ui->timeCaptured->display( "00:00" );
+
     // Connect Events
     connect( ui->preview_button, &QPushButton::clicked, this, &MainWindow::togglePreview );
 
@@ -80,7 +82,7 @@ void MainWindow::setStatus( STATUS status ) {
             ui->statusLabel->setText( "Connected." );
             ui->startButton->setText( "Start" );
             ui->recStats->hide();
-            qDebug("Connected....");
+            qDebug( "Connected...." );
             break;
         case RECORDING:
             ui->statusLabel->setText( "Recording!" );
