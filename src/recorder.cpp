@@ -41,7 +41,7 @@ void Recorder::newRecording( QString r_name ) {
     }
 
     // Clean r_name // TODO: Maybe Visual Feedback for that...
-    r_name.remove(QRegExp(QString::fromUtf8("[-`~!@#$%^&*()_—+=|:;<>«»,.?/{}\'\"\\\[\\]]")));
+    r_name.replace(QRegExp("[^\da-zA-Z\_]"), "_");
     recName = r_name;
 
     // Verify Recdir... create directories...
