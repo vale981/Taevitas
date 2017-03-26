@@ -46,7 +46,6 @@ void CameraManager::connectCamera(int index) {
 		return;
 	}
 
-    // Do not drop frames! //TODO Flexible Buffer size
     cam_config = FlyCapture2::FC2Config();
     cam_config.grabMode = GrabMode::BUFFER_FRAMES;
     cam_config.numBuffers = 10; // We gonna move them into our own data structure.

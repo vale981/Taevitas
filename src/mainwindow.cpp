@@ -115,7 +115,7 @@ void MainWindow::scanAndUpdateCameras() {
     unsigned int num_cameras = camMan.numCameras();
     updateCameraList( num_cameras );
     if ( num_cameras > 0 && !camMan.isConnected() )
-        cameraSelectnnnned( 0 );
+        cameraSelected( 0 );
 }
 
 void MainWindow::disableRecOptions() {
