@@ -42,7 +42,7 @@ void Recorder::newRecording( QString r_name ) {
 
     // Clean r_name // TODO: Maybe Visual Feedback for that...
     r_name.replace(QRegExp("[^\\da-zA-Z\\_]"), "_");
-    qDebug() << r_name();
+    qDebug() << r_name;
     recName = r_name;
 
     // Verify Recdir... create directories...
