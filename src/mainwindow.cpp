@@ -62,6 +62,10 @@ MainWindow::MainWindow( QWidget * parent ) :
 
     // Start recording
     connect( ui->startButton, &QPushButton::clicked, this, &MainWindow::startStopRecording );
+
+    // Stoppen Capturing, buffer empty...
+    connect( &camMan, &CameraManager::finishedCapturing, this, &MainWindow::startStopRecording, Qt::DirectConnection );
+
 }
 
 MainWindow::~MainWindow() {
@@ -90,6 +94,10 @@ void MainWindow::setStatus( STATUS status ) {
             ui->statusLabel->setText( "Recording!" );
             ui->startButton->setText( "Stop" );
             ui->recStats->show();
+            break;
+        case STOPPING:
+            ui->startButton->setText( "Stopping..." );
+            disableRecOptions();
             break;
     }
 }
@@ -266,10 +274,17 @@ void MainWindow::startStopRecording() {
 
     } else {
         // Stop Capture!
+        bool stopped;
         try {
-            camMan.stopCapture();
+            stop = camMan.stopCapture();
         } catch ( FlyCapture2::Error e ) {
             showError( e );
+            return;
+        }
+
+        if ( !stopped ) {
+            setStatus(STOPPING);
+            // We just wait...
             return;
         }
 

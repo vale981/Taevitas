@@ -40,7 +40,8 @@ class MainWindow : public QMainWindow {
         enum STATUS {
             WAITING,
             CONNECTED,
-            RECORDING
+            RECORDING,
+            STOPPING
         };
 
         void setStatus(STATUS status);
