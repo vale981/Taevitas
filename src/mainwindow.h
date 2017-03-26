@@ -33,7 +33,7 @@ class MainWindow : public QMainWindow {
         void showError( QString error );
 
         void updateCameraList( unsigned int num_cameras );
-        void stopCapture();
+        void resetCapture();
 
         void fit();
 

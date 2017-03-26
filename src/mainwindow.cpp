@@ -34,7 +34,8 @@ MainWindow::MainWindow( QWidget * parent ) :
     ui->projectName->setText( "Taevitas_Rec_" + QDateTime::currentDateTime().toString( "dd_MM_yyyy_hh_mm_ss" ) );
 
     // Set default dir
-    recorder.setProjectDir( QStandardPaths::writableLocation( QStandardPaths::DocumentsLocation ) );
+    QString defaultDir = QStandardPaths::writableLocation( QStandardPaths::DocumentsLocation );
+    recorder.setProjectDir( defaultDir );
 
     // Connect Frame Counts, Time Captured LCD
     connect( &recorder, &Recorder::frameSaved, this, [this] {
