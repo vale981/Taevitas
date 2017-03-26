@@ -65,8 +65,8 @@ void CameraManager::imageGrabbed( FlyCapture2::Image * image ) {
     emit frameCaptured( image_buffer->front() );
     delete image_buffer->front();
 
-    //image_buffer->removeFirst();
-
+    image_buffer->removeFirst();
+    image_buffer->append(new FlyCapture2::Image());
     if(!is_capturing && image_buffer->empty())
         emit finishedCapturing();
 
