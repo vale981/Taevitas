@@ -255,15 +255,6 @@ void MainWindow::startStopRecording() {
         // TODO: Maybe allow dynamic setting...
         ui->saveFrames->setProperty( "enabled", false );
 
-        if ( !camMan.isCapturing() ) {
-            try {
-                camMan.startCapture();
-            } catch ( FlyCapture2::Error e ) {
-                showError( e );
-                ui->saveFrames->setProperty( "enabled", true );
-                return;
-            }
-        }
 
         try {
             recorder.newRecording( ui->projectName->text() );
@@ -272,6 +263,16 @@ void MainWindow::startStopRecording() {
             ui->saveFrames->setProperty( "enabled", true );
             resetCapture();
             return;
+        }
+
+        if ( !camMan.isCapturing() ) {
+            try {
+                camMan.startCapture();
+            } catch ( FlyCapture2::Error e ) {
+                showError( e );
+                ui->saveFrames->setProperty( "enabled", true );
+                return;
+            }
         }
 
         setStatus( RECORDING );
