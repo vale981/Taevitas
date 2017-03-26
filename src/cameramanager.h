@@ -76,7 +76,7 @@ private slots:
 
 signals:
     void frameCaptured(FlyCapture2::Image* image) const;
-    void stopped() const;
+    void finishedCapturing() const;
 };
 	
 #endif // CAMERAMANAGER_H
