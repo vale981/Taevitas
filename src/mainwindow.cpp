@@ -34,7 +34,7 @@ MainWindow::MainWindow( QWidget * parent ) :
     ui->projectName->setText( "Taevitas_Rec_" + QDateTime::currentDateTime().toString( "dd_MM_yyyy_hh_mm_ss" ) );
 
     // Set default dir
-    recorder.setProjectDir(QStandardPaths::writableLocation( QStandardPaths::DocumentsLocation ));
+    recorder.setProjectDir( QStandardPaths::writableLocation( QStandardPaths::DocumentsLocation ) );
 
     // Connect Frame Counts, Time Captured LCD
     connect( &recorder, &Recorder::frameSaved, this, [this] {
@@ -269,7 +269,7 @@ void MainWindow::startStopRecording() {
         } catch ( RecorderError ) {
             showError( "Could not start Recording!" );
             ui->saveFrames->setProperty( "enabled", true );
-            stopCapture();
+            resetCapture();
             return;
         }
 
@@ -286,7 +286,7 @@ void MainWindow::startStopRecording() {
         }
 
         if ( !stopped ) {
-            setStatus(STOPPING);
+            setStatus( STOPPING );
             // We just wait...
             return;
         }
@@ -298,27 +298,26 @@ void MainWindow::startStopRecording() {
             return;
         }
 
-        // Restart Preview
-        if ( ui->preview_button->isChecked() ) {
-            try {
-                camMan.startCapture();
-            } catch ( FlyCapture2::Error e ) {
-                showError( e );
-            }
-        }
+        resetCapture();
 
         ui->saveFrames->setProperty( "enabled", true );
         setStatus( CONNECTED );
     }
 }
 
-void MainWindow::stopCapture() {
+void MainWindow::resetCapture() {
     if ( !ui->preview_button->isChecked() ) {
         try {
             camMan.stopCapture();
         } catch ( FlyCapture2::Error e ) {
             showError( e );
             return;
+        }
+    } else {
+        try {
+            camMan.startCapture();
+        } catch ( FlyCapture2::Error e ) {
+            showError( e );
         }
     }
 }
