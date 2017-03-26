@@ -47,7 +47,7 @@ class Recorder : public QObject {
         }
 
         QString getRecName() {
-            return rec_name;
+            return recName;
         }
 
         bool isRecording() {
@@ -64,7 +64,7 @@ class Recorder : public QObject {
         }
 
         bool dirSet() {
-            return ( baseDir.path() != "" );
+            return pDirSet;
         }
 
         bool captureFrames() {
@@ -104,7 +104,7 @@ public slots:
 
         QDir baseDir;
         QDir record_dir;
-        QString rec_name;
+        QString recName;
 
         // status file for frame count
         QFile * statFile;
@@ -120,6 +120,8 @@ public slots:
 
         // lock the appendFrame function.
         QMutex write_lock;
+
+        bool pDirSet;
 
     signals:
         void frameSaved();

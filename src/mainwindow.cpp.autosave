@@ -264,6 +264,7 @@ void MainWindow::startStopRecording() {
         }
 
         setStatus( RECORDING );
+        
     } else {
         // Stop Capture!
         try {

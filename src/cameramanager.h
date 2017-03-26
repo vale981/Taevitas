@@ -7,7 +7,6 @@
    hiding the internals from the GUI code, to make reusability easier, although FlyCapture code is needed   outside.
 */
 
-// TODO: Exclude inline Implementation
 // TODO: implement camera arrival removal
 #include <QObject>
 #include <QVector>

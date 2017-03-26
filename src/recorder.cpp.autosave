@@ -129,7 +129,6 @@ RecorderError Recorder::verifyRecDir() {
     return RecorderError::OK;
 }
 
-// TODO: Capture Status...
 void Recorder::stopRecording() {
     if ( is_recording ) {
         // Stop Recorder
