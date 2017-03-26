@@ -41,7 +41,7 @@ void Recorder::newRecording( QString& r_name ) {
     }
 
     // Clean r_name // TODO: Maybe Visual Feedback for that...
-    r_name.replace(QRegExp("[^\\_a-zA-Z0-9]"), "_");
+    //r_name.replace(QRegExp("[^\\_a-zA-Z0-9]"), "_");
     qDebug() << r_name;
     recName = r_name;
 
