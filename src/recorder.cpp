@@ -129,7 +129,6 @@ RecorderError Recorder::verifyRecDir() {
     return RecorderError::OK;
 }
 
-// TODO: Capture Status...
 void Recorder::stopRecording() {
     if ( is_recording ) {
         // Stop Recorder
@@ -179,6 +178,7 @@ void Recorder::appendFrame( FlyCapture2::Image * image ) {
 
     frame_n++;
     time_c = frame_n / options.frameRate;
+    qDebug() << time_c;
     emit frameSaved();
 
     // Go to begining.
