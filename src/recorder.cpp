@@ -75,6 +75,8 @@ void Recorder::newRecording( QString r_name ) {
             throw RecorderError::STATFILE_ERROR;
             return;
         }
+        time_c = frame_n / options.frameRate;
+        emit frameSaved();
     }
 
     Error f_err;
@@ -177,8 +179,7 @@ void Recorder::appendFrame( FlyCapture2::Image * image ) {
     }
 
     frame_n++;
-    time_c = frame_n / options.frameRate;
-    qDebug() << time_c;
+
     emit frameSaved();
 
     // Go to begining.
