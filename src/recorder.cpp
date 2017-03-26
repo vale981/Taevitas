@@ -26,7 +26,7 @@ void Recorder::setProjectDir( QString &p_dir ) {
     pDirSet = true;
 }
 
-void Recorder::newRecording( QString& r_name ) {
+void Recorder::newRecording( QString r_name ) {
     stopRecording();
 
     // If unset.

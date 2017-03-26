@@ -68,7 +68,7 @@ void CameraManager::imageGrabbed( FlyCapture2::Image * image ) {
     image_buffer->removeFirst();
 
     if(!is_capturing && image_buffer->empty())
-        emit finishedCapturing;
+        emit finishedCapturing();
 
     mutex.unlock();
     return;

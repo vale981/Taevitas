@@ -276,7 +276,7 @@ void MainWindow::startStopRecording() {
         // Stop Capture!
         bool stopped;
         try {
-            stop = camMan.stopCapture();
+            stopped = camMan.stopCapture();
         } catch ( FlyCapture2::Error e ) {
             showError( e );
             return;
