@@ -67,7 +67,7 @@ void CameraManager::imageGrabbed( FlyCapture2::Image * image ) {
 
     image_buffer->removeFirst();
 
-    if(!is_capturing && image_buffer->empty())
+    if ( !is_capturing && image_buffer->empty() )
         emit finishedCapturing();
 
     mutex.unlock();
@@ -80,6 +80,7 @@ bool CameraManager::stopCapture() {
 
 
     grabber->stopCapturing();
+    grabber->wait();
     Error error = camera.StopCapture();
     if ( error != PGRERROR_OK ) {
         throw error;
@@ -106,11 +107,13 @@ void CameraManager::startCapture() {
 
     // Just my own async image grabbing!
     // TODO: ERRORS!
-    grabber = new ImageGrabber( this );
-    grabber->setCamera( &camera );
-    connect( grabber, &ImageGrabber::imageCaptured, this, &CameraManager::imageGrabbed, Qt::QueuedConnection );
-    connect( grabber, &ImageGrabber::finished, grabber, &ImageGrabber::deleteLater );
-    grabber->start();
+    ImageGrabber tmpG;
+    tmpG = new ImageGrabber( this );
+    tmpG->setCamera( &camera );
+    connect( tmpG, &ImageGrabber::imageCaptured, this, &CameraManager::imageGrabbed, Qt::QueuedConnection );
+    connect( tmpG, &ImageGrabber::finished, tmpG, &ImageGrabber::deleteLater );
+    tmpG->start();
 
+    grabber = tmpG;
     is_capturing = true;
 }
