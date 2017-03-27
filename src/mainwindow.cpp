@@ -15,7 +15,7 @@ MainWindow::MainWindow( QWidget * parent ) :
     QMainWindow( parent ),
     ui( new Ui::MainWindow ),
     camMan( this ),
-    recorder( this, 18, false ),
+    recorder( 0, 18, false ),
     resize { false } {
     ui->setupUi( this );
 
