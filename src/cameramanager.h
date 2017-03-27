@@ -29,7 +29,7 @@ class CameraManager : public QObject {
         //TODO remove, if not needed
         const FlyCapture2::Camera * getCamera() const {
             return &camera;
-        };
+        }
 
         bool isConnected() {
             return camera.IsConnected();
