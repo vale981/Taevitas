@@ -41,7 +41,7 @@ void Recorder::newRecording( QString r_name ) {
     }
 
     // Clean r_name // TODO: Maybe Visual Feedback for that...
-    r_name.replace(QRegExp("[^\\_a-zA-Z0-9]"), "_");
+    r_name.replace( QRegExp( "[^\\_a-zA-Z0-9]" ), "_" );
     qDebug() << r_name;
     recName = r_name;
 
@@ -77,7 +77,6 @@ void Recorder::newRecording( QString r_name ) {
             return;
         }
         time_c = frame_n / options.frameRate;
-        emit frameSaved();
     }
 
     Error f_err;
@@ -182,12 +181,12 @@ void Recorder::appendFrame( FlyCapture2::Image * image ) {
     frame_n++;
     time_c = frame_n / options.frameRate;
 
-    emit frameSaved();
 
     // Go to begining.
     statFile->seek( 0 );
     // Write Frames to Stat File.
     statFile->write( QByteArray::number( frame_n ) );
 
+    emit frameSaved( image );
     write_lock.unlock();
 }

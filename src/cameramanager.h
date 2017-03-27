@@ -24,7 +24,7 @@ class CameraManager : public QObject {
         // Starts capturing images. When an image has been captured, the signal frameCaptured is emited.
         // Throws FlyCapture2::Error
         void startCapture();
-        bool stopCapture();
+        void stopCapture();
 
         //TODO remove, if not needed
         const FlyCapture2::Camera * getCamera() const {
@@ -40,7 +40,7 @@ class CameraManager : public QObject {
             FlyCapture2::BusManager bus_mgr;
             bus_mgr.GetNumOfCameras( &num_cameras );
             return num_cameras;
-        };
+        }
 
         // Connect camera from index. Once successfull it emits the cameraConnected signal.
         // Emits Error signal in case of an error.
@@ -65,17 +65,11 @@ class CameraManager : public QObject {
         // State Variable
         bool is_capturing;
 
-        QVector<FlyCapture2::Image *> * image_buffer;
-
         // Capture Thread
         ImageGrabber * grabber;
 
-    private slots:
-        void imageGrabbed( FlyCapture2::Image * image );
-
     signals:
         void frameCaptured( FlyCapture2::Image * image ) const;
-        void finishedCapturing() const;
 };
 
 #endif // CAMERAMANAGER_H

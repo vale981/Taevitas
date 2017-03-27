@@ -37,11 +37,19 @@ MainWindow::MainWindow( QWidget * parent ) :
     QString defaultDir = QStandardPaths::writableLocation( QStandardPaths::DocumentsLocation );
     recorder.setProjectDir( defaultDir );
 
+    // Move Recorder into another thread
+    QThread * t = new QThread();
+    recorder.moveToThread( t );
+    connect( t, &QThread::finished, t, &QThread::deleteLater );
+
+    // Initialize Image buffer.
+    image_buffer = new QVector<FlyCapture2::Image *>;
+
     // Connect Frame Counts, Time Captured LCD
-    connect( &recorder, &Recorder::frameSaved, this, [this] {
-        ui->framesCaptured->display( recorder.frameNumber() );
-        ui->timeCaptured->display( QString( "%1:%2" ).arg( ( ( ( int )recorder.timeCaptured() ) / 60 ) ).arg( ( int )recorder.timeCaptured() % 60 ) );
-    } );
+    connect( &recorder, &Recorder::frameSaved, this, &MainWindow::frameSaved );
+
+    // Connect ImageWriteSignal
+    connect( this, &MainWindow::saveFrame, &recorder, &Recorder::appendFrame );
 
     // Connect Events
     connect( ui->preview_button, &QPushButton::clicked, this, &MainWindow::togglePreview );
@@ -66,17 +74,16 @@ MainWindow::MainWindow( QWidget * parent ) :
 
     // Start recording
     connect( ui->startButton, &QPushButton::clicked, this, &MainWindow::startStopRecording );
-
-    // Stoppen Capturing, buffer empty...
-    connect( &camMan, &CameraManager::finishedCapturing, this, &MainWindow::startStopRecording, Qt::DirectConnection );
-
 }
 
 MainWindow::~MainWindow() {
     delete ui;
+    delete image_buffer;
 }
 
 void MainWindow::setStatus( STATUS status ) {
+    stopping = false;
+
     switch ( status ) {
         case WAITING:
             disableRecOptions();
@@ -102,6 +109,7 @@ void MainWindow::setStatus( STATUS status ) {
         case STOPPING:
             ui->startButton->setText( "Stopping..." );
             disableRecOptions();
+            stopping = true;
             break;
     }
 }
@@ -203,14 +211,20 @@ void MainWindow::togglePreview( bool checked ) {
 
 void MainWindow::frameCaptured( FlyCapture2::Image * image ) {
     qDebug() << "Image Captured!";
+    static QMutex m;
+    m.lock();
+
+    // TODO: WHY POINTER
+    image_buffer->append( image );
 
     // If preview is activated...
     if ( ui->preview_widget->isEnabled() )
         displayPreview( image );
 
     if ( recorder.isRecording() )
-        recorder.appendFrame( image );
+        emit saveFrame( image );
 
+    m.unlock();
     return;
 }
 
@@ -279,15 +293,14 @@ void MainWindow::startStopRecording() {
 
     } else {
         // Stop Capture!
-        bool stopped;
         try {
-            stopped = camMan.stopCapture();
+            camMan.stopCapture();
         } catch ( FlyCapture2::Error e ) {
             showError( e );
             return;
         }
 
-        if ( !stopped ) {
+        if ( image_buffer->length() > 0 ) {
             setStatus( STOPPING );
             // We just wait...
             return;
@@ -322,4 +335,26 @@ void MainWindow::resetCapture() {
             showError( e );
         }
     }
+}
+
+void MainWindow::frameSaved( FlyCapture2::Image * image ) {
+    static QMutex m;
+    m.lock();
+
+    ui->framesCaptured->display( recorder.frameNumber() );
+    ui->timeCaptured->display( QString( "%1:%2" ).arg( ( ( ( int )recorder.timeCaptured() ) / 60 ) ).arg( ( int )recorder.timeCaptured() % 60 ) );
+
+    // Search and Delete (Should be first).
+
+    for ( int i = 0; i < image_buffer->length(); i++ ) {
+        if ( ( *image_buffer )[i] == image ) {
+            image_buffer->remove( i );
+            break;
+        }
+    }
+
+    if ( stopping && image_buffer->empty() )
+        startStopRecording();
+
+    m.unlock();
 }

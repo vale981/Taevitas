@@ -4,13 +4,9 @@
 
 using namespace FlyCapture2;
 
-CameraManager::CameraManager( QObject * parent ) : QObject( parent ), num_cameras {0}, camera_index {-1}, is_capturing {false} {
-    image_buffer = new QVector<FlyCapture2::Image *>();
-}
+CameraManager::CameraManager( QObject * parent ) : QObject( parent ), num_cameras {0}, camera_index {-1}, is_capturing {false} {}
 
 CameraManager::~CameraManager() {
-    delete image_buffer;
-
     stopCapture();
     camera.Disconnect();
 }
@@ -55,28 +51,10 @@ void CameraManager::connectCamera( int index ) {
     camera_index = index;
 }
 
-// The capture callback is a wrapper to emit the frameCaptured signal.
-void CameraManager::imageGrabbed( FlyCapture2::Image * image ) {
-    //thread Safe
-    static QMutex mutex;
-    mutex.lock();
 
-    image_buffer->append( image );
-    emit frameCaptured( image_buffer->front() );
-    delete image_buffer->front();
-
-    image_buffer->removeFirst();
-
-    if ( !is_capturing && image_buffer->empty() )
-        emit finishedCapturing();
-
-    mutex.unlock();
-    return;
-}
-
-bool CameraManager::stopCapture() {
+void CameraManager::stopCapture() {
     if ( !is_capturing )
-        return false;
+        return;
 
 
     grabber->stopCapturing();
@@ -84,12 +62,10 @@ bool CameraManager::stopCapture() {
     Error error = camera.StopCapture();
     if ( error != PGRERROR_OK ) {
         throw error;
-        return false;
+        return;
     }
 
     is_capturing = false;
-
-    return image_buffer->empty();
 }
 
 void CameraManager::startCapture() {
@@ -107,10 +83,9 @@ void CameraManager::startCapture() {
 
     // Just my own async image grabbing!
     // TODO: ERRORS!
-    ImageGrabber tmpG;
-    tmpG = new ImageGrabber( this );
+    ImageGrabber * tmpG = new ImageGrabber( this );
     tmpG->setCamera( &camera );
-    connect( tmpG, &ImageGrabber::imageCaptured, this, &CameraManager::imageGrabbed, Qt::QueuedConnection );
+    connect( tmpG, &ImageGrabber::imageCaptured, this, &CameraManager::frameCaptured, Qt::QueuedConnection );
     connect( tmpG, &ImageGrabber::finished, tmpG, &ImageGrabber::deleteLater );
     tmpG->start();
 

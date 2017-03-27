@@ -44,11 +44,15 @@ class MainWindow : public QMainWindow {
             STOPPING
         };
 
-        void setStatus(STATUS status);
+        void setStatus( STATUS status );
 
         bool resize;
 
-private slots:
+        QVector<FlyCapture2::Image *> * image_buffer;
+
+        bool stopping;
+
+    private slots:
         // Fills Camera Combobox with Cameras
         void scanAndUpdateCameras();
 
@@ -57,6 +61,10 @@ private slots:
         void cameraSelected( int index );
         void directorySelection();
         void startStopRecording();
+        void frameSaved( FlyCapture2::Image * image );
+
+    signals:
+        void saveFrame( FlyCapture2::Image * image );
 };
 
 #endif // MAINWINDOW_H

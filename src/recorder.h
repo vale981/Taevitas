@@ -36,9 +36,6 @@ class Recorder : public QObject {
         // Start a recording. A recording directory with the avi files and evtl. a frame subfolder will be created. Throws RecorderError or FlyCapture2::Error
         void newRecording( QString r_name );
 
-        // Append a frame to the recording,
-        void appendFrame( FlyCapture2::Image * image );
-
         // stops the recording, cleans up, throws FlyCapture2::Error
         void stopRecording();
 
@@ -80,6 +77,9 @@ class Recorder : public QObject {
         }
 
     public slots:
+        // Append a frame to the recording,
+        void appendFrame( FlyCapture2::Image * image );
+
         void setCaptureFrames( bool set ) {
             capture_frames = set;
         }
@@ -124,6 +124,6 @@ class Recorder : public QObject {
         bool pDirSet;
 
     signals:
-        void frameSaved();
+        void frameSaved( FlyCapture2::Image * image );
 };
 #endif //RECORDER_H
