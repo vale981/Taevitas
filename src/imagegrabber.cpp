@@ -17,7 +17,7 @@ void ImageGrabber::run() {
 
         qDebug() << "Image Grabbed!";
 
-        stored_img->DeepCopy( tmp );
+        stored_img->DeepCopy( &tmp );
         emit imageCaptured( stored_img );
     }
 }
