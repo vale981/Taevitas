@@ -37,6 +37,7 @@ MainWindow::MainWindow( QWidget * parent ) :
     QString defaultDir = QStandardPaths::writableLocation( QStandardPaths::DocumentsLocation );
     recorder.setProjectDir( defaultDir );
 
+    // TODO: Finish -> quit
     // Move Recorder into another thread
     QThread * t = new QThread();
     recorder.moveToThread( t );
@@ -79,6 +80,7 @@ MainWindow::MainWindow( QWidget * parent ) :
 MainWindow::~MainWindow() {
     delete ui;
     delete image_buffer;
+
 }
 
 void MainWindow::setStatus( STATUS status ) {
