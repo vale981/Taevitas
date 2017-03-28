@@ -230,8 +230,10 @@ void MainWindow::frameCaptured( FlyCapture2::Image * image ) {
     if ( ui->preview_widget->isEnabled() )
         displayPreview( image );
 
-    if ( recorder.isRecording() )
+    if ( recorder.isRecording() ) {
+        qDebug() << "emmiting signal";
         emit saveFrame( image );
+    }
 
     m.unlock();
     return;
