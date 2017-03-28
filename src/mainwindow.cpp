@@ -41,8 +41,8 @@ MainWindow::MainWindow( QWidget * parent ) :
     // Move Recorder into another thread
     recThread = new QThread();
     recorder.moveToThread( recThread );
-    connect( recThread, &QThread::finished, recThread, &QThread::deleteLater );
     recThread->start();
+    connect( recThread, &QThread::finished, recThread, &QThread::deleteLater );
 
     // Initialize Image buffer.
     image_buffer = new QVector<FlyCapture2::Image *>;
