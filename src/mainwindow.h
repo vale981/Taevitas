@@ -42,7 +42,7 @@ class MainWindow : public QMainWindow {
             CONNECTED,
             RECORDING,
             STOPPING
-        };
+        } status;
 
         void setStatus( STATUS status );
 
@@ -50,7 +50,7 @@ class MainWindow : public QMainWindow {
 
         QVector<FlyCapture2::Image *> * image_buffer;
 
-        bool stopping;
+        QThread * capThread;
 
     private slots:
         // Fills Camera Combobox with Cameras

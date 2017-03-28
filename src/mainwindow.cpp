@@ -39,9 +39,9 @@ MainWindow::MainWindow( QWidget * parent ) :
 
     // TODO: Finish -> quit
     // Move Recorder into another thread
-    QThread * t = new QThread();
-    recorder.moveToThread( t );
-    connect( t, &QThread::finished, t, &QThread::deleteLater );
+    capThread = new QThread();
+    recorder.moveToThread( capThread );
+    connect( capThread, &QThread::finished, t, &QThread::deleteLater );
 
     // Initialize Image buffer.
     image_buffer = new QVector<FlyCapture2::Image *>;
@@ -81,10 +81,15 @@ MainWindow::~MainWindow() {
     delete ui;
     delete image_buffer;
 
+    if ( RECORDING )
+        startStopRecording();
+
+    capThread->quit();
+    capThread->wait();
 }
 
 void MainWindow::setStatus( STATUS status ) {
-    stopping = false;
+    this->status = status;
 
     switch ( status ) {
         case WAITING:
@@ -111,7 +116,6 @@ void MainWindow::setStatus( STATUS status ) {
         case STOPPING:
             ui->startButton->setText( "Stopping..." );
             disableRecOptions();
-            stopping = true;
             break;
     }
 }
@@ -355,7 +359,7 @@ void MainWindow::frameSaved( FlyCapture2::Image * image ) {
         }
     }
 
-    if ( stopping && image_buffer->empty() )
+    if ( status == STOPPING && image_buffer->empty() )
         startStopRecording();
 
     m.unlock();
