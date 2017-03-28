@@ -4,7 +4,7 @@
 
 using namespace FlyCapture2;
 
-Recorder::Recorder( QObject * parent, unsigned int frame_rate, bool cap_frames ) : QObject( parent ), is_recording {false}, frame_n {0}, time_c {0}, pDirSet { false } {
+Recorder::Recorder( QObject * parent, unsigned int frame_rate, bool cap_frames ) : QObject( parent ), is_recording {false}, append {false}, frame_n {0}, time_c {0}, pDirSet { false } {
     // No Compression for frame_captures
     frame_options.compression = frame_options.NONE;
     options.frameRate = frame_rate;
@@ -82,10 +82,10 @@ void Recorder::newRecording( QString r_name ) {
         time_c = frame_n / options.frameRate;
     }
 
-    Error f_err;
-
     qDebug() << ( record_dir.path() + "/" + recName ).toStdString().c_str();
+
     // open AVI in recorder
+    Error f_err;
     f_err = recorder.AVIOpen( ( record_dir.path() + "/" + recName + "_" + QString::number( frame_n ) + ".avi" ).toStdString().c_str(), &options );
     if ( f_err != PGRERROR_OK ) {
         throw f_err;
