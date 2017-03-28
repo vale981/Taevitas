@@ -58,8 +58,8 @@ void CameraManager::stopCapture() {
 
 
     grabber->stopCapturing();
-    grabber->quit();
     grabber->wait();
+
     Error error = camera.StopCapture();
     if ( error != PGRERROR_OK ) {
         throw error;

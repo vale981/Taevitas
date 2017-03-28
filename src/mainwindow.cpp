@@ -39,9 +39,9 @@ MainWindow::MainWindow( QWidget * parent ) :
 
     // TODO: Finish -> quit
     // Move Recorder into another thread
-    capThread = new QThread();
-    recorder.moveToThread( capThread );
-    connect( capThread, &QThread::finished, capThread, &QThread::deleteLater );
+    recThread = new QThread();
+    recorder.moveToThread( recThread );
+    connect( recThread, &QThread::finished, recThread, &QThread::deleteLater );
 
     // Initialize Image buffer.
     image_buffer = new QVector<FlyCapture2::Image *>;
@@ -84,8 +84,8 @@ MainWindow::~MainWindow() {
     if ( RECORDING )
         startStopRecording();
 
-    capThread->quit();
-    capThread->wait();
+    recThread->quit();
+    recThread->wait();
 }
 
 void MainWindow::setStatus( STATUS status ) {

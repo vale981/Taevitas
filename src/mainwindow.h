@@ -50,7 +50,7 @@ class MainWindow : public QMainWindow {
 
         QVector<FlyCapture2::Image *> * image_buffer;
 
-        QThread * capThread;
+        QThread * recThread;
 
     private slots:
         // Fills Camera Combobox with Cameras
