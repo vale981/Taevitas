@@ -29,5 +29,4 @@ void ImageGrabber::stopCapturing() {
 
     delete tmp;
     delete stored_img;
-    terminate();
 }
