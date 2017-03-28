@@ -42,6 +42,7 @@ MainWindow::MainWindow( QWidget * parent ) :
     recThread = new QThread();
     recorder.moveToThread( recThread );
     connect( recThread, &QThread::finished, recThread, &QThread::deleteLater );
+    recThread->start();
 
     // Initialize Image buffer.
     image_buffer = new QVector<FlyCapture2::Image *>;
@@ -231,7 +232,6 @@ void MainWindow::frameCaptured( FlyCapture2::Image * image ) {
         displayPreview( image );
 
     if ( recorder.isRecording() ) {
-        qDebug() << "emmiting signal";
         emit saveFrame( image );
     }
 
