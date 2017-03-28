@@ -86,7 +86,7 @@ void Recorder::newRecording( QString r_name ) {
     f_err = recorder.AVIOpen( ( record_dir.path() + "/" + recName + "_" + QString::number( frame_n ) + ".avi" ).toStdString().c_str(), &options );
     if ( f_err != PGRERROR_OK ) {
         throw f_err;
-        qDebug( "That's the problem." )
+        qDebug() << ( "That's the problem." );
         return;
     }
 
