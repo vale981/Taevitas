@@ -16,8 +16,7 @@ class ImageGrabber : public QThread {
         bool capture;
         FlyCapture2::Camera * cam;
 
-        FlyCapture2::Image * tmp;
-        FlyCapture2::Image * stored_img;
+        FlyCapture2::Image tmp;
 
     signals:
         void imageCaptured( FlyCapture2::Image * image );

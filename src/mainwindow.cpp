@@ -50,7 +50,7 @@ MainWindow::MainWindow( QWidget * parent ) :
     connect( &recorder, &Recorder::frameSaved, this, &MainWindow::frameSaved );
 
     // Connect ImageWriteSignal
-    connect( this, &MainWindow::saveFrame, &recorder, &Recorder::appendFrame );
+    connect( this, &MainWindow::saveFrame, &recorder, &Recorder::appendFrame, Qt::QueuedConnection );
 
     // Connect Events
     connect( ui->preview_button, &QPushButton::clicked, this, &MainWindow::togglePreview );
@@ -77,12 +77,15 @@ MainWindow::MainWindow( QWidget * parent ) :
     connect( ui->startButton, &QPushButton::clicked, this, &MainWindow::startStopRecording );
 }
 
+// TODO: Proper wait please! EVENT
 MainWindow::~MainWindow() {
     delete ui;
     delete image_buffer;
 
-    if ( RECORDING )
+    if ( status == RECORDING ) {
+        showError( "Stopping Capture..." );
         startStopRecording();
+    }
 
     recThread->quit();
     recThread->wait();
