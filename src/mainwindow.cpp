@@ -360,6 +360,7 @@ void MainWindow::frameSaved( FlyCapture2::Image * image ) {
 
     for ( int i = 0; i < image_buffer->length(); i++ ) {
         if ( ( *image_buffer )[i] == image ) {
+            delete image_buffer[i];
             image_buffer->remove( i );
             break;
         }
