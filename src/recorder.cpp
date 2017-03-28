@@ -42,7 +42,6 @@ void Recorder::newRecording( QString r_name ) {
 
     // Clean r_name // TODO: Maybe Visual Feedback for that...
     r_name.replace( QRegExp( "[^\\_a-zA-Z0-9]" ), "_" );
-    qDebug() << r_name;
     recName = r_name;
 
     // Verify Recdir... create directories...
@@ -54,6 +53,7 @@ void Recorder::newRecording( QString r_name ) {
         return;
     }
 
+    qDebug() << "here";
     bool statExists = QFile( record_dir.path() + "/" + ".stat" ).exists();
 
     // get Status file
@@ -63,12 +63,15 @@ void Recorder::newRecording( QString r_name ) {
         return;
     }
 
+    qDebug() << "here2";
     if ( !statExists ) {
         statFile->write( "0" );
     }
 
     frame_n = 0;
     time_c = 0;
+
+    qDebug() << "here3";
 
     // If append, figure out Frame count etc...
     if ( append ) {
@@ -86,7 +89,6 @@ void Recorder::newRecording( QString r_name ) {
     f_err = recorder.AVIOpen( ( record_dir.path() + "/" + recName + "_" + QString::number( frame_n ) + ".avi" ).toStdString().c_str(), &options );
     if ( f_err != PGRERROR_OK ) {
         throw f_err;
-        qDebug() << ( "That's the problem." );
         return;
     }
 

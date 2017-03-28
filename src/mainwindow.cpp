@@ -303,8 +303,8 @@ void MainWindow::startStopRecording() {
         }
 
         if ( image_buffer->length() > 0 ) {
-            setStatus( STOPPING );
             // We just wait...
+            setStatus( STOPPING );
             return;
         }
 
