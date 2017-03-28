@@ -90,6 +90,7 @@ MainWindow::~MainWindow() {
 
     recThread->quit();
     recThread->wait();
+    delete recThread;
 }
 
 void MainWindow::setStatus( STATUS status ) {
