@@ -1,3 +1,4 @@
+// TODO: starting State
 #include "cameramanager.h"
 #include <QDebug>
 #include <QMutex>
@@ -56,15 +57,15 @@ void CameraManager::stopCapture() {
     if ( !is_capturing )
         return;
 
-
-    grabber->stopCapturing();
-    grabber->wait();
-
     Error error = camera.StopCapture();
     if ( error != PGRERROR_OK ) {
         throw error;
         return;
     }
+
+    grabber->stopCapturing();
+    grabber->wait();
+
 
     is_capturing = false;
 }
