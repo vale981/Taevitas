@@ -304,7 +304,6 @@ void MainWindow::startStopRecording() {
             }
         }
 
-        qDebug() << recorder.frameNumber();
         // FIXME: Why doesn't that work?
         setLcd();
         setStatus( RECORDING );
@@ -379,6 +378,7 @@ void MainWindow::frameSaved( FlyCapture2::Image * image ) {
 }
 
 void MainWindow::setLcd() {
+    qDebug() << "setting lcd";
     ui->framesCaptured->display( recorder.frameNumber() );
     ui->timeCaptured->display( QString( "%1:%2" ).arg( ( ( ( int )recorder.timeCaptured() ) / 60 ) ).arg( ( int )recorder.timeCaptured() % 60 ) );
 }
