@@ -10,6 +10,7 @@
 
 // TODO: Handle Errors!!
 // TODO: Handle Disconnect!!
+// TODO: Started Capture Event...
 
 MainWindow::MainWindow( QWidget * parent ) :
     QMainWindow( parent ),
@@ -292,7 +293,7 @@ void MainWindow::startStopRecording() {
             resetCapture();
             return;
         }
-
+        qDebug() << recorder;
         if ( !camMan.isCapturing() ) {
             try {
                 camMan.startCapture();
@@ -303,6 +304,7 @@ void MainWindow::startStopRecording() {
             }
         }
 
+        // FIXME: Why doesn't that work?
         setLcd();
         setStatus( RECORDING );
 
