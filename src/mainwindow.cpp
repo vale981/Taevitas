@@ -304,6 +304,7 @@ void MainWindow::startStopRecording() {
             }
         }
 
+        qDebug() << recorder.frameNumber();
         // FIXME: Why doesn't that work?
         setLcd();
         setStatus( RECORDING );

@@ -53,7 +53,6 @@ void Recorder::newRecording( QString r_name ) {
         return;
     }
 
-    qDebug() << "here";
     bool statExists = QFile( record_dir.path() + "/" + ".stat" ).exists();
 
     // get Status file
@@ -63,15 +62,12 @@ void Recorder::newRecording( QString r_name ) {
         return;
     }
 
-    qDebug() << "here2";
     if ( !statExists ) {
         statFile->write( "0" );
     }
 
     frame_n = 0;
     time_c = 0;
-
-    qDebug() << "here3";
 
     // If append, figure out Frame count etc...
     if ( append ) {
@@ -81,8 +77,6 @@ void Recorder::newRecording( QString r_name ) {
         }
         time_c = frame_n / options.frameRate;
     }
-
-    qDebug() << frameNumber();
 
     // open AVI in recorder
     Error f_err;
