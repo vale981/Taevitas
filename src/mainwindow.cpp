@@ -270,7 +270,8 @@ void MainWindow::displayPreview( FlyCapture2::Image * last_capture ) {
 void MainWindow::directorySelection() {
     QString dir = QFileDialog::getExistingDirectory( this, tr( "Choose the working Directory." ), ( recorder.dirSet() ? recorder.getProjectDir() : QStandardPaths::writableLocation( QStandardPaths::DocumentsLocation ) ), QFileDialog::ShowDirsOnly );
     try {
-        recorder.setProjectDir( dir );
+        if ( !recorder.isRecording() )
+            recorder.setProjectDir( dir );
         enableStart();
     } catch ( FlyCapture2::Error e ) {
         showError( e );
@@ -302,6 +303,9 @@ void MainWindow::startStopRecording() {
                 return;
             }
         }
+
+        ui->framesCaptured->display( recorder.frameNumber() );
+        ui->timeCaptured->display( QString( "%1:%2" ).arg( ( ( ( int )recorder.timeCaptured() ) / 60 ) ).arg( ( int )recorder.timeCaptured() % 60 ) );
 
         setStatus( RECORDING );
 
@@ -355,8 +359,7 @@ void MainWindow::frameSaved( FlyCapture2::Image * image ) {
     static QMutex m;
     m.lock();
 
-    ui->framesCaptured->display( recorder.frameNumber() );
-    ui->timeCaptured->display( QString( "%1:%2" ).arg( ( ( ( int )recorder.timeCaptured() ) / 60 ) ).arg( ( int )recorder.timeCaptured() % 60 ) );
+    setLcd();
 
     // Search and Delete (Should be first).
 
@@ -373,4 +376,9 @@ void MainWindow::frameSaved( FlyCapture2::Image * image ) {
         startStopRecording();
 
     m.unlock();
+}
+
+void MainWindow::setLcd() {
+    ui->framesCaptured->display( recorder.frameNumber() );
+    ui->timeCaptured->display( QString( "%1:%2" ).arg( ( ( ( int )recorder.timeCaptured() ) / 60 ) ).arg( ( int )recorder.timeCaptured() % 60 ) );
 }

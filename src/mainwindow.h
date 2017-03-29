@@ -52,6 +52,8 @@ class MainWindow : public QMainWindow {
 
         QThread * recThread;
 
+        void setLcd();
+
     private slots:
         // Fills Camera Combobox with Cameras
         void scanAndUpdateCameras();
