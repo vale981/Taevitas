@@ -225,16 +225,17 @@ void MainWindow::frameCaptured( FlyCapture2::Image * image ) {
     static QMutex m;
     m.lock();
 
-    // TODO: WHY POINTER
-    if ( image )
-        image_buffer->append( image );
-    ui->buffer->display( image_buffer->length() );
+    if ( image == nullptr )
+        return;
 
     // If preview is activated...
     if ( ui->preview_widget->isEnabled() )
         displayPreview( image );
 
     if ( recorder.isRecording() ) {
+        // TODO: WHY POINTER
+        image_buffer->append( image );
+        ui->buffer->display( image_buffer->length() );
         emit saveFrame( image );
     }
 
