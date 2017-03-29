@@ -234,7 +234,8 @@ void MainWindow::frameCaptured( FlyCapture2::Image * image ) {
         // TODO: WHY POINTER
         image_buffer->append( image );
         ui->buffer->display( image_buffer->length() );
-        emit saveFrame( image );
+        if ( image_buffer->length() < 2 )
+            emit saveFrame( image );
     } else
         delete image;
 
@@ -371,7 +372,9 @@ void MainWindow::frameSaved( FlyCapture2::Image * image ) {
     }
 
     ui->buffer->display( image_buffer->length() );
-    if ( status == STOPPING && image_buffer->empty() )
+    if ( !image_buffer->empty() )
+        emit saveFrame( image_buffer->top() );
+    else if ( status == STOPPING  )
         startStopRecording();
 
     m.unlock();
