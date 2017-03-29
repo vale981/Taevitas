@@ -305,8 +305,8 @@ void MainWindow::startStopRecording() {
         }
 
         // FIXME: Why doesn't that work?
-        setLcd();
         setStatus( RECORDING );
+        setLcd();
 
     } else {
         // Stop Capture!
