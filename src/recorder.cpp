@@ -82,7 +82,7 @@ void Recorder::newRecording( QString r_name ) {
         time_c = frame_n / options.frameRate;
     }
 
-    qDebug() << ( record_dir.path() + "/" + recName ).toStdString().c_str();
+    qDebug() << frameNumber();
 
     // open AVI in recorder
     Error f_err;

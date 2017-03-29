@@ -234,8 +234,7 @@ void MainWindow::frameCaptured( FlyCapture2::Image * image ) {
         // TODO: WHY POINTER
         image_buffer->append( image );
         ui->buffer->display( image_buffer->length() );
-        if ( image_buffer->length() < 2 )
-            emit saveFrame( image );
+        emit saveFrame( image );
     } else
         delete image;
 
@@ -294,7 +293,7 @@ void MainWindow::startStopRecording() {
             resetCapture();
             return;
         }
-        qDebug() << "Started recorder...";
+
         if ( !camMan.isCapturing() ) {
             try {
                 camMan.startCapture();
@@ -372,9 +371,7 @@ void MainWindow::frameSaved( FlyCapture2::Image * image ) {
     }
 
     ui->buffer->display( image_buffer->length() );
-    if ( !image_buffer->empty() )
-        emit saveFrame( image_buffer->first() );
-    else if ( status == STOPPING  )
+    if ( status == STOPPING && image_buffer->empty() )
         startStopRecording();
 
     m.unlock();
