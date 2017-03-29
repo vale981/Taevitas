@@ -227,6 +227,7 @@ void MainWindow::frameCaptured( FlyCapture2::Image * image ) {
 
     // TODO: WHY POINTER
     image_buffer->append( image );
+    ui->buffer->display( image_buffer->length() );
 
     // If preview is activated...
     if ( ui->preview_widget->isEnabled() )
@@ -366,6 +367,7 @@ void MainWindow::frameSaved( FlyCapture2::Image * image ) {
         }
     }
 
+    ui->buffer->display( image_buffer->length() );
     if ( status == STOPPING && image_buffer->empty() )
         startStopRecording();
 

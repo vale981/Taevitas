@@ -47,6 +47,8 @@ public:
     QLCDNumber *framesCaptured;
     QLabel *label_3;
     QLabel *label_4;
+    QLCDNumber *buffer;
+    QLabel *label_5;
     QGroupBox *groupBox;
     QVBoxLayout *verticalLayout;
     QFormLayout *formLayout;
@@ -129,11 +131,21 @@ public:
 
         gridLayout_2->addWidget(label_4, 0, 1, 1, 1, Qt::AlignHCenter);
 
+        buffer = new QLCDNumber(recStats);
+        buffer->setObjectName(QStringLiteral("buffer"));
+
+        gridLayout_2->addWidget(buffer, 3, 0, 1, 2, Qt::AlignHCenter);
+
+        label_5 = new QLabel(recStats);
+        label_5->setObjectName(QStringLiteral("label_5"));
+
+        gridLayout_2->addWidget(label_5, 2, 0, 1, 2, Qt::AlignHCenter);
+
 
         verticalLayout_2->addWidget(recStats);
 
 
-        gridLayout->addWidget(groupBox_2, 2, 0, 1, 1, Qt::AlignLeft);
+        gridLayout->addWidget(groupBox_2, 2, 0, 1, 1);
 
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QStringLiteral("groupBox"));
@@ -242,7 +254,7 @@ public:
         verticalLayout->addWidget(recOptions);
 
 
-        gridLayout->addWidget(groupBox, 0, 0, 1, 1, Qt::AlignLeft);
+        gridLayout->addWidget(groupBox, 0, 0, 1, 1);
 
         MainWindow->setCentralWidget(centralWidget);
 
@@ -259,6 +271,7 @@ public:
         statusLabel->setText(QApplication::translate("MainWindow", "Waiting.", Q_NULLPTR));
         label_3->setText(QApplication::translate("MainWindow", "Frames", Q_NULLPTR));
         label_4->setText(QApplication::translate("MainWindow", "Minutes", Q_NULLPTR));
+        label_5->setText(QApplication::translate("MainWindow", "Buffer", Q_NULLPTR));
         groupBox->setTitle(QApplication::translate("MainWindow", "Settings", Q_NULLPTR));
         cameraSelector->setCurrentText(QString());
         label->setText(QApplication::translate("MainWindow", "Camera:", Q_NULLPTR));
