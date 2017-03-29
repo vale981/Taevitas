@@ -293,7 +293,7 @@ void MainWindow::startStopRecording() {
             resetCapture();
             return;
         }
-        qDebug() << recorder;
+        qDebug() << "Started recorder...";
         if ( !camMan.isCapturing() ) {
             try {
                 camMan.startCapture();
