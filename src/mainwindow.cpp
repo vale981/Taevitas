@@ -226,7 +226,8 @@ void MainWindow::frameCaptured( FlyCapture2::Image * image ) {
     m.lock();
 
     // TODO: WHY POINTER
-    image_buffer->append( image );
+    if ( image )
+        image_buffer->append( image );
     ui->buffer->display( image_buffer->length() );
 
     // If preview is activated...
