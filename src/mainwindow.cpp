@@ -237,7 +237,8 @@ void MainWindow::frameCaptured( FlyCapture2::Image * image ) {
         image_buffer->append( image );
         ui->buffer->display( image_buffer->length() );
         emit saveFrame( image );
-    }
+    } else
+        delete image;
 
     m.unlock();
     return;
