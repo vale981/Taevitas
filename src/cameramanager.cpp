@@ -57,13 +57,14 @@ void CameraManager::stopCapture() {
     if ( !is_capturing )
         return;
 
+    grabber->stopCapturing();
+
     Error error = camera.StopCapture();
     if ( error != PGRERROR_OK ) {
         throw error;
         return;
     }
 
-    grabber->stopCapturing();
     grabber->wait();
 
 
