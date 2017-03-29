@@ -225,9 +225,6 @@ void MainWindow::frameCaptured( FlyCapture2::Image * image ) {
     static QMutex m;
     m.lock();
 
-    if ( image == nullptr )
-        return;
-
     // If preview is activated...
     /*if ( ui->preview_widget->isEnabled() )
         displayPreview( image );*/
@@ -306,9 +303,7 @@ void MainWindow::startStopRecording() {
             }
         }
 
-        ui->framesCaptured->display( recorder.frameNumber() );
-        ui->timeCaptured->display( QString( "%1:%2" ).arg( ( ( ( int )recorder.timeCaptured() ) / 60 ) ).arg( ( int )recorder.timeCaptured() % 60 ) );
-
+        setLcd();
         setStatus( RECORDING );
 
     } else {
