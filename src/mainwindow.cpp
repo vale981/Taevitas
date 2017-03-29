@@ -229,8 +229,8 @@ void MainWindow::frameCaptured( FlyCapture2::Image * image ) {
         return;
 
     // If preview is activated...
-    if ( ui->preview_widget->isEnabled() )
-        displayPreview( image );
+    /*if ( ui->preview_widget->isEnabled() )
+        displayPreview( image );*/
 
     if ( recorder.isRecording() ) {
         // TODO: WHY POINTER
