@@ -94,6 +94,8 @@ void MainWindow::closeEvent ( QCloseEvent * event ) {
         recThread->quit();
         recThread->weait();
         event->ignore();
+
+        QTimer::singleShot( 1000, this, &MainWindow::close() );
         return;
     }
 
