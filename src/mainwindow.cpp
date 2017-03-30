@@ -145,12 +145,14 @@ void MainWindow::setStatus( STATUS status ) {
             enableRecOptions();
             ui->statusLabel->setText( "Connected." );
             ui->startButton->setText( "Start" );
+            ui->cameraSelector->setProperty( "enabled", true );
             ui->recStats->hide();
             qDebug( "Connected...." );
             break;
         case RECORDING:
             ui->timeCaptured->display( QString( "00:00" ) );
             ui->framesCaptured->display( 0 );
+            ui->cameraSelector->setProperty( "enabled", false );
 
             ui->statusLabel->setText( "Recording!" );
             ui->startButton->setText( "Stop" );
