@@ -16,7 +16,7 @@ bool SerialCommunicator::selectPort( const QSerialPortInfo &info ) {
     port.close();
     port.setPort( info );
 
-    bool open = serial.open( QIODevice::ReadWrite );
+    bool open = port.open( QIODevice::ReadWrite );
     return open;
 }
 
