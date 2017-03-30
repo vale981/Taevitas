@@ -89,9 +89,14 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::closeEvent ( QCloseEvent * event ) {
+    // TODO: Nicer
     if ( status == RECORDING ) {
         setStatus( STOPPING );
         startStopRecording();
+        event->ignore();
+        QTimer::singleShot( 1000, this, &MainWindow::close );
+        return;
+    } else if ( status == STOPPING ) {
         event->ignore();
         QTimer::singleShot( 1000, this, &MainWindow::close );
         return;
