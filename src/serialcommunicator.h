@@ -25,8 +25,8 @@ class SerialCommunicator : public QObject {
         bool selectPort( const int index );
 
         // Signal Specific
-        void sendStart() {
-            write( "Start" );
+        void sendRun() {
+            write( "Run" );
         }
 
         void sendHalt() {

@@ -72,6 +72,11 @@ MainWindow::MainWindow( QWidget * parent ) :
     // Rescan Serials
     connect( ui->serialScanButton, &QPushButton::clicked, this, &MainWindow::fillSerialPorts );
 
+    // Serial Control Buttons
+    connect( ui->sRun, &QPushButton::clicked, &comm, &SerialCommunicator::sendRun );
+    connect( ui->sHalt, &QPushButton::clicked, &comm, &SerialCommunicator::sendHalt );
+    connect( ui->sFast, &QPushButton::clicked, &comm, &SerialCommunicator::sendFast );
+
     // Camera selected
     connect( ui->cameraSelector, static_cast<void( QComboBox::* )( int )>( &QComboBox::currentIndexChanged ), this, &MainWindow::cameraSelected );
 
