@@ -47,9 +47,10 @@ class SerialCommunicator : public QObject {
         QList<QSerialPortInfo> ports;
         void write( QByteArray data );
 
+        int lastBuff;
+
     private slots:
         void handleRead();
-        int lastBuff;
 };
 
 #endif // SERIALCOMMUNICATOR_H
