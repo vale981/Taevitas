@@ -25,6 +25,8 @@ bool SerialCommunicator::selectPort( const QString &portName ) {
             break;
         }
     }
+
+    return false;
 }
 
 // TODO: Maybe Inline
