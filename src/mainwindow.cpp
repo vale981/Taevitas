@@ -76,7 +76,7 @@ MainWindow::MainWindow( QWidget * parent ) :
     connect( ui->cameraSelector, static_cast<void( QComboBox::* )( int )>( &QComboBox::currentIndexChanged ), this, &MainWindow::cameraSelected );
 
     // Serial Selected
-    connect( ui->serialSelector, static_cast<void( QComboBox::* )( int )>( &QComboBox::currentIndexChanged ), &comm, [this] ( int port ) {
+    connect( ui->serialSelector, static_cast<void( QComboBox::* )( int )>( &QComboBox::currentIndexChanged ), this, [this] ( int port ) {
         ui->serialControl->setProperty( "visible", comm.selectPort( port ) );
     } );
 
@@ -94,6 +94,11 @@ MainWindow::MainWindow( QWidget * parent ) :
 
     // Start recording
     connect( ui->startButton, &QPushButton::clicked, this, &MainWindow::startStopRecording );
+
+    // Serial Selected
+    connect( &comm, &SerialCommunicator::dataRead, this, [this] ( QByteArray data ) {
+        qDebug() << data;
+    } );
 }
 
 // TODO: Proper wait please! EVENT

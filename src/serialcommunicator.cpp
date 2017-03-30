@@ -1,7 +1,9 @@
 #include "serialcommunicator.h"
 #include "QDebug"
 
-SerialCommunicator::SerialCommunicator( QObject * parent ) : QObject( parent ), port( this ), lastBuff { 0 } {}
+SerialCommunicator::SerialCommunicator( QObject * parent ) : QObject( parent ), port( this ), lastBuff { 0 } {
+    connect( &port,  &QSerialPort::readyRead, this, &SerialCommunicator::handleRead );
+}
 
 SerialCommunicator::~SerialCommunicator() {
     port.close();
@@ -46,4 +48,8 @@ void SerialCommunicator::write( QByteArray data ) {
         return;
 
     port.write( data.append( '\n' ) );
+}
+
+void SerialCommunicator::handleRead() {
+    emit dataRead( port.readAll() );
 }

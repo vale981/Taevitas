@@ -9,12 +9,13 @@ class SerialCommunicator : public QObject {
     public:
         explicit SerialCommunicator( QObject * parent = 0 );
         ~SerialCommunicator();
-
-    public:
         const QList<QSerialPortInfo> &getPorts();
         bool isConnected() const {
             return port.isOpen();
         }
+
+    signals:
+        void dataRead( QByteArray data );
 
     public slots:
         // TODO: Maybe Remove
@@ -46,6 +47,8 @@ class SerialCommunicator : public QObject {
         QList<QSerialPortInfo> ports;
         void write( QByteArray data );
 
+    private slots:
+        void handleRead();
         int lastBuff;
 };
 
