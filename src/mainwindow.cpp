@@ -92,7 +92,7 @@ void MainWindow::closeEvent ( QCloseEvent * event ) {
         setStatus( STOPPING );
         startStopRecording();
         recThread->quit();
-        recThread->weait();
+        recThread->wait();
         event->ignore();
 
         QTimer::singleShot( 1000, this, &MainWindow::close() );
