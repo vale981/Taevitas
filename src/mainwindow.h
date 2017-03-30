@@ -19,6 +19,8 @@ class MainWindow : public QMainWindow {
         explicit MainWindow( QWidget * parent = 0 );
         ~MainWindow();
 
+        void closeEvent( QCloseEvent * event );
+
     private:
         Ui::MainWindow * ui;
         CameraManager camMan;
