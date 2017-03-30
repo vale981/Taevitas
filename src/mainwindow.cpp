@@ -159,7 +159,7 @@ void MainWindow::updateCameraList( unsigned int num_cameras ) {
 
 void MainWindow::fillSerialPorts() {
     ui->serialSelector->clear();
-    for ( QSerialPortInfo &info : comm.getPorts() ) {
+    for ( QSerialPortInfo info : comm.getPorts() ) {
         ui->cameraSelector->addItem( info.portName() );
     }
 }
