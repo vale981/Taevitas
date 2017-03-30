@@ -19,6 +19,7 @@ class MainWindow : public QMainWindow {
         explicit MainWindow( QWidget * parent = 0 );
         ~MainWindow();
 
+    protected:
         void closeEvent( QCloseEvent * event );
 
     private:

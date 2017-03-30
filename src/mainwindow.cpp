@@ -85,6 +85,8 @@ MainWindow::MainWindow( QWidget * parent ) :
 MainWindow::~MainWindow() {
     delete ui;
     delete image_buffer;
+    recThread->quit();
+    recThread->wait();
     delete recThread;
 }
 
@@ -100,9 +102,6 @@ void MainWindow::closeEvent ( QCloseEvent * event ) {
         QTimer::singleShot( 1000, this, &MainWindow::close );
         return;
     }
-
-    recThread->quit();
-    recThread->wait();
     event->accept();
 }
 
