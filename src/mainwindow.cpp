@@ -7,6 +7,7 @@
 #include <QTime>
 #include <QErrorMessage>
 #include <QFileDialog>
+#include <QCloseEvent>
 
 // TODO: Handle Errors!!
 // TODO: Handle Disconnect!!
@@ -83,15 +84,16 @@ MainWindow::MainWindow( QWidget * parent ) :
 MainWindow::~MainWindow() {
     delete ui;
     delete image_buffer;
-
-    if ( status == RECORDING ) {
-        showError( "Stopping Capture..." );
-        startStopRecording();
-    }
-
-    recThread->quit();
-    recThread->wait();
     delete recThread;
+}
+
+void MainWindow::closeEvent ( QCloseEvent * event ) {
+    if ( status == RECORDING ) {
+        setStatus( STOPPING );
+        startStopRecording();
+        recThread->quit();
+        recThread->wait();
+    }
 }
 
 void MainWindow::setStatus( STATUS status ) {

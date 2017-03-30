@@ -105,8 +105,8 @@ RecorderError Recorder::verifyRecDir() {
         QMessageBox msgBox;
 
         msgBox.setText( tr( "A recording with this name already exists. Which action should be taken?" ) );
-        void * appendButton = msgBox.addButton( tr( "Append the recording." ), QMessageBox::ActionRole );
-        void * removeButton = msgBox.addButton( tr( "Overwrite recording." ), QMessageBox::ActionRole );
+        void * appendButton = msgBox.addButton( tr( "Append the recording" ), QMessageBox::ApplyRole );
+        void * removeButton = msgBox.addButton( tr( "Overwrite recording" ), QMessageBox::ActionRole );
         void * abortButton = msgBox.addButton( QMessageBox::Abort );
 
         msgBox.exec();
