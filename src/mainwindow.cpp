@@ -77,6 +77,11 @@ MainWindow::MainWindow( QWidget * parent ) :
     connect( ui->sHalt, &QPushButton::clicked, &comm, &SerialCommunicator::sendHalt );
     connect( ui->sFast, &QPushButton::clicked, &comm, &SerialCommunicator::sendFast );
 
+    // Serial Monitor
+    connect( &comm, &SerialCommunicator::dataRead, this, [this] ( QByteArray data ) {
+        ui->serialMon->appendPlainText( data );
+    } );
+
     // Camera selected
     connect( ui->cameraSelector, static_cast<void( QComboBox::* )( int )>( &QComboBox::currentIndexChanged ), this, &MainWindow::cameraSelected );
 
@@ -99,11 +104,6 @@ MainWindow::MainWindow( QWidget * parent ) :
 
     // Start recording
     connect( ui->startButton, &QPushButton::clicked, this, &MainWindow::startStopRecording );
-
-    // Serial Selected
-    connect( &comm, &SerialCommunicator::dataRead, this, [this] ( QByteArray data ) {
-        qDebug() << data;
-    } );
 }
 
 // TODO: Proper wait please! EVENT

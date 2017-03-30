@@ -23,6 +23,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSpinBox>
@@ -62,6 +63,7 @@ public:
     QCheckBox *saveFrames;
     QPushButton *startButton;
     QPushButton *preview_button;
+    QPlainTextEdit *serialMon;
     QGroupBox *groupBox_2;
     QVBoxLayout *verticalLayout_2;
     QLabel *statusLabel;
@@ -79,7 +81,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(614, 750);
+        MainWindow->resize(614, 767);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -247,6 +249,12 @@ public:
         preview_button->setCheckable(true);
 
         verticalLayout_4->addWidget(preview_button);
+
+        serialMon = new QPlainTextEdit(recOptions);
+        serialMon->setObjectName(QStringLiteral("serialMon"));
+        serialMon->setReadOnly(true);
+
+        verticalLayout_4->addWidget(serialMon);
 
 
         verticalLayout->addWidget(recOptions);
