@@ -429,6 +429,7 @@ void MainWindow::frameSaved( FlyCapture2::Image * image ) {
     if ( status == STOPPING && image_buffer->empty() )
         startStopRecording();
 
+    comm.sendBuffer( image_buffer->length() );
     m.unlock();
 }
 
