@@ -51,6 +51,7 @@ public:
     QLabel *label_6;
     QComboBox *serialSelector;
     QPushButton *camScanButton;
+    QPushButton *serialScanButton;
     QPushButton *directorySelector;
     QGroupBox *recOptions;
     QVBoxLayout *verticalLayout_4;
@@ -136,6 +137,11 @@ public:
         formLayout->setVerticalSpacing(0);
         cameraSelector = new QComboBox(groupBox);
         cameraSelector->setObjectName(QStringLiteral("cameraSelector"));
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(cameraSelector->sizePolicy().hasHeightForWidth());
+        cameraSelector->setSizePolicy(sizePolicy2);
         cameraSelector->setEditable(false);
 
         formLayout->setWidget(0, QFormLayout::FieldRole, cameraSelector);
@@ -166,18 +172,23 @@ public:
 
         camScanButton = new QPushButton(groupBox);
         camScanButton->setObjectName(QStringLiteral("camScanButton"));
-        QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Preferred);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(camScanButton->sizePolicy().hasHeightForWidth());
-        camScanButton->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy3(QSizePolicy::Minimum, QSizePolicy::Preferred);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(camScanButton->sizePolicy().hasHeightForWidth());
+        camScanButton->setSizePolicy(sizePolicy3);
 
         verticalLayout->addWidget(camScanButton);
 
+        serialScanButton = new QPushButton(groupBox);
+        serialScanButton->setObjectName(QStringLiteral("serialScanButton"));
+
+        verticalLayout->addWidget(serialScanButton);
+
         directorySelector = new QPushButton(groupBox);
         directorySelector->setObjectName(QStringLiteral("directorySelector"));
-        sizePolicy2.setHeightForWidth(directorySelector->sizePolicy().hasHeightForWidth());
-        directorySelector->setSizePolicy(sizePolicy2);
+        sizePolicy3.setHeightForWidth(directorySelector->sizePolicy().hasHeightForWidth());
+        directorySelector->setSizePolicy(sizePolicy3);
 
         verticalLayout->addWidget(directorySelector);
 
@@ -205,8 +216,8 @@ public:
 
         fps_box = new QSpinBox(recOptions);
         fps_box->setObjectName(QStringLiteral("fps_box"));
-        sizePolicy2.setHeightForWidth(fps_box->sizePolicy().hasHeightForWidth());
-        fps_box->setSizePolicy(sizePolicy2);
+        sizePolicy3.setHeightForWidth(fps_box->sizePolicy().hasHeightForWidth());
+        fps_box->setSizePolicy(sizePolicy3);
         fps_box->setValue(18);
 
         formLayout_2->setWidget(0, QFormLayout::FieldRole, fps_box);
@@ -223,16 +234,16 @@ public:
         startButton = new QPushButton(recOptions);
         startButton->setObjectName(QStringLiteral("startButton"));
         startButton->setEnabled(false);
-        sizePolicy2.setHeightForWidth(startButton->sizePolicy().hasHeightForWidth());
-        startButton->setSizePolicy(sizePolicy2);
+        sizePolicy3.setHeightForWidth(startButton->sizePolicy().hasHeightForWidth());
+        startButton->setSizePolicy(sizePolicy3);
         startButton->setFlat(false);
 
         verticalLayout_4->addWidget(startButton);
 
         preview_button = new QPushButton(recOptions);
         preview_button->setObjectName(QStringLiteral("preview_button"));
-        sizePolicy2.setHeightForWidth(preview_button->sizePolicy().hasHeightForWidth());
-        preview_button->setSizePolicy(sizePolicy2);
+        sizePolicy3.setHeightForWidth(preview_button->sizePolicy().hasHeightForWidth());
+        preview_button->setSizePolicy(sizePolicy3);
         preview_button->setCheckable(true);
 
         verticalLayout_4->addWidget(preview_button);
@@ -323,6 +334,7 @@ public:
         label->setText(QApplication::translate("MainWindow", "Camera:", Q_NULLPTR));
         label_6->setText(QApplication::translate("MainWindow", "Serial Port:", Q_NULLPTR));
         camScanButton->setText(QApplication::translate("MainWindow", "Rescan Cameras", Q_NULLPTR));
+        serialScanButton->setText(QApplication::translate("MainWindow", "Rescan Serial Ports", Q_NULLPTR));
         directorySelector->setText(QApplication::translate("MainWindow", "Working Directory", Q_NULLPTR));
         recOptions->setTitle(QApplication::translate("MainWindow", "Recorder Settings", Q_NULLPTR));
         projectName->setPlaceholderText(QApplication::translate("MainWindow", "Project Name", Q_NULLPTR));

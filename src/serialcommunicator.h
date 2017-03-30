@@ -18,9 +18,9 @@ class SerialCommunicator : public QObject {
     public slots:
         // TODO: Maybe Remove
         // returns False if the port is not open
-        bool selectPort( QSerialPortInfo &info );
-        bool selectPort( QString &portName );
-        bool selectPort( int index );
+        bool selectPort( const QSerialPortInfo &info );
+        bool selectPort( const QString &portName );
+        bool selectPort( const int index );
 
         // Signal Specific
         void sendStart() {
@@ -37,7 +37,7 @@ class SerialCommunicator : public QObject {
 
         void sendBuffer( int buff ) {
             if ( lastBuff != buff )
-                write( QString( "B" ) + QString::number( buff ) );
+                write( QByteArray( "B" ) + QString::number( buff ).toUtf8() );
         }
 
     signals:
@@ -46,8 +46,7 @@ class SerialCommunicator : public QObject {
     private:
         QSerialPort port;
         QList<QSerialPortInfo> ports;
-        void write( QString data );
-        void write( char * data );
+        void write( QByteArray data );
 
         int lastBuff;
 };

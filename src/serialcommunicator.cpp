@@ -7,7 +7,7 @@ const QList<QSerialPortInfo> &SerialCommunicator::getPorts() {
     return ports;
 }
 
-bool SerialCommunicator::selectPort( QSerialPortInfo &info ) {
+bool SerialCommunicator::selectPort( const QSerialPortInfo &info ) {
     port.setPort( info );
     bool open = port.isOpen();
     if ( open ) {
@@ -18,7 +18,7 @@ bool SerialCommunicator::selectPort( QSerialPortInfo &info ) {
 }
 
 // Overload just searches for the port.
-bool SerialCommunicator::selectPort( QString &portName ) {
+bool SerialCommunicator::selectPort( const QString &portName ) {
     for ( QSerialPortInfo info : ports ) {
         if ( info.portName() == portName ) {
             return selectPort( info );
@@ -28,19 +28,14 @@ bool SerialCommunicator::selectPort( QString &portName ) {
 }
 
 // TODO: Maybe Inline
-bool SerialCommunicator::selectPort( int index ) {
+bool SerialCommunicator::selectPort( const int index ) {
     return selectPort( ports.at( index ) );
 }
 
 // TODO: Maybe Different
-void SerialCommunicator::write( QString data ) {
-    write( data.toUtf8().toStdString().c_str() );
-}
-
-void SerialCommunicator::write( char * data ) {
+void SerialCommunicator::write( QByteArray data ) {
     if ( !port.isOpen() )
         return;
 
-    port.write( data );
-    port.write( '\n' );
+    port.write( data.append( '\n' ) );
 }
