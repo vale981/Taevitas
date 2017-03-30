@@ -183,7 +183,7 @@ void MainWindow::fillSerialPorts() {
         }
 
         // TODO: Method for that
-        ui->serialControl->setProperty( "visible", comm.selectPort( port ) );
+        ui->serialControl->setProperty( "visible", comm.selectPort( ports ) );
     }
 
 }
