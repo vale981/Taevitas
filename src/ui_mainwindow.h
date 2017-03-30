@@ -37,7 +37,7 @@ public:
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QSpacerItem *verticalSpacer;
-    QGroupBox *groupBox_3;
+    QGroupBox *serialControl;
     QVBoxLayout *verticalLayout_3;
     QPushButton *sRun;
     QPushButton *sHalt;
@@ -95,29 +95,29 @@ public:
 
         gridLayout->addItem(verticalSpacer, 2, 0, 1, 1);
 
-        groupBox_3 = new QGroupBox(centralWidget);
-        groupBox_3->setObjectName(QStringLiteral("groupBox_3"));
-        verticalLayout_3 = new QVBoxLayout(groupBox_3);
+        serialControl = new QGroupBox(centralWidget);
+        serialControl->setObjectName(QStringLiteral("serialControl"));
+        verticalLayout_3 = new QVBoxLayout(serialControl);
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setContentsMargins(11, 11, 11, 11);
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
-        sRun = new QPushButton(groupBox_3);
+        sRun = new QPushButton(serialControl);
         sRun->setObjectName(QStringLiteral("sRun"));
 
         verticalLayout_3->addWidget(sRun);
 
-        sHalt = new QPushButton(groupBox_3);
+        sHalt = new QPushButton(serialControl);
         sHalt->setObjectName(QStringLiteral("sHalt"));
 
         verticalLayout_3->addWidget(sHalt);
 
-        sFast = new QPushButton(groupBox_3);
+        sFast = new QPushButton(serialControl);
         sFast->setObjectName(QStringLiteral("sFast"));
 
         verticalLayout_3->addWidget(sFast);
 
 
-        gridLayout->addWidget(groupBox_3, 1, 0, 1, 1);
+        gridLayout->addWidget(serialControl, 1, 0, 1, 1);
 
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QStringLiteral("groupBox"));
@@ -325,7 +325,7 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Taevitas", Q_NULLPTR));
-        groupBox_3->setTitle(QApplication::translate("MainWindow", "Serial Control", Q_NULLPTR));
+        serialControl->setTitle(QApplication::translate("MainWindow", "Serial Control", Q_NULLPTR));
         sRun->setText(QApplication::translate("MainWindow", "Run", Q_NULLPTR));
         sHalt->setText(QApplication::translate("MainWindow", "Halt", Q_NULLPTR));
         sFast->setText(QApplication::translate("MainWindow", "Fast", Q_NULLPTR));
