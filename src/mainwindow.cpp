@@ -178,7 +178,7 @@ void MainWindow::fillSerialPorts() {
     qDebug() << ports.length();
 
     // Fill Combo Box with Serial Ports
-    for ( QSerialPortInfo info : comm.getPorts() ) {
+    for ( QSerialPortInfo info : ports ) ) {
         ui->cameraSelector->addItem( info.portName() );
     }
 }
