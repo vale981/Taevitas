@@ -89,20 +89,20 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::closeEvent ( QCloseEvent * event ) {
-//    // TODO: Nicer
-//    if ( status == RECORDING ) {
-//        startStopRecording();
-//        event->ignore();
-//        QTimer::singleShot( 1000, this, &MainWindow::close );
-//        return;
-//    } else if ( status == STOPPING ) {
-//        event->ignore();
-//        QTimer::singleShot( 1000, this, &MainWindow::close );
-//        return;
-//    }
+    // TODO: Nicer
+    if ( status == RECORDING ) {
+        startStopRecording();
+        event->ignore();
+        QTimer::singleShot( 1000, this, &MainWindow::close );
+        return;
+    } else if ( status == STOPPING ) {
+        event->ignore();
+        QTimer::singleShot( 1000, this, &MainWindow::close );
+        return;
+    }
 
-//    recThread->quit();
-//    recThread->wait();
+    recThread->quit();
+    recThread->wait();
     event->accept();
 }
 
