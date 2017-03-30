@@ -92,8 +92,12 @@ void MainWindow::closeEvent ( QCloseEvent * event ) {
         setStatus( STOPPING );
         startStopRecording();
         recThread->quit();
-        recThread->wait();
+        recThread->weait();
+        event->ignore();
+        return;
     }
+
+    event->ignore();
 }
 
 void MainWindow::setStatus( STATUS status ) {
