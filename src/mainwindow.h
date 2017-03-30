@@ -7,6 +7,7 @@
 #include "FlyCapture2.h"
 #include "cameramanager.h"
 #include "recorder.h"
+#include "serialcommunicator.h"
 
 namespace Ui {
 class MainWindow;
@@ -57,6 +58,8 @@ class MainWindow : public QMainWindow {
 
         void setLcd();
 
+        SerialCommunicator comm;
+
     private slots:
         // Fills Camera Combobox with Cameras
         void scanAndUpdateCameras();
@@ -67,6 +70,8 @@ class MainWindow : public QMainWindow {
         void directorySelection();
         void startStopRecording();
         void frameSaved( FlyCapture2::Image * image );
+
+        void fillSerialPorts();
 
     signals:
         void saveFrame( FlyCapture2::Image * image );

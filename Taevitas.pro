@@ -6,6 +6,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT += serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -27,12 +28,14 @@ SOURCES += src/main.cpp\
         src/mainwindow.cpp\
 	src/cameramanager.cpp\
 	src/recorder.cpp \
-    src/imagegrabber.cpp
+    src/imagegrabber.cpp \
+    src/serialcommunicator.cpp
 
 HEADERS  += src/mainwindow.h\
 	src/cameramanager.h\
         src/recorder.h \ 
-    src/imagegrabber.h
+    src/imagegrabber.h \
+    src/serialcommunicator.h
 
 FORMS    += src/forms/mainwindow.ui
 

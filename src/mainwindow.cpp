@@ -19,7 +19,8 @@ MainWindow::MainWindow( QWidget * parent ) :
     ui( new Ui::MainWindow ),
     camMan( this ),
     recorder( 0, 18, false ),
-    resize { false } {
+    resize { false },
+    comm( this ) {
     ui->setupUi( this );
 
     // Set Scene and Hide Preview Widget
@@ -153,6 +154,13 @@ void MainWindow::updateCameraList( unsigned int num_cameras ) {
     // Fill Combo Box with cameras
     for ( unsigned int i = 0; i < num_cameras; i++ ) {
         ui->cameraSelector->addItem( QString( i + '0' ) );
+    }
+}
+
+void MainWindow::fillSerialPorts() {
+    ui->serialSelector->clear();
+    for ( QSerialPortInfo &info : comm.getPorts() ) {
+        ui->cameraSelector->addItem( info.portName() );
     }
 }
 
