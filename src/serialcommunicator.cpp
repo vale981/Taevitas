@@ -1,7 +1,7 @@
 #include "serialcommunicator.h"
 #include "QDebug"
 
-SerialCommunicator::SerialCommunicator( QObject * parent ) : QObject( parent ), port( this ), lastBuff { 0 } {
+SerialCommunicator::SerialCommunicator( QObject * parent ) : QObject( parent ), port( this ), lastBuff { -1 } {
     connect( &port,  &QSerialPort::readyRead, this, &SerialCommunicator::handleRead );
 }
 
