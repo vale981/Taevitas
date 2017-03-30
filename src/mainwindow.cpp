@@ -79,6 +79,7 @@ MainWindow::MainWindow( QWidget * parent ) :
 
     // Serial Monitor
     connect( &comm, &SerialCommunicator::dataRead, this, [this] ( QByteArray data ) {
+        ui->serialMon->moveCursor( QTextCursor::Start );
         ui->serialMon->insertPlainText( QString( "%1: " ).arg( QDateTime::currentDateTime().toString() ).append( data ) );
     } );
 
