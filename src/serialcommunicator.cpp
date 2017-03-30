@@ -1,4 +1,5 @@
 #include "serialcommunicator.h"
+#include "QDebug"
 
 SerialCommunicator::SerialCommunicator( QObject * parent ) : QObject( parent ), port( this ), lastBuff { 0 } {}
 
