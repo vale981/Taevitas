@@ -8,7 +8,7 @@ class SerialCommunicator : public QObject {
         Q_OBJECT
     public:
         explicit SerialCommunicator( QObject * parent = 0 );
-        explicit ~SerialCommunicator();
+        ~SerialCommunicator();
 
     public:
         const QList<QSerialPortInfo> &getPorts();
