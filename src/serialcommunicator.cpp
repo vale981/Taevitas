@@ -5,8 +5,6 @@ SerialCommunicator::SerialCommunicator( QObject * parent ) : QObject( parent ), 
 
 const QList<QSerialPortInfo> &SerialCommunicator::getPorts() {
     ports = QSerialPortInfo::availablePorts();
-    qDebug() << ports.length();
-
     return ports;
 }
 

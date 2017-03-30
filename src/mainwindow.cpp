@@ -174,6 +174,9 @@ void MainWindow::updateCameraList( unsigned int num_cameras ) {
 void MainWindow::fillSerialPorts() {
     ui->serialSelector->clear();
 
+    QList<QSerialPortInfo> ports = comm.getPorts();
+    qDebug() << ports.length();
+
     // Fill Combo Box with Serial Ports
     for ( QSerialPortInfo info : comm.getPorts() ) {
         ui->cameraSelector->addItem( info.portName() );
