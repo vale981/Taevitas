@@ -26,6 +26,9 @@ MainWindow::MainWindow( QWidget * parent ) :
     // Set Scene and Hide Preview Widget
     ui->preview_widget->hide();
 
+    // Hide Serial Control
+    ui->serialControl->setProperty( "visible", false );
+
     fit();
 
     // Set status
@@ -173,7 +176,6 @@ void MainWindow::fillSerialPorts() {
 
     // Fill Combo Box with Serial Ports
     for ( QSerialPortInfo info : comm.getPorts() ) {
-        qDebug() << info.portName();
         ui->cameraSelector->addItem( info.portName() );
     }
 }

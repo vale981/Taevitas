@@ -4,6 +4,8 @@ SerialCommunicator::SerialCommunicator( QObject * parent ) : QObject( parent ), 
 
 const QList<QSerialPortInfo> &SerialCommunicator::getPorts() {
     ports = QSerialPortInfo::availablePorts();
+    qDebug() << ports.length();
+
     return ports;
 }
 
@@ -31,6 +33,9 @@ bool SerialCommunicator::selectPort( const QString &portName ) {
 
 // TODO: Maybe Inline
 bool SerialCommunicator::selectPort( const int index ) {
+    if ( index < 0 )
+        return false;
+
     return selectPort( ports.at( index ) );
 }
 
