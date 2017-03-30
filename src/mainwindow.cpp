@@ -79,7 +79,7 @@ MainWindow::MainWindow( QWidget * parent ) :
 
     // Serial Monitor
     connect( &comm, &SerialCommunicator::dataRead, this, [this] ( QByteArray data ) {
-        ui->serialMon->insertPlainText( data );
+        ui->serialMon->insertPlainText( QDateTime::toString() + data );
     } );
 
     // Camera selected
