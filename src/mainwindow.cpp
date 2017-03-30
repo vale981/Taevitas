@@ -174,10 +174,18 @@ void MainWindow::updateCameraList( unsigned int num_cameras ) {
 void MainWindow::fillSerialPorts() {
     ui->serialSelector->clear();
 
+    auto ports = comm.getPorts();
+
     // Fill Combo Box with Serial Ports
-    for ( QSerialPortInfo info : comm.getPorts() ) {
-        ui->serialSelector->addItem( info.portName() );
+    if ( ports.length() > 0 ) {
+        for ( QSerialPortInfo &info : ports ) {
+            ui->serialSelector->addItem( info.portName() );
+        }
+
+        // TODO: Method for that
+        ui->serialControl->setProperty( "visible", comm.selectPort( port ) );
     }
+
 }
 
 void MainWindow::scanAndUpdateCameras() {
