@@ -92,15 +92,14 @@ void MainWindow::closeEvent ( QCloseEvent * event ) {
     if ( status == RECORDING ) {
         setStatus( STOPPING );
         startStopRecording();
-        recThread->quit();
-        recThread->wait();
         event->ignore();
-
         QTimer::singleShot( 1000, this, &MainWindow::close );
         return;
     }
 
-    event->ignore();
+    recThread->quit();
+    recThread->wait();
+    event->accept();
 }
 
 void MainWindow::setStatus( STATUS status ) {
