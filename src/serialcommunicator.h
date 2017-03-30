@@ -41,9 +41,6 @@ class SerialCommunicator : public QObject {
                 write( QByteArray( "B" ) + QString::number( buff ).toUtf8() );
         }
 
-    signals:
-        void connected();
-
     private:
         QSerialPort port;
         QList<QSerialPortInfo> ports;
