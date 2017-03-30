@@ -427,15 +427,15 @@ void MainWindow::frameSaved( FlyCapture2::Image * image ) {
     }
 
     ui->buffer->display( image_buffer->length() );
+    comm.sendBuffer( image_buffer->length() );
+
     if ( status == STOPPING && image_buffer->empty() )
         startStopRecording();
 
-    comm.sendBuffer( image_buffer->length() );
     m.unlock();
 }
 
 void MainWindow::setLcd() {
-    qDebug() << "setting lcd";
     ui->framesCaptured->display( recorder.frameNumber() );
     ui->timeCaptured->display( QString( "%1:%2" ).arg( ( ( ( int )recorder.timeCaptured() ) / 60 ) ).arg( ( int )recorder.timeCaptured() % 60 ) );
 }
