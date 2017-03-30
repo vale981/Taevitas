@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>614</width>
-    <height>767</height>
+    <height>843</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -21,7 +21,7 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="2" column="0">
+    <item row="3" column="0">
      <spacer name="verticalSpacer">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -36,36 +36,6 @@
        </size>
       </property>
      </spacer>
-    </item>
-    <item row="1" column="0">
-     <widget class="QGroupBox" name="serialControl">
-      <property name="title">
-       <string>Serial Control</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <item>
-        <widget class="QPushButton" name="sRun">
-         <property name="text">
-          <string>Run</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="sHalt">
-         <property name="text">
-          <string>Halt</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="sFast">
-         <property name="text">
-          <string>Fast</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
     </item>
     <item row="0" column="0">
      <widget class="QGroupBox" name="groupBox">
@@ -253,20 +223,13 @@
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QPlainTextEdit" name="serialMon">
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
          </layout>
         </widget>
        </item>
       </layout>
      </widget>
     </item>
-    <item row="3" column="0">
+    <item row="4" column="0">
      <widget class="QGroupBox" name="groupBox_2">
       <property name="title">
        <string>Status</string>
@@ -318,7 +281,7 @@
       </layout>
      </widget>
     </item>
-    <item row="0" column="2" rowspan="4">
+    <item row="0" column="2" rowspan="5">
      <widget class="QLabel" name="preview_widget">
       <property name="enabled">
        <bool>false</bool>
@@ -332,6 +295,43 @@
       <property name="text">
        <string/>
       </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QGroupBox" name="serialControl">
+      <property name="title">
+       <string>Serial Control</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QPushButton" name="sRun">
+         <property name="text">
+          <string>Run</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="sHalt">
+         <property name="text">
+          <string>Halt</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="sFast">
+         <property name="text">
+          <string>Fast</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPlainTextEdit" name="serialMon">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
    </layout>
