@@ -175,7 +175,7 @@ void MainWindow::fillSerialPorts() {
     ui->serialSelector->clear();
 
     // Fill Combo Box with Serial Ports
-    for ( QSerialPortInfo &info : comm.getPorts() ) {
+    for ( QSerialPortInfo info : comm.getPorts() ) {
         ui->serialSelector->addItem( info.portName() );
     }
 }
