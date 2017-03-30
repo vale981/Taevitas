@@ -8,6 +8,7 @@
 #include <QErrorMessage>
 #include <QFileDialog>
 #include <QCloseEvent>
+#include <QTimer>
 
 // TODO: Handle Errors!!
 // TODO: Handle Disconnect!!
