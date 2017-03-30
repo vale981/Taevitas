@@ -38,7 +38,7 @@
      </spacer>
     </item>
     <item row="1" column="0">
-     <widget class="QGroupBox" name="groupBox_3">
+     <widget class="QGroupBox" name="serialControl">
       <property name="title">
        <string>Serial Control</string>
       </property>

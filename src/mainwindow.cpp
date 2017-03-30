@@ -73,7 +73,9 @@ MainWindow::MainWindow( QWidget * parent ) :
     connect( ui->cameraSelector, static_cast<void( QComboBox::* )( int )>( &QComboBox::currentIndexChanged ), this, &MainWindow::cameraSelected );
 
     // Serial Selected
-    connect( ui->serialSelector, static_cast<void( QComboBox::* )( int )>( &QComboBox::currentIndexChanged ), &comm, QOverload<int>::of( &SerialCommunicator::selectPort ) );
+    connect( ui->serialSelector, static_cast<void( QComboBox::* )( int )>( &QComboBox::currentIndexChanged ), &comm, [this] ( int port ) {
+        //ui-> comm.selectPort( port )
+    } );
 
     // File Selector
     connect( ui->directorySelector, &QPushButton::clicked, this, &MainWindow::directorySelection );
