@@ -39,7 +39,7 @@ class SerialCommunicator : public QObject {
 
         void sendBuffer( int buff ) {
             if ( lastBuff != buff )
-                write( QByteArray( "B:" ) + QString::number( buff ).toUtf8() );
+                write( QByteArray( "B" ) + QString::number( buff ).toUtf8() );
         }
 
     private:
