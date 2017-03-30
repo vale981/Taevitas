@@ -3,14 +3,20 @@
 
 SerialCommunicator::SerialCommunicator( QObject * parent ) : QObject( parent ), port( this ), lastBuff { 0 } {}
 
+SerialCommunicator::~SerialCommunicator() {
+    port.close();
+}
+
 const QList<QSerialPortInfo> &SerialCommunicator::getPorts() {
     ports = QSerialPortInfo::availablePorts();
     return ports;
 }
 
 bool SerialCommunicator::selectPort( const QSerialPortInfo &info ) {
+    port.close();
     port.setPort( info );
-    bool open = port.isOpen();
+
+    bool open = serial.open( QIODevice::ReadWrite );
     if ( open ) {
         emit connected();
     }
