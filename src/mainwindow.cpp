@@ -34,6 +34,9 @@ MainWindow::MainWindow( QWidget * parent ) :
     // Try to connect to first cam
     scanAndUpdateCameras();
 
+    // Fill serial ports.
+    fillSerialPorts();
+
     // Set default name
     ui->projectName->setText( "Taevitas_Rec_" + QDateTime::currentDateTime().toString( "dd_MM_yyyy_hh_mm_ss" ) );
 
@@ -60,11 +63,17 @@ MainWindow::MainWindow( QWidget * parent ) :
     // Connect Events
     connect( ui->preview_button, &QPushButton::clicked, this, &MainWindow::togglePreview );
 
-    // Cam ComboBox clicked
+    // Rescan Cameras
     connect( ui->camScanButton, &QPushButton::clicked, this, &MainWindow::scanAndUpdateCameras );
+
+    // Rescan Serials
+    connect( ui->serialScanButton, &QPushButton::clicked, this, &MainWindow::fillSerialPorts );
 
     // Camera selected
     connect( ui->cameraSelector, static_cast<void( QComboBox::* )( int )>( &QComboBox::currentIndexChanged ), this, &MainWindow::cameraSelected );
+
+    // Serial Selected
+    connect( ui->serialSelector, static_cast<void( QComboBox::* )( int )>( &QComboBox::currentIndexChanged ), &comm, &SerialCommunicator::selectPort );
 
     // File Selector
     connect( ui->directorySelector, &QPushButton::clicked, this, &MainWindow::directorySelection );

@@ -143,6 +143,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="serialScanButton">
+         <property name="text">
+          <string>Rescan Serial Ports</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="directorySelector">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">

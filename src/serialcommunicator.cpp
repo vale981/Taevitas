@@ -1,6 +1,6 @@
 #include "serialcommunicator.h"
 
-SerialCommunicator::SerialCommunicator( QObject * parent ) : QObject( parent ), port( this ) {}
+SerialCommunicator::SerialCommunicator( QObject * parent ) : QObject( parent ), port( this ), lastBuff { 0 } {}
 
 const QList<QSerialPortInfo> &SerialCommunicator::getPorts() {
     ports = QSerialPortInfo::availablePorts();
@@ -25,4 +25,22 @@ bool SerialCommunicator::selectPort( QString &portName ) {
             break;
         }
     }
+}
+
+// TODO: Maybe Inline
+bool SerialCommunicator::selectPort( int index ) {
+    return selectPort( ports.at( index ) );
+}
+
+// TODO: Maybe Different
+void SerialCommunicator::write( QString data ) {
+    write( data.toUtf8().toStdString().c_str() );
+}
+
+void SerialCommunicator::write( char * data ) {
+    if ( !port.isOpen() )
+        return;
+
+    port.write( data );
+    port.write( '\n' );
 }
