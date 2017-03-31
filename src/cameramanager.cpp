@@ -1,13 +1,18 @@
-// TODO: starting State
 #include "cameramanager.h"
 #include <QDebug>
 #include <QMutex>
 
 using namespace FlyCapture2;
 
-CameraManager::CameraManager( QObject * parent ) : QObject( parent ), num_cameras {0}, camera_index {-1}, is_capturing {false} {}
+CameraManager::CameraManager( QObject * parent ) : QObject( parent ), num_cameras {0}, camera_index {-1}, is_capturing {false} {
+    bus_mgr.RegisterCallback( &CameraManager::camConnectEvent, ARRIVAL, this, &handleC );
+    bus_mgr.RegisterCallback( &CameraManager::camDisconnectEvent, REMOVAL, this, &handleD );
+}
 
 CameraManager::~CameraManager() {
+    bus_mgr.UnregisterCallback( handleC );
+    bus_mgr.UnregisterCallback( handleD );
+
     stopCapture();
     camera.Disconnect();
 }
@@ -52,6 +57,19 @@ void CameraManager::connectCamera( int index ) {
     camera_index = index;
 }
 
+void CameraManager::camConnectEvent( void * pParameter, unsigned int serialNumber ) {
+    static_cast<CameraManager *>( pParameter )->cameraConnected();
+}
+
+void CameraManager::camDisconnectEvent( void * pParameter, unsigned int serialNumber ) {
+    CameraManager * cam = static_cast<CameraManager *>( pParameter );
+    FlyCapture2::CameraInfo info;
+
+    cam->camera.GetCameraInfo( &info );
+    bool current = ( serialNumber == info.serialNumber );
+
+    cam->cameraDisconnected( current );
+}
 
 void CameraManager::stopCapture() {
     if ( !is_capturing )

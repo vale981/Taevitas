@@ -7,7 +7,6 @@
    hiding the internals from the GUI code, to make reusability easier, although FlyCapture code is needed   outside.
 */
 
-// TODO: implement camera arrival removal
 #include <QObject>
 #include <QVector>
 #include <QThread>
@@ -26,7 +25,7 @@ class CameraManager : public QObject {
         void startCapture();
         void stopCapture();
 
-        //TODO remove, if not needed
+        // NOTE: Maybe not needed.
         const FlyCapture2::Camera * getCamera() const {
             return &camera;
         }
@@ -37,7 +36,6 @@ class CameraManager : public QObject {
 
         // Get the number of connected cameras.
         unsigned int numCameras() {
-            FlyCapture2::BusManager bus_mgr;
             bus_mgr.GetNumOfCameras( &num_cameras );
             return num_cameras;
         }
@@ -50,9 +48,13 @@ class CameraManager : public QObject {
             return is_capturing;
         }
 
+        FlyCapture2::CallbackHandle handleC;
+        FlyCapture2::CallbackHandle handleD;
+
     private:
         FlyCapture2::Camera camera;
         FlyCapture2::FC2Config cam_config;
+        FlyCapture2::BusManager bus_mgr;
 
         unsigned int num_cameras;
 
@@ -68,8 +70,13 @@ class CameraManager : public QObject {
         // Capture Thread
         ImageGrabber * grabber;
 
+        static void camConnectEvent( void * pParameter, unsigned int serialNumber );
+        static void camDisconnectEvent( void * pParameter, unsigned int serialNumber );
+
     signals:
         void frameCaptured( FlyCapture2::Image * image ) const;
+        void cameraConnected();
+        void cameraDisconnected( bool current );
 };
 
 #endif // CAMERAMANAGER_H

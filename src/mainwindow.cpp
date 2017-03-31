@@ -11,9 +11,6 @@
 #include <QTimer>
 
 // TODO: Handle Errors!!
-// TODO: Handle Disconnect!!
-// TODO: Started Capture Event...
-
 MainWindow::MainWindow( QWidget * parent ) :
     QMainWindow( parent ),
     ui( new Ui::MainWindow ),
@@ -47,7 +44,6 @@ MainWindow::MainWindow( QWidget * parent ) :
     QString defaultDir = QStandardPaths::writableLocation( QStandardPaths::DocumentsLocation );
     recorder.setProjectDir( defaultDir );
 
-    // TODO: Finish -> quit
     // Move Recorder into another thread
     recThread = new QThread();
     recorder.moveToThread( recThread );
@@ -97,8 +93,17 @@ MainWindow::MainWindow( QWidget * parent ) :
     // Frame Captured
     connect( &camMan, &CameraManager::frameCaptured, this, &MainWindow::frameCaptured, Qt::DirectConnection );
 
-    // Change Project Name
-    connect( ui->projectName, &QLineEdit::textChanged, this, &MainWindow::enableStart );
+    // Camera Connected
+    connect( &camMan, &CameraManager::cameraConnected, this, &MainWindow::scanAndUpdateCameras );
+
+    // Camera Disconnected
+    connect( &camMan, &CameraManager::cameraDisconnected, this, [this] ( bool current ) {
+        if ( current ) {
+            showError( "Camera Disconnected" );
+            startStopRecording();
+        }
+        scanAndUpdateCameras();
+    } );
 
     // Change Record Frames
     connect( ui->saveFrames, &QCheckBox::toggled, &recorder, &Recorder::setCaptureFrames );
@@ -107,7 +112,6 @@ MainWindow::MainWindow( QWidget * parent ) :
     connect( ui->startButton, &QPushButton::clicked, this, &MainWindow::startStopRecording );
 }
 
-// TODO: Proper wait please! EVENT
 MainWindow::~MainWindow() {
     delete ui;
     delete image_buffer;
@@ -169,8 +173,8 @@ void MainWindow::setStatus( STATUS status ) {
 
 // FIXME
 void MainWindow::fit() {
-    setMinimumSize( 0, 0 );
-    setMaximumSize( 5000, 5000 );
+//    setMinimumSize( 0, 0 );
+//    setMaximumSize( 5000, 5000 );
     adjustSize();
     //setFixedSize( this->size() );
 }
@@ -195,7 +199,7 @@ void MainWindow::fillSerialPorts() {
             ui->serialSelector->addItem( info.portName() );
         }
 
-        // TODO: Method for that
+        // NOTE: UNCRITICAL Method for that
         ui->serialControl->setProperty( "visible", comm.selectPort( 0 ) );
     }
 
@@ -218,19 +222,21 @@ void MainWindow::enableRecOptions() {
     enableStart();
 }
 
+// TODO: LATER Test this.
 void MainWindow::enableStart() {
-    if ( ui->projectName->text() != "t" && recorder.dirSet() && camMan.isConnected() ) {
+    if ( ui->projectName->text() != "" && recorder.dirSet() && camMan.isConnected() ) {
         ui->startButton->setProperty( "enabled", true );
     } else {
-        ui->startButton->setProperty( "enabled", true );
+        ui->startButton->setProperty( "enabled", false );
     }
 }
 
 void MainWindow::showError( QString error ) {
     QMessageBox errBox;
+    errBox.setParent( this );
     errBox.critical( 0, "Error", "An Error has occured:\n" + error );
     errBox.setFixedSize( 500, 200 );
-    errBox.show();
+    errBox.open();
 }
 
 void MainWindow::showError( FlyCapture2::Error error ) {
@@ -327,19 +333,21 @@ void MainWindow::displayPreview( FlyCapture2::Image * last_capture ) {
 
 void MainWindow::directorySelection() {
     QString dir = QFileDialog::getExistingDirectory( this, tr( "Choose the working Directory." ), ( recorder.dirSet() ? recorder.getProjectDir() : QStandardPaths::writableLocation( QStandardPaths::DocumentsLocation ) ), QFileDialog::ShowDirsOnly );
-    try {
-        if ( !recorder.isRecording() )
-            recorder.setProjectDir( dir );
-        enableStart();
-    } catch ( FlyCapture2::Error e ) {
-        showError( e );
-    }
+    if ( !dir.isEmpty() )
+        try {
+            if ( !recorder.isRecording() ) {
+                recorder.setProjectDir( dir );
+                enableStart();
+            }
+        } catch ( RecorderError e ) {
+            showError( "Invalid Recording Directory." );
+        }
 }
 
 void MainWindow::startStopRecording() {
     // TODO: Errors
     if ( !recorder.isRecording() ) {
-        // TODO: Maybe allow dynamic setting...
+        // NOTE: UNCRITICAL Maybe allow dynamic setting...
         ui->saveFrames->setProperty( "enabled", false );
 
 

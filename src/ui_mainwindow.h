@@ -38,11 +38,6 @@ public:
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QSpacerItem *verticalSpacer;
-    QGroupBox *serialControl;
-    QVBoxLayout *verticalLayout_3;
-    QPushButton *sRun;
-    QPushButton *sHalt;
-    QPushButton *sFast;
     QGroupBox *groupBox;
     QVBoxLayout *verticalLayout;
     QFormLayout *formLayout;
@@ -63,7 +58,6 @@ public:
     QCheckBox *saveFrames;
     QPushButton *startButton;
     QPushButton *preview_button;
-    QPlainTextEdit *serialMon;
     QGroupBox *groupBox_2;
     QVBoxLayout *verticalLayout_2;
     QLabel *statusLabel;
@@ -76,12 +70,18 @@ public:
     QLCDNumber *buffer;
     QLabel *label_5;
     QLabel *preview_widget;
+    QGroupBox *serialControl;
+    QVBoxLayout *verticalLayout_3;
+    QPushButton *sRun;
+    QPushButton *sHalt;
+    QPushButton *sFast;
+    QPlainTextEdit *serialMon;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(614, 767);
+        MainWindow->resize(478, 965);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -95,31 +95,7 @@ public:
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         verticalSpacer = new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::MinimumExpanding);
 
-        gridLayout->addItem(verticalSpacer, 2, 0, 1, 1);
-
-        serialControl = new QGroupBox(centralWidget);
-        serialControl->setObjectName(QStringLiteral("serialControl"));
-        verticalLayout_3 = new QVBoxLayout(serialControl);
-        verticalLayout_3->setSpacing(6);
-        verticalLayout_3->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
-        sRun = new QPushButton(serialControl);
-        sRun->setObjectName(QStringLiteral("sRun"));
-
-        verticalLayout_3->addWidget(sRun);
-
-        sHalt = new QPushButton(serialControl);
-        sHalt->setObjectName(QStringLiteral("sHalt"));
-
-        verticalLayout_3->addWidget(sHalt);
-
-        sFast = new QPushButton(serialControl);
-        sFast->setObjectName(QStringLiteral("sFast"));
-
-        verticalLayout_3->addWidget(sFast);
-
-
-        gridLayout->addWidget(serialControl, 1, 0, 1, 1);
+        gridLayout->addItem(verticalSpacer, 3, 0, 1, 1);
 
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QStringLiteral("groupBox"));
@@ -250,12 +226,6 @@ public:
 
         verticalLayout_4->addWidget(preview_button);
 
-        serialMon = new QPlainTextEdit(recOptions);
-        serialMon->setObjectName(QStringLiteral("serialMon"));
-        serialMon->setReadOnly(true);
-
-        verticalLayout_4->addWidget(serialMon);
-
 
         verticalLayout->addWidget(recOptions);
 
@@ -313,7 +283,7 @@ public:
         verticalLayout_2->addWidget(recStats);
 
 
-        gridLayout->addWidget(groupBox_2, 3, 0, 1, 1);
+        gridLayout->addWidget(groupBox_2, 4, 0, 1, 1);
 
         preview_widget = new QLabel(centralWidget);
         preview_widget->setObjectName(QStringLiteral("preview_widget"));
@@ -321,7 +291,42 @@ public:
         preview_widget->setFrameShape(QFrame::StyledPanel);
         preview_widget->setFrameShadow(QFrame::Raised);
 
-        gridLayout->addWidget(preview_widget, 0, 2, 4, 1);
+        gridLayout->addWidget(preview_widget, 0, 2, 5, 1);
+
+        serialControl = new QGroupBox(centralWidget);
+        serialControl->setObjectName(QStringLiteral("serialControl"));
+        verticalLayout_3 = new QVBoxLayout(serialControl);
+        verticalLayout_3->setSpacing(6);
+        verticalLayout_3->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        sRun = new QPushButton(serialControl);
+        sRun->setObjectName(QStringLiteral("sRun"));
+
+        verticalLayout_3->addWidget(sRun);
+
+        sHalt = new QPushButton(serialControl);
+        sHalt->setObjectName(QStringLiteral("sHalt"));
+
+        verticalLayout_3->addWidget(sHalt);
+
+        sFast = new QPushButton(serialControl);
+        sFast->setObjectName(QStringLiteral("sFast"));
+
+        verticalLayout_3->addWidget(sFast);
+
+        serialMon = new QPlainTextEdit(serialControl);
+        serialMon->setObjectName(QStringLiteral("serialMon"));
+        QSizePolicy sizePolicy4(QSizePolicy::Ignored, QSizePolicy::Expanding);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(serialMon->sizePolicy().hasHeightForWidth());
+        serialMon->setSizePolicy(sizePolicy4);
+        serialMon->setReadOnly(true);
+
+        verticalLayout_3->addWidget(serialMon);
+
+
+        gridLayout->addWidget(serialControl, 2, 0, 1, 1);
 
         MainWindow->setCentralWidget(centralWidget);
 
@@ -333,10 +338,6 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Taevitas", Q_NULLPTR));
-        serialControl->setTitle(QApplication::translate("MainWindow", "Serial Control", Q_NULLPTR));
-        sRun->setText(QApplication::translate("MainWindow", "Run", Q_NULLPTR));
-        sHalt->setText(QApplication::translate("MainWindow", "Halt", Q_NULLPTR));
-        sFast->setText(QApplication::translate("MainWindow", "Fast", Q_NULLPTR));
         groupBox->setTitle(QApplication::translate("MainWindow", "Settings", Q_NULLPTR));
         cameraSelector->setCurrentText(QString());
         label->setText(QApplication::translate("MainWindow", "Camera:", Q_NULLPTR));
@@ -356,6 +357,10 @@ public:
         label_4->setText(QApplication::translate("MainWindow", "Minutes", Q_NULLPTR));
         label_5->setText(QApplication::translate("MainWindow", "Buffer", Q_NULLPTR));
         preview_widget->setText(QString());
+        serialControl->setTitle(QApplication::translate("MainWindow", "Serial Control", Q_NULLPTR));
+        sRun->setText(QApplication::translate("MainWindow", "Run", Q_NULLPTR));
+        sHalt->setText(QApplication::translate("MainWindow", "Halt", Q_NULLPTR));
+        sFast->setText(QApplication::translate("MainWindow", "Fast", Q_NULLPTR));
     } // retranslateUi
 
 };

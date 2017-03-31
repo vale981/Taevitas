@@ -4,11 +4,12 @@
 void ImageGrabber::run() {
     qDebug() << "Starting Capture.";
     capture = true;
+    FlyCapture2::Error err;
+
     while ( capture ) {
         FlyCapture2::Image * stored_img = new FlyCapture2::Image();
 
-        // TODO: Errors
-        cam->RetrieveBuffer( &tmp );
+        err = cam->RetrieveBuffer( &tmp );
 
         if ( !capture ) {
             delete stored_img;

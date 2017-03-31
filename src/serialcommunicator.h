@@ -18,11 +18,9 @@ class SerialCommunicator : public QObject {
         void dataRead( QByteArray data );
 
     public slots:
-        // TODO: Maybe Remove
         // returns False if the port is not open
         bool selectPort( const QSerialPortInfo &info );
-        bool selectPort( const QString &portName );
-        bool selectPort( const int index );
+        inline bool selectPort( const int index );
 
         // Signal Specific
         void sendRun() {
@@ -52,5 +50,12 @@ class SerialCommunicator : public QObject {
     private slots:
         void handleRead();
 };
+
+bool SerialCommunicator::selectPort( const int index ) {
+    if ( index < 0 )
+        return false;
+
+    return selectPort( ports.at( index ) );
+}
 
 #endif // SERIALCOMMUNICATOR_H

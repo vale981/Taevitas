@@ -22,27 +22,8 @@ bool SerialCommunicator::selectPort( const QSerialPortInfo &info ) {
     return open;
 }
 
-// Overload just searches for the port.
-bool SerialCommunicator::selectPort( const QString &portName ) {
-    for ( QSerialPortInfo info : ports ) {
-        if ( info.portName() == portName ) {
-            return selectPort( info );
-            break;
-        }
-    }
 
-    return false;
-}
-
-// TODO: Maybe Inline
-bool SerialCommunicator::selectPort( const int index ) {
-    if ( index < 0 )
-        return false;
-
-    return selectPort( ports.at( index ) );
-}
-
-// TODO: Maybe Different
+// NOTE: Maybe Nicer
 void SerialCommunicator::write( QByteArray data ) {
     if ( !port.isOpen() )
         return;
