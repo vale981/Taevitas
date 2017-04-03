@@ -155,8 +155,11 @@ void MainWindow::setStatus( STATUS status ) {
             ui->startButton->setText( "Start" );
             ui->cameraSelector->setProperty( "enabled", true );
             ui->recStats->hide();
+
+            // Note: Suboptimal
             if ( recorder.dirSet() )
                 enableStart();
+
             qDebug( "Connected...." );
             break;
         case RECORDING:
