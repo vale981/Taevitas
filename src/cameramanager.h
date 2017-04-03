@@ -77,6 +77,7 @@ class CameraManager : public QObject {
         void frameCaptured( FlyCapture2::Image * image ) const;
         void cameraConnected();
         void cameraDisconnected( bool current );
+        void captureError( FlyCapture2::Error err );
 };
 
 #endif // CAMERAMANAGER_H

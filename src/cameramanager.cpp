@@ -108,6 +108,7 @@ void CameraManager::startCapture() {
     tmpG->setCamera( &camera );
     connect( tmpG, &ImageGrabber::imageCaptured, this, &CameraManager::frameCaptured, Qt::QueuedConnection );
     connect( tmpG, &ImageGrabber::finished, tmpG, &ImageGrabber::deleteLater );
+    connect( tmpG, &ImageGrabber::captureError, this, &CameraManager::captureError );
     tmpG->start();
 
     grabber = tmpG;

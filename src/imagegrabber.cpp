@@ -10,6 +10,8 @@ void ImageGrabber::run() {
         FlyCapture2::Image * stored_img = new FlyCapture2::Image();
 
         err = cam->RetrieveBuffer( &tmp );
+        if ( err != FlyCapture2::PGRERROR_OK )
+            emit captureError( err );
 
         if ( !capture ) {
             delete stored_img;

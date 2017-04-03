@@ -15,14 +15,47 @@
   This class is a wrapper around the AVIRecorder from PTGrey to abstract and implement signals.
  */
 
-enum class RecorderError {
-    INVALID_PROJECT_DIRECTORY,
-    INVALID_RECORDING_NAME,
-    CREATION_RECORD_DIRECTORY_FAILED,
-    CANCELED,
-    CANT_OPEN_STATFILE,
-    STATFILE_ERROR,
-    OK
+class RecorderError {
+    public:
+        RecorderError( _Error err ) : Error { _err } {}
+        char * what() {
+            // Will propably only be looked up once :)
+            return _description[Error];
+        }
+
+        _RecorderError error() {
+            return Error;
+        }
+
+        bool RecorderError::operator==( const RecorderError &other ) const {
+            return Error == other.Error;
+        }
+
+        bool RecorderError::operator!=( const RecorderError &other ) const {
+            return !( Error == other.Error );
+        }
+
+        enum _RecorderError {
+            INVALID_PROJECT_DIRECTORY,
+            INVALID_RECORDING_NAME,
+            CREATION_RECORD_DIRECTORY_FAILED,
+            CANCELED,
+            CANT_OPEN_STATFILE,
+            STATFILE_ERROR,
+            OK
+        };
+    private:
+        _RecorderError Error;
+
+        static const QHash<_RecorderError, char *> _description {
+            { _RecorderError::INVALID_PROJECT_DIRECTORY, "Invalid Project Directory!" },
+            { _RecorderError::INVALID_RECORDING_NAME, "Invalid Recording Name!" },
+            { _RecorderError::CREATION_RECORD_DIRECTORY_FAILED, "The creation of the recording directory failed." },
+            { _RecorderError::CANCELED, "Operation Canceled" },
+            { _RecorderError::CANT_OPEN_STATFILE, "Failed to open the statfile." },
+            { _RecorderError::STATFILE_ERROR, "Error with (corrupted/malformed) statfile.\nPlease consider to create a new project, to prevent damage to the corrupted one." },
+            { _RecorderError::OK, "All went OK." },
+        };
 };
 
 class Recorder : public QObject {
@@ -125,5 +158,6 @@ class Recorder : public QObject {
 
     signals:
         void frameSaved( FlyCapture2::Image * image );
+        void writeError( FlyCapture2::Error err );
 };
 #endif //RECORDER_H

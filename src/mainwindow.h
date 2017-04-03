@@ -37,7 +37,6 @@ class MainWindow : public QMainWindow {
         void showError( QString error );
 
         void updateCameraList( unsigned int num_cameras );
-        void resetCapture();
 
         void fit();
 
@@ -58,6 +57,11 @@ class MainWindow : public QMainWindow {
 
         void setLcd();
 
+
+        // Starts or Stops the capture, depeending on if it is already running.
+        // Throws FlyCapture2::Error;
+        void resetCapture();
+
         SerialCommunicator comm;
 
     private slots:
@@ -72,6 +76,9 @@ class MainWindow : public QMainWindow {
         void frameSaved( FlyCapture2::Image * image );
 
         void fillSerialPorts();
+
+        void handleCaptureError( FlyCapture2::Error err );
+        void handleWriteError( FlyCapture2::Error err );
 
     signals:
         void saveFrame( FlyCapture2::Image * image );

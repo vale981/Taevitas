@@ -18,7 +18,7 @@ Recorder::~Recorder() {
 void Recorder::setProjectDir( QString &p_dir ) {
     QFileInfo pDirInfo( p_dir );
     if ( !pDirInfo.isDir() || !pDirInfo.isWritable() ) {
-        throw RecorderError::INVALID_PROJECT_DIRECTORY;
+        throw RecorderError( RecorderError::INVALID_PROJECT_DIRECTORY );
         return;
     }
 
@@ -31,12 +31,12 @@ void Recorder::newRecording( QString r_name ) {
 
     // If unset.
     if ( !dirSet() ) {
-        throw RecorderError::INVALID_PROJECT_DIRECTORY;
+        throw RecorderError( RecorderError::INVALID_PROJECT_DIRECTORY );
         return;
     }
 
     if ( r_name.length() == 0 ) {
-        throw RecorderError::INVALID_RECORDING_NAME;
+        throw RecorderError( RecorderError::INVALID_RECORDING_NAME );
         return;
     }
 
@@ -58,7 +58,7 @@ void Recorder::newRecording( QString r_name ) {
     // get Status file
     statFile = new QFile(  record_dir.path() + "/" + ".stat" );
     if ( !statFile->open( QIODevice::ReadWrite | QIODevice::Text ) ) {
-        throw RecorderError::CANT_OPEN_STATFILE;
+        throw RecorderError( RecorderError::CANT_OPEN_STATFILE );
         return;
     }
 
@@ -72,7 +72,7 @@ void Recorder::newRecording( QString r_name ) {
     // If append, figure out Frame count etc...
     if ( append ) {
         if ( !restoreRecording() ) {
-            throw RecorderError::STATFILE_ERROR;
+            throw RecorderError( RecorderError::STATFILE_ERROR );
             return;
         }
         time_c = frame_n / options.frameRate;
@@ -116,7 +116,7 @@ RecorderError Recorder::verifyRecDir() {
         } else if ( msgBox.clickedButton() == removeButton ) {
             record_dir.removeRecursively();
         } else if ( msgBox.clickedButton() == abortButton ) {
-            return RecorderError::CANCELED;
+            return RecorderError( RecorderError::CANCELED );
         }
     }
 
@@ -125,7 +125,7 @@ RecorderError Recorder::verifyRecDir() {
     if ( capture_frames )
         record_dir.mkdir( "frames" );
 
-    return RecorderError::OK;
+    return RecorderError( RecorderError::OK );
 }
 
 void Recorder::stopRecording() {
@@ -163,7 +163,7 @@ void Recorder::appendFrame( FlyCapture2::Image * image ) {
     Error app_err = recorder.AVIAppend( image );
     if ( app_err != PGRERROR_OK ) {
         write_lock.unlock();
-        throw app_err;
+        emit writeError( app_err );
         return;
     }
 
@@ -172,7 +172,7 @@ void Recorder::appendFrame( FlyCapture2::Image * image ) {
         app_err = image->Save( ( record_dir.path() + "/frames/" + recName + "_" + QString::number( frame_n ) + ".tiff"  ).toStdString().c_str(), &frame_options );
         if ( app_err != PGRERROR_OK ) {
             write_lock.unlock();
-            throw app_err;
+            emit writeError( app_err );
             return;
         }
     }

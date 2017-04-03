@@ -10,7 +10,6 @@
 #include <QCloseEvent>
 #include <QTimer>
 
-// TODO: Handle Errors!!
 MainWindow::MainWindow( QWidget * parent ) :
     QMainWindow( parent ),
     ui( new Ui::MainWindow ),
@@ -56,6 +55,9 @@ MainWindow::MainWindow( QWidget * parent ) :
     // Connect Frame Counts, Time Captured LCD
     connect( &recorder, &Recorder::frameSaved, this, &MainWindow::frameSaved );
 
+    // Connect Frame Counts, Time Captured LCD
+    connect( &recorder, &Recorder::writeError, this, &MainWindow::handleWriteError );
+
     // Connect ImageWriteSignal
     connect( this, &MainWindow::saveFrame, &recorder, &Recorder::appendFrame, Qt::QueuedConnection );
 
@@ -81,7 +83,7 @@ MainWindow::MainWindow( QWidget * parent ) :
 
     // Camera selected
     connect( ui->cameraSelector, static_cast<void( QComboBox::* )( int )>( &QComboBox::currentIndexChanged ), this, &MainWindow::cameraSelected );
-
+    x
     // Serial Selected
     connect( ui->serialSelector, static_cast<void( QComboBox::* )( int )>( &QComboBox::currentIndexChanged ), this, [this] ( int port ) {
         ui->serialControl->setProperty( "visible", comm.selectPort( port ) );
@@ -92,6 +94,9 @@ MainWindow::MainWindow( QWidget * parent ) :
 
     // Frame Captured
     connect( &camMan, &CameraManager::frameCaptured, this, &MainWindow::frameCaptured, Qt::DirectConnection );
+
+    // Capture Error
+    connect( &camMan, &CameraManager::captureError, this, &MainWindow::handleCaptureError );
 
     // Camera Connected
     connect( &camMan, &CameraManager::cameraConnected, this, &MainWindow::scanAndUpdateCameras );
@@ -121,7 +126,6 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::closeEvent ( QCloseEvent * event ) {
-    // TODO: Nicer
     if ( status == RECORDING ) {
         startStopRecording();
         event->ignore();
@@ -295,7 +299,7 @@ void MainWindow::frameCaptured( FlyCapture2::Image * image ) {
         displayPreview( image );
 
     if ( recorder.isRecording() ) {
-        // TODO: WHY POINTER
+        // Note: WHY POINTER
         image_buffer->append( image );
         ui->buffer->display( image_buffer->length() );
         emit saveFrame( image );
@@ -345,20 +349,34 @@ void MainWindow::directorySelection() {
 }
 
 void MainWindow::startStopRecording() {
-    // TODO: Errors
     if ( !recorder.isRecording() ) {
         // NOTE: UNCRITICAL Maybe allow dynamic setting...
         ui->saveFrames->setProperty( "enabled", false );
 
 
+        // NOTE: That is ugly. Maybe I should wrap it into my own Error/Exception Class!
         try {
             recorder.newRecording( ui->projectName->text() );
         } catch ( RecorderError ) {
-            showError( "Could not start Recording!" );
+            showError( RecorderError.what() );
             ui->saveFrames->setProperty( "enabled", true );
-            resetCapture();
+            try {
+                resetCapture();
+            } catch ( FlyCapture2::Error e ) {
+                showError( e );
+            }
+            return;
+        }  catch ( FlyCapture2::Error e ) {
+            showError( e );
+            ui->saveFrames->setProperty( "enabled", true );
+            try {
+                resetCapture();
+            } catch ( FlyCapture2::Error e ) {
+                showError( e );
+            }
             return;
         }
+
 
         if ( !camMan.isCapturing() ) {
             try {
@@ -370,7 +388,6 @@ void MainWindow::startStopRecording() {
             }
         }
 
-        // FIXME: Why doesn't that work?
         setStatus( RECORDING );
         setLcd();
 
@@ -396,8 +413,11 @@ void MainWindow::startStopRecording() {
             return;
         }
 
-        resetCapture();
-
+        try {
+            resetCapture();
+        } catch ( FlyCapture2::Error e ) {
+            showError( e );
+        }
         ui->saveFrames->setProperty( "enabled", true );
         setStatus( CONNECTED );
     }
@@ -408,14 +428,13 @@ void MainWindow::resetCapture() {
         try {
             camMan.stopCapture();
         } catch ( FlyCapture2::Error e ) {
-            showError( e );
-            return;
+            throw;
         }
     } else {
         try {
             camMan.startCapture();
         } catch ( FlyCapture2::Error e ) {
-            showError( e );
+            throw;
         }
     }
 }
@@ -448,4 +467,22 @@ void MainWindow::frameSaved( FlyCapture2::Image * image ) {
 void MainWindow::setLcd() {
     ui->framesCaptured->display( recorder.frameNumber() );
     ui->timeCaptured->display( QString( "%1:%2" ).arg( ( ( ( int )recorder.timeCaptured() ) / 60 ) ).arg( ( int )recorder.timeCaptured() % 60 ) );
+}
+
+void MainWindow::handleCaptureError( FlyCapture2::Error err ) {
+    showError( err );
+
+    try {
+        camMan.stopCapture();
+    } catch ( FlyCapture2::Error e ) {
+        showError( e );
+    }
+
+    if ( recorder.isRecording() )
+        startStopRecording();
+}
+
+void MainWindow::handleWriteError( FlyCapture2::Error err ) {
+    showError( err );
+    startStopRecording();
 }

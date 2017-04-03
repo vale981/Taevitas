@@ -20,6 +20,7 @@ class ImageGrabber : public QThread {
 
     signals:
         void imageCaptured( FlyCapture2::Image * image );
+        void captureError( FlyCapture2::Error err );
 
     public slots:
         void stopCapturing();
