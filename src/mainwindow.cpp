@@ -30,6 +30,10 @@ MainWindow::MainWindow( QWidget * parent ) :
     // Set status
     setStatus( WAITING );
 
+    // Set default dir
+    QString defaultDir = QStandardPaths::writableLocation( QStandardPaths::DocumentsLocation );
+    recorder.setProjectDir( defaultDir );
+
     // Try to connect to first cam
     scanAndUpdateCameras();
 
@@ -38,10 +42,6 @@ MainWindow::MainWindow( QWidget * parent ) :
 
     // Set default name
     ui->projectName->setText( "Taevitas_Rec_" + QDateTime::currentDateTime().toString( "dd_MM_yyyy_hh_mm_ss" ) );
-
-    // Set default dir
-    QString defaultDir = QStandardPaths::writableLocation( QStandardPaths::DocumentsLocation );
-    recorder.setProjectDir( defaultDir );
 
     // Move Recorder into another thread
     recThread = new QThread();
