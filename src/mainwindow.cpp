@@ -83,7 +83,7 @@ MainWindow::MainWindow( QWidget * parent ) :
 
     // Camera selected
     connect( ui->cameraSelector, static_cast<void( QComboBox::* )( int )>( &QComboBox::currentIndexChanged ), this, &MainWindow::cameraSelected );
-    x
+
     // Serial Selected
     connect( ui->serialSelector, static_cast<void( QComboBox::* )( int )>( &QComboBox::currentIndexChanged ), this, [this] ( int port ) {
         ui->serialControl->setProperty( "visible", comm.selectPort( port ) );
@@ -357,8 +357,8 @@ void MainWindow::startStopRecording() {
         // NOTE: That is ugly. Maybe I should wrap it into my own Error/Exception Class!
         try {
             recorder.newRecording( ui->projectName->text() );
-        } catch ( RecorderError ) {
-            showError( RecorderError.what() );
+        } catch ( RecorderError e ) {
+            showError( e.what() );
             ui->saveFrames->setProperty( "enabled", true );
             try {
                 resetCapture();

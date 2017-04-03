@@ -4,6 +4,16 @@
 
 using namespace FlyCapture2;
 
+const QHash<RecorderError::_RecorderError, QString> RecorderError::_description = {
+    { RecorderError::INVALID_PROJECT_DIRECTORY, "Invalid Project Directory!" },
+    { RecorderError::INVALID_RECORDING_NAME, "Invalid Recording Name!" },
+    { RecorderError::CREATION_RECORD_DIRECTORY_FAILED, "The creation of the recording directory failed." },
+    { RecorderError::CANCELED, "Operation Canceled" },
+    { RecorderError::CANT_OPEN_STATFILE, "Failed to open the statfile." },
+    { RecorderError::STATFILE_ERROR, "Error with (corrupted/malformed) statfile.\nPlease consider to create a new project, to prevent damage to the corrupted one." },
+    { RecorderError::OK, "All went OK." },
+};
+
 Recorder::Recorder( QObject * parent, unsigned int frame_rate, bool cap_frames ) : QObject( parent ), is_recording {false}, append {false}, frame_n {0}, time_c {0}, pDirSet { false } {
     // No Compression for frame_captures
     frame_options.compression = frame_options.NONE;
