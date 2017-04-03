@@ -344,7 +344,7 @@ void MainWindow::directorySelection() {
                 enableStart();
             }
         } catch ( RecorderError e ) {
-            showError( "Invalid Recording Directory." );
+            showError( e.what() );
         }
 }
 
