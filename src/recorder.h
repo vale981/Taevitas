@@ -30,7 +30,7 @@ class RecorderError {
 
         RecorderError( _RecorderError _err ) : Error { _err } {}
 
-        const QString &what() {
+        const QString what() {
             // Will propably only be looked up once :)
             return _description[Error];
         }
