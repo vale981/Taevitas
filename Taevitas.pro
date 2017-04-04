@@ -48,9 +48,6 @@ UI_DIR = src/
 win32 {
 	win32:CONFIG(release, debug|release): LIBS += -L$$PWD/'../../../Program Files/Point Grey Research/FlyCapture2/lib/' -lFlyCapture2
 	else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/'../../../Program Files/Point Grey Research/FlyCapture2/lib/' -lFlyCapture2d
-
-	INCLUDEPATH += $$PWD/'../../../Program Files/Point Grey Research/FlyCapture2/include'
-	DEPENDPATH += $$PWD/'../../../Program Files/Point Grey Research/FlyCapture2/include'
 }
 
 unix: LIBS += -L$$PWD/third_party/lib/ -lflycapture
