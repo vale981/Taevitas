@@ -55,7 +55,7 @@ void CameraManager::connectCamera( int index ) {
     cam_config = FlyCapture2::FC2Config();
     cam_config.grabMode = GrabMode::BUFFER_FRAMES;
     cam_config.numBuffers = 10; // We gonna move them into our own data structure.
-    cam_config.highPerformanceRetrieveBuffer = false;
+    cam_config.highPerformanceRetrieveBuffer = false; // We want to trigger.
     camera.SetConfiguration( &cam_config );
 
     camera_index = index;
