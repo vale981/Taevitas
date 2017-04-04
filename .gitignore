@@ -5,5 +5,5 @@ moc_*
 build
 *#*
 *~
-*.pro.user
+*.pro.user*
 *.qmake.*
