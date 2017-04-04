@@ -182,10 +182,10 @@ void MainWindow::setStatus( STATUS status ) {
 }
 
 void MainWindow::fit() {
-    setMinimumSize( 0, 0 );
-    setMaximumSize( 5000, 5000 );
+    //setMinimumSize( 0, 0 );
+    //setMaximumSize( 5000, 5000 );
     adjustSize();
-    setFixedSize( this->size() );
+    //setFixedSize( this->size() );
 }
 
 void MainWindow::updateCameraList( unsigned int num_cameras ) {
@@ -494,7 +494,5 @@ void MainWindow::handleWriteError( FlyCapture2::Error err ) {
 
 void MainWindow::selectSerialPort( int port ) {
     ui->serialControl->setProperty( "visible", comm.selectPort( port ) );
-
-    qDebug() << "fit";
     fit();
 }
