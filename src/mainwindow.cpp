@@ -73,9 +73,6 @@ MainWindow::MainWindow( QWidget * parent ) :
     connect( ui->sHalt, &QPushButton::clicked, &comm, &SerialCommunicator::sendHalt );
     connect( ui->sFast, &QPushButton::clicked, &comm, &SerialCommunicator::sendFast );
 
-    // TODO: Delete
-    connect( ui->camScanButton, &QPushButton::clicked, this, &MainWindow::fit );
-
     // Serial Monitor
     connect( &comm, &SerialCommunicator::dataRead, this, [this] ( QByteArray data ) {
         ui->serialMon->moveCursor( QTextCursor::Start );
@@ -83,10 +80,10 @@ MainWindow::MainWindow( QWidget * parent ) :
     } );
 
     // Camera selected
-    connect( ui->cameraSelector, static_cast<void( QComboBox::* )( int )>( &QComboBox::currentIndexChanged ), this, &MainWindow::cameraSelected );
+    connect( ui->cameraSelector, static_cast<void( QComboBox::* )( int )>( &QComboBox::activated ), this, &MainWindow::cameraSelected );
 
     // Serial Selected
-    connect( ui->serialSelector, static_cast<void( QComboBox::* )( int )>( &QComboBox::currentIndexChanged ), this, [this] ( int port ) {
+    connect( ui->serialSelector, static_cast<void( QComboBox::* )( int )>( &QComboBox::activated ), this, [this] ( int port ) {
         ui->serialControl->setProperty( "visible", comm.selectPort( port ) );
     } );
 
