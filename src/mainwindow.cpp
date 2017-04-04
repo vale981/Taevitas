@@ -181,63 +181,6 @@ void MainWindow::setStatus( STATUS status ) {
     QTimer::singleShot( 0, this, &MainWindow::fit );
 }
 
-void MainWindow::fit() {
-    setMinimumSize( 0, 0 );
-    adjustSize();
-    setMinimumSize( size() );
-}
-
-void MainWindow::updateCameraList( unsigned int num_cameras ) {
-    ui->cameraSelector->clear();
-
-    // Fill Combo Box with cameras
-    for ( unsigned int i = 0; i < num_cameras; i++ ) {
-        ui->cameraSelector->addItem( QString( i + '0' ) );
-    }
-}
-
-void MainWindow::fillSerialPorts() {
-    ui->serialSelector->clear();
-
-    auto ports = comm.getPorts();
-
-    // Fill Combo Box with Serial Ports
-    if ( ports.length() > 0 ) {
-        for ( QSerialPortInfo &info : ports ) {
-            ui->serialSelector->addItem( info.portName() );
-        }
-
-        selectSerialPort( 0 );
-    }
-
-}
-
-void MainWindow::scanAndUpdateCameras() {
-    unsigned int num_cameras = camMan.numCameras();
-    updateCameraList( num_cameras );
-    if ( num_cameras > 0 && !camMan.isConnected() )
-        cameraSelected( 0 );
-}
-
-void MainWindow::disableRecOptions() {
-    ui->recOptions->setProperty( "enabled", false );
-    ui->startButton->setProperty( "enabled", false );
-}
-
-void MainWindow::enableRecOptions() {
-    ui->recOptions->setProperty( "enabled", true );
-    enableStart();
-}
-
-// TODO: LATER Test this.
-void MainWindow::enableStart() {
-    if ( ui->projectName->text() != "" && recorder.dirSet() && camMan.isConnected() ) {
-        ui->startButton->setProperty( "enabled", true );
-    } else {
-        ui->startButton->setProperty( "enabled", false );
-    }
-}
-
 void MainWindow::showError( QString error ) {
     QMessageBox errBox;
     errBox.setParent( this );
@@ -250,71 +193,55 @@ void MainWindow::showError( FlyCapture2::Error error ) {
     showError( error.GetDescription() );
 }
 
-void MainWindow::cameraSelected( int index ) {
-    if ( recorder.isRecording() || index < 0 )
-        return;
-
-    try {
-        camMan.connectCamera( index );
-    } catch ( FlyCapture2::Error e ) {
-        showError( e );
-        return;
-    }
-
-    setStatus( CONNECTED );
+void MainWindow::setLcd() {
+    ui->framesCaptured->display( recorder.frameNumber() );
+    ui->timeCaptured->display( QString( "%1:%2" ).arg( ( ( ( int )recorder.timeCaptured() ) / 60 ) ).arg( ( int )recorder.timeCaptured() % 60 ) );
 }
 
-// Show/Hide Preview
-void MainWindow::togglePreview( bool checked ) {
-    // skip if there is no camera
-    if ( !camMan.isConnected() ) {
-        ui->preview_button->setProperty( "checked", false );
-        return;
+void MainWindow::updateCameraList( unsigned int num_cameras ) {
+    ui->cameraSelector->clear();
+
+    // Fill Combo Box with cameras
+    for ( unsigned int i = 0; i < num_cameras; i++ ) {
+        ui->cameraSelector->addItem( QString( i + '0' ) );
     }
+}
 
-    if ( checked ) {
-        ui->preview_widget->setProperty( "enabled", true );
-        resize = true;
+// TODO: LATER Test this.
+void MainWindow::enableStart() {
+    if ( ui->projectName->text() != "" && recorder.dirSet() && camMan.isConnected() ) {
+        ui->startButton->setProperty( "enabled", true );
+    } else {
+        ui->startButton->setProperty( "enabled", false );
+    }
+}
 
-        // Start Capturing for preview
+void MainWindow::enableRecOptions() {
+    ui->recOptions->setProperty( "enabled", true );
+    enableStart();
+}
+
+void MainWindow::disableRecOptions() {
+    ui->recOptions->setProperty( "enabled", false );
+    ui->startButton->setProperty( "enabled", false );
+}
+
+void MainWindow::resetCapture() {
+    if ( !ui->preview_button->isChecked() ) {
+        try {
+            camMan.stopCapture();
+        } catch ( FlyCapture2::Error e ) {
+            throw;
+        }
+    } else {
         try {
             camMan.startCapture();
         } catch ( FlyCapture2::Error e ) {
-            showError( e );
+            throw;
         }
-    } else {
-        ui->preview_widget->setProperty( "enabled", false );
-        ui->preview_widget->hide();
-        QTimer::singleShot( 0, this, &MainWindow::fit );
-
-        //Stop capture
-        if ( !recorder.isRecording() )
-            camMan.stopCapture();
     }
 }
 
-void MainWindow::frameCaptured( FlyCapture2::Image * image ) {
-    qDebug() << "Image Captured!";
-    static QMutex m;
-    m.lock();
-
-    // If preview is activated...
-    if ( ui->preview_widget->isEnabled() )
-        displayPreview( image );
-
-    if ( recorder.isRecording() ) {
-        // Note: WHY POINTER
-        image_buffer->append( image );
-        ui->buffer->display( image_buffer->length() );
-        emit saveFrame( image );
-    } else
-        delete image;
-
-    m.unlock();
-    return;
-}
-
-// Render Preview
 void MainWindow::displayPreview( FlyCapture2::Image * last_capture ) {
     ui->preview_widget->show();
 
@@ -339,24 +266,11 @@ void MainWindow::displayPreview( FlyCapture2::Image * last_capture ) {
     }
 }
 
-void MainWindow::directorySelection() {
-    QString dir = QFileDialog::getExistingDirectory( this, tr( "Choose the working Directory." ), ( recorder.dirSet() ? recorder.getProjectDir() : QStandardPaths::writableLocation( QStandardPaths::DocumentsLocation ) ), QFileDialog::ShowDirsOnly );
-    if ( !dir.isEmpty() )
-        try {
-            if ( !recorder.isRecording() ) {
-                recorder.setProjectDir( dir );
-                enableStart();
-            }
-        } catch ( RecorderError e ) {
-            showError( e.what() );
-        }
-}
 
 void MainWindow::startStopRecording() {
     if ( !recorder.isRecording() ) {
         // NOTE: UNCRITICAL Maybe allow dynamic setting...
         ui->saveFrames->setProperty( "enabled", false );
-
 
         // NOTE: That is ugly. Maybe I should wrap it into my own Error/Exception Class!
         try {
@@ -381,7 +295,6 @@ void MainWindow::startStopRecording() {
             return;
         }
 
-
         if ( !camMan.isCapturing() ) {
             try {
                 camMan.startCapture();
@@ -394,7 +307,6 @@ void MainWindow::startStopRecording() {
 
         setStatus( RECORDING );
         setLcd();
-
     } else {
         // Stop Capture!
         try {
@@ -427,20 +339,108 @@ void MainWindow::startStopRecording() {
     }
 }
 
-void MainWindow::resetCapture() {
-    if ( !ui->preview_button->isChecked() ) {
-        try {
-            camMan.stopCapture();
-        } catch ( FlyCapture2::Error e ) {
-            throw;
+void MainWindow::scanAndUpdateCameras() {
+    unsigned int num_cameras = camMan.numCameras();
+    updateCameraList( num_cameras );
+    if ( num_cameras > 0 && !camMan.isConnected() )
+        cameraSelected( 0 );
+}
+
+void MainWindow::fillSerialPorts() {
+    ui->serialSelector->clear();
+
+    auto ports = comm.getPorts();
+
+    // Fill Combo Box with Serial Ports
+    if ( ports.length() > 0 ) {
+        for ( QSerialPortInfo &info : ports ) {
+            ui->serialSelector->addItem( info.portName() );
         }
-    } else {
+
+        selectSerialPort( 0 );
+    }
+
+}
+
+void MainWindow::togglePreview( bool checked ) {
+    // skip if there is no camera
+    if ( !camMan.isConnected() ) {
+        ui->preview_button->setProperty( "checked", false );
+        return;
+    }
+
+    if ( checked ) {
+        ui->preview_widget->setProperty( "enabled", true );
+        resize = true;
+
+        // Start Capturing for preview
         try {
             camMan.startCapture();
         } catch ( FlyCapture2::Error e ) {
-            throw;
+            showError( e );
         }
+    } else {
+        ui->preview_widget->setProperty( "enabled", false );
+        ui->preview_widget->hide();
+        QTimer::singleShot( 0, this, &MainWindow::fit );
+
+        //Stop capture
+        if ( !recorder.isRecording() )
+            camMan.stopCapture();
     }
+}
+
+void MainWindow::directorySelection() {
+    QString dir = QFileDialog::getExistingDirectory( this, tr( "Choose the working Directory." ), ( recorder.dirSet() ? recorder.getProjectDir() : QStandardPaths::writableLocation( QStandardPaths::DocumentsLocation ) ), QFileDialog::ShowDirsOnly );
+    if ( !dir.isEmpty() )
+        try {
+            if ( !recorder.isRecording() ) {
+                recorder.setProjectDir( dir );
+                enableStart();
+            }
+        } catch ( RecorderError e ) {
+            showError( e.what() );
+        }
+}
+
+void MainWindow::selectSerialPort( int port ) {
+    ui->serialControl->setProperty( "visible", comm.selectPort( port ) );
+    QTimer::singleShot( 0, this, &MainWindow::fit );
+}
+
+void MainWindow::cameraSelected( int index ) {
+    if ( recorder.isRecording() || index < 0 )
+        return;
+
+    try {
+        camMan.connectCamera( index );
+    } catch ( FlyCapture2::Error e ) {
+        showError( e );
+        return;
+    }
+
+    setStatus( CONNECTED );
+}
+
+void MainWindow::frameCaptured( FlyCapture2::Image * image ) {
+    qDebug() << "Image Captured!";
+    static QMutex m;
+    m.lock();
+
+    // If preview is activated...
+    if ( ui->preview_widget->isEnabled() )
+        displayPreview( image );
+
+    if ( recorder.isRecording() ) {
+        // Note: WHY POINTER
+        image_buffer->append( image );
+        ui->buffer->display( image_buffer->length() );
+        emit saveFrame( image );
+    } else
+        delete image;
+
+    m.unlock();
+    return;
 }
 
 void MainWindow::frameSaved( FlyCapture2::Image * image ) {
@@ -468,11 +468,6 @@ void MainWindow::frameSaved( FlyCapture2::Image * image ) {
     m.unlock();
 }
 
-void MainWindow::setLcd() {
-    ui->framesCaptured->display( recorder.frameNumber() );
-    ui->timeCaptured->display( QString( "%1:%2" ).arg( ( ( ( int )recorder.timeCaptured() ) / 60 ) ).arg( ( int )recorder.timeCaptured() % 60 ) );
-}
-
 void MainWindow::handleCaptureError( FlyCapture2::Error err ) {
     showError( err );
 
@@ -491,7 +486,8 @@ void MainWindow::handleWriteError( FlyCapture2::Error err ) {
     startStopRecording();
 }
 
-void MainWindow::selectSerialPort( int port ) {
-    ui->serialControl->setProperty( "visible", comm.selectPort( port ) );
-    QTimer::singleShot( 0, this, &MainWindow::fit );
+void MainWindow::fit() {
+    setMinimumSize( 0, 0 );
+    adjustSize();
+    setMinimumSize( size() );
 }
