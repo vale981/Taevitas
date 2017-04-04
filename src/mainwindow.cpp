@@ -85,6 +85,7 @@ MainWindow::MainWindow( QWidget * parent ) :
     // Serial Selected
     connect( ui->serialSelector, static_cast<void( QComboBox::* )( int )>( &QComboBox::activated ), this, [this] ( int port ) {
         ui->serialControl->setProperty( "visible", comm.selectPort( port ) );
+        fit();
     } );
 
     // File Selector
@@ -179,6 +180,7 @@ void MainWindow::setStatus( STATUS status ) {
             disableRecOptions();
             break;
     }
+
     fit();
 }
 
