@@ -113,7 +113,7 @@ MainWindow::MainWindow( QWidget * parent ) :
     connect( ui->startButton, &QPushButton::clicked, this, &MainWindow::startStopRecording );
 
     // Make the UI Fit nicely
-    QTimer::singleShot( 0, this, &MainWindow::fit );
+    fit();
 }
 
 MainWindow::~MainWindow() {
@@ -178,7 +178,7 @@ void MainWindow::setStatus( STATUS status ) {
             break;
     }
 
-    QTimer::singleShot( 0, this, &MainWindow::fit );
+    fit();
 }
 
 void MainWindow::showError( QString error ) {
@@ -261,7 +261,7 @@ void MainWindow::displayPreview( FlyCapture2::Image * last_capture ) {
     ui->preview_widget->setPixmap( last_preview );
 
     if ( resize ) {
-        QTimer::singleShot( 0, this, &MainWindow::fit );
+        fit();
         resize = false;
     }
 }
@@ -382,7 +382,7 @@ void MainWindow::togglePreview( bool checked ) {
     } else {
         ui->preview_widget->setProperty( "enabled", false );
         ui->preview_widget->hide();
-        QTimer::singleShot( 0, this, &MainWindow::fit );
+        fit();
 
         //Stop capture
         if ( !recorder.isRecording() )
@@ -405,7 +405,7 @@ void MainWindow::directorySelection() {
 
 void MainWindow::selectSerialPort( int port ) {
     ui->serialControl->setProperty( "visible", comm.selectPort( port ) );
-    QTimer::singleShot( 0, this, &MainWindow::fit );
+    fit();
 }
 
 void MainWindow::cameraSelected( int index ) {
@@ -488,6 +488,8 @@ void MainWindow::handleWriteError( FlyCapture2::Error err ) {
 
 void MainWindow::fit() {
     setMinimumSize( 0, 0 );
-    adjustSize();
-    setMinimumSize( size() );
+    QTimer::singleShot( 0, this, [this]() {
+        adjustSize();
+        setMinimumSize( size() );
+    } );
 }
