@@ -79,6 +79,8 @@ class MainWindow : public QMainWindow {
         void handleWriteError( FlyCapture2::Error err );
         void fit();
 
+        void selectSerialPort( int port );
+
     signals:
         void saveFrame( FlyCapture2::Image * image );
 };

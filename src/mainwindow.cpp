@@ -83,10 +83,7 @@ MainWindow::MainWindow( QWidget * parent ) :
     connect( ui->cameraSelector, static_cast<void( QComboBox::* )( int )>( &QComboBox::activated ), this, &MainWindow::cameraSelected );
 
     // Serial Selected
-    connect( ui->serialSelector, static_cast<void( QComboBox::* )( int )>( &QComboBox::activated ), this, [this] ( int port ) {
-        ui->serialControl->setProperty( "visible", comm.selectPort( port ) );
-        fit();
-    } );
+    connect( ui->serialSelector, static_cast<void( QComboBox::* )( int )>( &QComboBox::activated ), this, &MainWindow::selectSerialPort );
 
     // File Selector
     connect( ui->directorySelector, &QPushButton::clicked, this, &MainWindow::directorySelection );
@@ -184,7 +181,6 @@ void MainWindow::setStatus( STATUS status ) {
     fit();
 }
 
-// FIXME
 void MainWindow::fit() {
     setMinimumSize( 0, 0 );
     setMaximumSize( 5000, 5000 );
@@ -212,8 +208,7 @@ void MainWindow::fillSerialPorts() {
             ui->serialSelector->addItem( info.portName() );
         }
 
-        // NOTE: UNCRITICAL Method for that
-        ui->serialControl->setProperty( "visible", comm.selectPort( 0 ) );
+        selectSerialPort( 0 );
     }
 
 }
@@ -495,4 +490,9 @@ void MainWindow::handleCaptureError( FlyCapture2::Error err ) {
 void MainWindow::handleWriteError( FlyCapture2::Error err ) {
     showError( err );
     startStopRecording();
+}
+
+void MainWindow::selectSerialPort( int port ) {
+    ui->serialControl->setProperty( "visible", comm.selectPort( port ) );
+    fit();
 }
