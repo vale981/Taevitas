@@ -121,12 +121,12 @@ class Recorder : public QObject {
         // lock the appendFrame function.
         QMutex write_lock;
 
-        // Indicates wether the project directorie is set.
-        bool pDirSet;
-
         // basic state Variable, because AVIRecorder doesn't provide it.
         // Well it does, but it is boring to look it up.
         bool is_recording;
+
+        // Indicates wether the project directorie is set.
+        bool pDirSet;
 
         // append to existing files
         bool append;

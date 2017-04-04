@@ -64,11 +64,11 @@ class CameraManager : public QObject {
 
         unsigned int num_cameras;
 
-        // GUID of the camera, which is currently being used
-        FlyCapture2::PGRGuid camera_guid;
-
         // Index of the current camera
         int camera_index;
+
+        // GUID of the camera, which is currently being used
+        FlyCapture2::PGRGuid camera_guid;
 
         // Event Handlers
         static void camConnectEvent( void * pParameter, unsigned int serialNumber );

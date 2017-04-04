@@ -15,8 +15,8 @@ MainWindow::MainWindow( QWidget * parent ) :
     ui( new Ui::MainWindow ),
     camMan( this ),
     recorder( 0, 18, false ),
-    resize { false },
-    comm( this ) {
+    comm( this ),
+    resize { false } {
     ui->setupUi( this );
 
     // Set Scene and Hide Preview Widget

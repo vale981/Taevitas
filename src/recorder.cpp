@@ -14,7 +14,13 @@ const QHash<RecorderError::_RecorderError, QString> RecorderError::_description 
     { RecorderError::OK, "All went OK." },
 };
 
-Recorder::Recorder( QObject * parent, unsigned int frame_rate, bool cap_frames ) : QObject( parent ), is_recording {false}, append {false}, frame_n {0}, time_c {0}, pDirSet { false } {
+Recorder::Recorder( QObject * parent, unsigned int frame_rate, bool cap_frames ) :
+    QObject( parent ),
+    is_recording {false},
+    pDirSet { false },
+    append {false},
+    frame_n {0},
+    time_c {0} {
     // No Compression for frame_captures
     frame_options.compression = frame_options.NONE;
     options.frameRate = frame_rate;

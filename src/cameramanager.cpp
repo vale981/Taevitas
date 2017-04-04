@@ -4,7 +4,11 @@
 
 using namespace FlyCapture2;
 
-CameraManager::CameraManager( QObject * parent ) : QObject( parent ), num_cameras {0}, camera_index {-1}, is_capturing {false} {
+CameraManager::CameraManager( QObject * parent ) :
+    QObject( parent ),
+    num_cameras {0},
+    is_capturing {false},
+    camera_index {-1} {
     bus_mgr.RegisterCallback( &CameraManager::camConnectEvent, ARRIVAL, this, &handleC );
     bus_mgr.RegisterCallback( &CameraManager::camDisconnectEvent, REMOVAL, this, &handleD );
 }
