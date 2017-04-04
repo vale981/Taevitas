@@ -494,5 +494,7 @@ void MainWindow::handleWriteError( FlyCapture2::Error err ) {
 
 void MainWindow::selectSerialPort( int port ) {
     ui->serialControl->setProperty( "visible", comm.selectPort( port ) );
+
+    qDebug() << "fit";
     fit();
 }
