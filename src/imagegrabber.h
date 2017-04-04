@@ -10,12 +10,13 @@ class ImageGrabber : public QThread {
     public:
         ImageGrabber( QObject * parent = 0 ) : QThread( parent ) {}
         void run() Q_DECL_OVERRIDE;
+
         void setCamera( FlyCapture2::Camera * cam );
 
     private:
         bool capture;
-        FlyCapture2::Camera * cam;
 
+        FlyCapture2::Camera * cam;
         FlyCapture2::Image tmp;
 
     signals:
