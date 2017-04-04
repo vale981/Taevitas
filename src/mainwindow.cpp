@@ -181,7 +181,7 @@ void MainWindow::setStatus( STATUS status ) {
     QTimer::singleShot( 0, this, &MainWindow::fit );
 }
 
-void MainWindow::    QTimer::singleShot( 0, this, &MainWindow::fit ) {
+void MainWindow::fit() {
     setMinimumSize( 0, 0 );
     setMaximumSize( 5000, 5000 );
     adjustSize();
