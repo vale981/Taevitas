@@ -179,6 +179,7 @@ void MainWindow::setStatus( STATUS status ) {
             disableRecOptions();
             break;
     }
+    fit();
 }
 
 // FIXME
