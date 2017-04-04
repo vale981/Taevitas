@@ -38,8 +38,6 @@ class MainWindow : public QMainWindow {
 
         void updateCameraList( unsigned int num_cameras );
 
-        void fit();
-
         enum STATUS {
             WAITING,
             CONNECTED,
@@ -79,6 +77,7 @@ class MainWindow : public QMainWindow {
 
         void handleCaptureError( FlyCapture2::Error err );
         void handleWriteError( FlyCapture2::Error err );
+        void fit();
 
     signals:
         void saveFrame( FlyCapture2::Image * image );

@@ -25,8 +25,6 @@ MainWindow::MainWindow( QWidget * parent ) :
     // Hide Serial Control
     ui->serialControl->setProperty( "visible", false );
 
-    fit();
-
     // Set status
     setStatus( WAITING );
 
@@ -75,6 +73,9 @@ MainWindow::MainWindow( QWidget * parent ) :
     connect( ui->sHalt, &QPushButton::clicked, &comm, &SerialCommunicator::sendHalt );
     connect( ui->sFast, &QPushButton::clicked, &comm, &SerialCommunicator::sendFast );
 
+    // TODO: Delete
+    connect( ui->camScanButton, &QPushButton::clicked, this, &MainWindow::fit );
+
     // Serial Monitor
     connect( &comm, &SerialCommunicator::dataRead, this, [this] ( QByteArray data ) {
         ui->serialMon->moveCursor( QTextCursor::Start );
@@ -115,6 +116,9 @@ MainWindow::MainWindow( QWidget * parent ) :
 
     // Start recording
     connect( ui->startButton, &QPushButton::clicked, this, &MainWindow::startStopRecording );
+
+    // Make the UI Fit nicely
+    fit();
 }
 
 MainWindow::~MainWindow() {
@@ -287,6 +291,7 @@ void MainWindow::togglePreview( bool checked ) {
     } else {
         ui->preview_widget->setProperty( "enabled", false );
         ui->preview_widget->hide();
+        fit();
 
         //Stop capture
         if ( !recorder.isRecording() )

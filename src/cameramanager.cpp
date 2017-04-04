@@ -103,7 +103,6 @@ void CameraManager::startCapture() {
     }
 
     // Just my own async image grabbing!
-    // TODO: ERRORS!
     ImageGrabber * tmpG = new ImageGrabber( this );
     tmpG->setCamera( &camera );
     connect( tmpG, &ImageGrabber::imageCaptured, this, &CameraManager::frameCaptured, Qt::QueuedConnection );
