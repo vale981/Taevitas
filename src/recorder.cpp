@@ -25,17 +25,6 @@ Recorder::~Recorder() {
     stopRecording();
 }
 
-void Recorder::setProjectDir( QString &p_dir ) {
-    QFileInfo pDirInfo( p_dir );
-    if ( !pDirInfo.isDir() || !pDirInfo.isWritable() ) {
-        throw RecorderError( RecorderError::INVALID_PROJECT_DIRECTORY );
-        return;
-    }
-
-    baseDir = QDir( p_dir );
-    pDirSet = true;
-}
-
 void Recorder::newRecording( QString r_name ) {
     stopRecording();
 
@@ -99,6 +88,31 @@ void Recorder::newRecording( QString r_name ) {
     is_recording = true;
 }
 
+void Recorder::stopRecording() {
+    if ( is_recording ) {
+        // Stop Recorder
+        Error err = recorder.AVIClose();
+        if ( err != PGRERROR_OK ) {
+            throw err;
+            return;
+        }
+
+        is_recording = false;
+        cleanup();
+    }
+}
+
+void Recorder::setProjectDir( QString &p_dir ) {
+    QFileInfo pDirInfo( p_dir );
+    if ( !pDirInfo.isDir() || !pDirInfo.isWritable() ) {
+        throw RecorderError( RecorderError::INVALID_PROJECT_DIRECTORY );
+        return;
+    }
+
+    baseDir = QDir( p_dir );
+    pDirSet = true;
+}
+
 bool Recorder::restoreRecording() {
     bool ok;
 
@@ -138,30 +152,6 @@ RecorderError Recorder::verifyRecDir() {
     return RecorderError( RecorderError::OK );
 }
 
-void Recorder::stopRecording() {
-    if ( is_recording ) {
-        // Stop Recorder
-        Error err = recorder.AVIClose();
-        if ( err != PGRERROR_OK ) {
-            throw err;
-            return;
-        }
-
-        is_recording = false;
-        cleanup();
-    }
-}
-
-void Recorder::cleanup() {
-    // Reset Everything
-    if ( !is_recording ) {
-        frame_n = 0;
-        time_c =  0;
-        append = false;
-        delete statFile;
-    }
-}
-
 void Recorder::appendFrame( FlyCapture2::Image * image ) {
     write_lock.lock();
     qDebug() << "Writing Frame...";
@@ -198,4 +188,14 @@ void Recorder::appendFrame( FlyCapture2::Image * image ) {
 
     emit frameSaved( image );
     write_lock.unlock();
+}
+
+void Recorder::cleanup() {
+    // Reset Everything
+    if ( !is_recording ) {
+        frame_n = 0;
+        time_c =  0;
+        append = false;
+        delete statFile;
+    }
 }

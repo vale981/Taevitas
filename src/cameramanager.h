@@ -20,6 +20,10 @@ class CameraManager : public QObject {
         explicit CameraManager( QObject * parent = 0 );
         ~CameraManager();
 
+        // Connect camera from index. Once successfull it emits the cameraConnected signal.
+        // Emits Error signal in case of an error.
+        void connectCamera( int );
+
         // Starts capturing images. When an image has been captured, the signal frameCaptured is emited.
         // Throws FlyCapture2::Error
         void startCapture();
@@ -40,21 +44,23 @@ class CameraManager : public QObject {
             return num_cameras;
         }
 
-        // Connect camera from index. Once successfull it emits the cameraConnected signal.
-        // Emits Error signal in case of an error.
-        void connectCamera( int );
-
         bool isCapturing() {
             return is_capturing;
         }
-
-        FlyCapture2::CallbackHandle handleC;
-        FlyCapture2::CallbackHandle handleD;
 
     private:
         FlyCapture2::Camera camera;
         FlyCapture2::FC2Config cam_config;
         FlyCapture2::BusManager bus_mgr;
+
+        FlyCapture2::CallbackHandle handleC;
+        FlyCapture2::CallbackHandle handleD;
+
+        // Capture Thread
+        ImageGrabber * grabber;
+
+        // Status Variable
+        bool is_capturing;
 
         unsigned int num_cameras;
 
@@ -64,12 +70,7 @@ class CameraManager : public QObject {
         // Index of the current camera
         int camera_index;
 
-        // State Variable
-        bool is_capturing;
-
-        // Capture Thread
-        ImageGrabber * grabber;
-
+        // Event Handlers
         static void camConnectEvent( void * pParameter, unsigned int serialNumber );
         static void camDisconnectEvent( void * pParameter, unsigned int serialNumber );
 
@@ -77,6 +78,7 @@ class CameraManager : public QObject {
         void frameCaptured( FlyCapture2::Image * image ) const;
         void cameraConnected();
         void cameraDisconnected( bool current );
+
         void captureError( FlyCapture2::Error err );
 };
 

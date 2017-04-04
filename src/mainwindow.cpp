@@ -295,6 +295,9 @@ void MainWindow::startStopRecording() {
             return;
         }
 
+        // If changed through corrections.
+        ui->projectName->setText( recorder.getRecName() );
+
         if ( !camMan.isCapturing() ) {
             try {
                 camMan.startCapture();

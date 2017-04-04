@@ -68,23 +68,31 @@ class Recorder : public QObject {
         // stops the recording, cleans up, throws FlyCapture2::Error
         void stopRecording();
 
+        void setProjectDir( QString &p_dir );
         QString getProjectDir() {
             return baseDir.absolutePath();
-        }
-
-        QString getRecName() {
-            return recName;
         }
 
         bool isRecording() {
             return is_recording;
         }
 
+        int frameNumber() const {
+            return frame_n;
+        }
+
+        double timeCaptured() const {
+            return time_c;
+        }
+
+        QString getRecName() {
+            return recName;
+        }
+
         unsigned int getFrameRate() {
             return options.frameRate;
         }
 
-        void setProjectDir( QString &p_dir );
         void setFrameRate( unsigned int frame_rate ) {
             options.frameRate = frame_rate;
         }
@@ -95,14 +103,6 @@ class Recorder : public QObject {
 
         bool captureFrames() {
             return capture_frames;
-        }
-
-        int frameNumber() const {
-            return frame_n;
-        }
-
-        double timeCaptured() const {
-            return time_c;
         }
 
     public slots:
@@ -118,7 +118,14 @@ class Recorder : public QObject {
         FlyCapture2::AVIOption options;
         FlyCapture2::TIFFOption frame_options;
 
-        // Basic state Variable, because AVIRecorder doesn't provide it.
+        // lock the appendFrame function.
+        QMutex write_lock;
+
+        // Indicates wether the project directorie is set.
+        bool pDirSet;
+
+        // basic state Variable, because AVIRecorder doesn't provide it.
+        // Well it does, but it is boring to look it up.
         bool is_recording;
 
         // append to existing files
@@ -131,6 +138,7 @@ class Recorder : public QObject {
         int frame_n;
         double time_c;
 
+        // recording config
         QDir baseDir;
         QDir record_dir;
         QString recName;
@@ -146,11 +154,6 @@ class Recorder : public QObject {
 
         // reset Status, only if not recording (is_recording == false).
         void cleanup();
-
-        // lock the appendFrame function.
-        QMutex write_lock;
-
-        bool pDirSet;
 
     signals:
         void frameSaved( FlyCapture2::Image * image );

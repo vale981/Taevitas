@@ -57,38 +57,6 @@ void CameraManager::connectCamera( int index ) {
     camera_index = index;
 }
 
-void CameraManager::camConnectEvent( void * pParameter, unsigned int serialNumber ) {
-    static_cast<CameraManager *>( pParameter )->cameraConnected();
-}
-
-void CameraManager::camDisconnectEvent( void * pParameter, unsigned int serialNumber ) {
-    CameraManager * cam = static_cast<CameraManager *>( pParameter );
-    FlyCapture2::CameraInfo info;
-
-    cam->camera.GetCameraInfo( &info );
-    bool current = ( serialNumber == info.serialNumber );
-
-    cam->cameraDisconnected( current );
-}
-
-void CameraManager::stopCapture() {
-    if ( !is_capturing )
-        return;
-
-    grabber->stopCapturing();
-
-    Error error = camera.StopCapture();
-    if ( error != PGRERROR_OK ) {
-        throw error;
-        return;
-    }
-
-    grabber->wait();
-
-
-    is_capturing = false;
-}
-
 void CameraManager::startCapture() {
     // Don't capture twice!
     if ( is_capturing )
@@ -112,4 +80,36 @@ void CameraManager::startCapture() {
 
     grabber = tmpG;
     is_capturing = true;
+}
+
+void CameraManager::stopCapture() {
+    if ( !is_capturing )
+        return;
+
+    grabber->stopCapturing();
+
+    Error error = camera.StopCapture();
+    if ( error != PGRERROR_OK ) {
+        throw error;
+        return;
+    }
+
+    grabber->wait();
+
+
+    is_capturing = false;
+}
+
+void CameraManager::camConnectEvent( void * pParameter, unsigned int serialNumber ) {
+    static_cast<CameraManager *>( pParameter )->cameraConnected();
+}
+
+void CameraManager::camDisconnectEvent( void * pParameter, unsigned int serialNumber ) {
+    CameraManager * cam = static_cast<CameraManager *>( pParameter );
+    FlyCapture2::CameraInfo info;
+
+    cam->camera.GetCameraInfo( &info );
+    bool current = ( serialNumber == info.serialNumber );
+
+    cam->cameraDisconnected( current );
 }
