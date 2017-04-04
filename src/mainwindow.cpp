@@ -493,6 +493,6 @@ void MainWindow::fit() {
     setMinimumSize( 0, 0 );
     QTimer::singleShot( 0, this, [this]() {
         adjustSize();
-        setMinimumSize( size() );
+        setFixedSize( size() );
     } );
 }
