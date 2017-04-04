@@ -183,9 +183,8 @@ void MainWindow::setStatus( STATUS status ) {
 
 void MainWindow::fit() {
     setMinimumSize( 0, 0 );
-    setMaximumSize( 5000, 5000 );
     adjustSize();
-    setFixedSize( this->size() );
+    setMinimumSize( size() );
 }
 
 void MainWindow::updateCameraList( unsigned int num_cameras ) {
