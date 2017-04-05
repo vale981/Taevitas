@@ -15,7 +15,8 @@ MainWindow::MainWindow( QWidget * parent ) :
     ui( new Ui::MainWindow ),
     camMan( this ),
     recorder( 0, 18, false ),
-    comm( this ) {
+    comm( this ),
+    resize { false } {
     ui->setupUi( this );
 
     // Set Scene and Hide Preview Widget
@@ -258,7 +259,10 @@ void MainWindow::displayPreview( FlyCapture2::Image * last_capture ) {
     last_preview.convertFromImage( last_preview_image );
     ui->preview_widget->setPixmap( last_preview );
 
-    fit();
+    if ( resize ) {
+        fit();
+        resize = false;
+    }
 }
 
 
@@ -370,6 +374,7 @@ void MainWindow::togglePreview( bool checked ) {
 
     if ( checked ) {
         ui->preview_widget->setProperty( "enabled", true );
+        resize = true;
 
         // Start Capturing for preview
         try {
@@ -380,6 +385,9 @@ void MainWindow::togglePreview( bool checked ) {
     } else {
         ui->preview_widget->setProperty( "enabled", false );
         ui->preview_widget->hide();
+
+        resize = true;
+
         fit();
 
         //Stop capture

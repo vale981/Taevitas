@@ -37,6 +37,7 @@ class MainWindow : public QMainWindow {
         Recorder recorder;
         SerialCommunicator comm;
         QThread * recThread;
+        bool resize;
         QVector<FlyCapture2::Image *> * image_buffer;
 
         void showError( FlyCapture2::Error err );
