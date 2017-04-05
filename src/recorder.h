@@ -17,6 +17,8 @@
  */
 
 class RecorderError {
+        Q_OBJECT
+
     public:
         enum _RecorderError {
             INVALID_PROJECT_DIRECTORY,
