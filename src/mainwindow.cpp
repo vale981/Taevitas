@@ -226,7 +226,7 @@ void MainWindow::disableRecOptions() {
 }
 
 void MainWindow::resetCapture() {
-    if ( !ui->preview_button->isChecked() ) {
+    if ( !ui->preview_button->isChecked() || !recorder.isRecording() ) {
         try {
             camMan.stopCapture();
         } catch ( FlyCapture2::Error e ) {
@@ -385,8 +385,6 @@ void MainWindow::togglePreview( bool checked ) {
     } else {
         ui->preview_widget->setProperty( "enabled", false );
         ui->preview_widget->hide();
-
-        resize = true;
 
         fit();
 
