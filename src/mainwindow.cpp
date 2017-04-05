@@ -28,12 +28,12 @@ MainWindow::MainWindow( QWidget * parent ) :
     // Set status
     setStatus( WAITING );
 
+    // Try to connect to first cam
+    scanAndUpdateCameras();
+
     // Set default dir
     QString defaultDir = QStandardPaths::writableLocation( QStandardPaths::DocumentsLocation );
     recorder.setProjectDir( defaultDir );
-
-    // Try to connect to first cam
-    scanAndUpdateCameras();
 
     // Fill serial ports.
     fillSerialPorts();
