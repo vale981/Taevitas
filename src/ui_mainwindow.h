@@ -104,6 +104,7 @@ public:
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(groupBox->sizePolicy().hasHeightForWidth());
         groupBox->setSizePolicy(sizePolicy1);
+        groupBox->setMinimumSize(QSize(190, 409));
         groupBox->setMaximumSize(QSize(190, 16777215));
         verticalLayout = new QVBoxLayout(groupBox);
         verticalLayout->setSpacing(6);
