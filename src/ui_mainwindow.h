@@ -104,7 +104,7 @@ public:
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(groupBox->sizePolicy().hasHeightForWidth());
         groupBox->setSizePolicy(sizePolicy1);
-        groupBox->setMinimumSize(QSize(190, 409));
+        groupBox->setMinimumSize(QSize(0, 0));
         groupBox->setMaximumSize(QSize(190, 16777215));
         verticalLayout = new QVBoxLayout(groupBox);
         verticalLayout->setSpacing(6);
@@ -151,7 +151,7 @@ public:
 
         camScanButton = new QPushButton(groupBox);
         camScanButton->setObjectName(QStringLiteral("camScanButton"));
-        QSizePolicy sizePolicy3(QSizePolicy::Minimum, QSizePolicy::Preferred);
+        QSizePolicy sizePolicy3(QSizePolicy::Minimum, QSizePolicy::Fixed);
         sizePolicy3.setHorizontalStretch(0);
         sizePolicy3.setVerticalStretch(0);
         sizePolicy3.setHeightForWidth(camScanButton->sizePolicy().hasHeightForWidth());
@@ -195,8 +195,11 @@ public:
 
         fps_box = new QSpinBox(recOptions);
         fps_box->setObjectName(QStringLiteral("fps_box"));
-        sizePolicy3.setHeightForWidth(fps_box->sizePolicy().hasHeightForWidth());
-        fps_box->setSizePolicy(sizePolicy3);
+        QSizePolicy sizePolicy4(QSizePolicy::Minimum, QSizePolicy::Preferred);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(fps_box->sizePolicy().hasHeightForWidth());
+        fps_box->setSizePolicy(sizePolicy4);
         fps_box->setValue(18);
 
         formLayout_2->setWidget(0, QFormLayout::FieldRole, fps_box);
@@ -213,16 +216,16 @@ public:
         startButton = new QPushButton(recOptions);
         startButton->setObjectName(QStringLiteral("startButton"));
         startButton->setEnabled(false);
-        sizePolicy3.setHeightForWidth(startButton->sizePolicy().hasHeightForWidth());
-        startButton->setSizePolicy(sizePolicy3);
+        sizePolicy4.setHeightForWidth(startButton->sizePolicy().hasHeightForWidth());
+        startButton->setSizePolicy(sizePolicy4);
         startButton->setFlat(false);
 
         verticalLayout_4->addWidget(startButton);
 
         preview_button = new QPushButton(recOptions);
         preview_button->setObjectName(QStringLiteral("preview_button"));
-        sizePolicy3.setHeightForWidth(preview_button->sizePolicy().hasHeightForWidth());
-        preview_button->setSizePolicy(sizePolicy3);
+        sizePolicy4.setHeightForWidth(preview_button->sizePolicy().hasHeightForWidth());
+        preview_button->setSizePolicy(sizePolicy4);
         preview_button->setCheckable(true);
 
         verticalLayout_4->addWidget(preview_button);
@@ -296,6 +299,7 @@ public:
 
         serialControl = new QGroupBox(centralWidget);
         serialControl->setObjectName(QStringLiteral("serialControl"));
+        serialControl->setMinimumSize(QSize(190, 0));
         verticalLayout_3 = new QVBoxLayout(serialControl);
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setContentsMargins(11, 11, 11, 11);
@@ -317,11 +321,11 @@ public:
 
         serialMon = new QPlainTextEdit(serialControl);
         serialMon->setObjectName(QStringLiteral("serialMon"));
-        QSizePolicy sizePolicy4(QSizePolicy::Ignored, QSizePolicy::Expanding);
-        sizePolicy4.setHorizontalStretch(0);
-        sizePolicy4.setVerticalStretch(0);
-        sizePolicy4.setHeightForWidth(serialMon->sizePolicy().hasHeightForWidth());
-        serialMon->setSizePolicy(sizePolicy4);
+        QSizePolicy sizePolicy5(QSizePolicy::Ignored, QSizePolicy::Expanding);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(serialMon->sizePolicy().hasHeightForWidth());
+        serialMon->setSizePolicy(sizePolicy5);
         serialMon->setReadOnly(true);
 
         verticalLayout_3->addWidget(serialMon);
