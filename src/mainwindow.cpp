@@ -373,6 +373,7 @@ void MainWindow::togglePreview( bool checked ) {
     }
 
     if ( checked ) {
+        setMaximumSize( 1e5, 1e5 );
         ui->preview_widget->setProperty( "enabled", true );
         resize = true;
 
