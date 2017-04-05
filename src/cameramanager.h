@@ -79,7 +79,7 @@ class CameraManager : public QObject {
         void cameraConnected();
         void cameraDisconnected( bool current );
 
-        void captureError( FlyCapture2::Error err );
+        void captureError( QString err );
 };
 
 #endif // CAMERAMANAGER_H

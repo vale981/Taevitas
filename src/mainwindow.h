@@ -73,7 +73,7 @@ class MainWindow : public QMainWindow {
         void cameraSelected( int index );
         void frameCaptured( FlyCapture2::Image * image );
         void frameSaved( FlyCapture2::Image * image );
-        void handleCaptureError( FlyCapture2::Error err );
+        void handleCaptureError( QString err );
         void handleWriteError( FlyCapture2::Error err );
 
         void fit();

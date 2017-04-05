@@ -471,7 +471,7 @@ void MainWindow::frameSaved( FlyCapture2::Image * image ) {
     m.unlock();
 }
 
-void MainWindow::handleCaptureError( FlyCapture2::Error err ) {
+void MainWindow::handleCaptureError( QString err ) {
     showError( err );
 
     try {

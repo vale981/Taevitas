@@ -4,9 +4,6 @@
 
 int main( int argc, char * argv[] ) {
     QApplication a( argc, argv );
-
-    qRegisterMetaType<FlyCapture2::Error>();
-
     MainWindow w;
     w.show();
 
