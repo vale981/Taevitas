@@ -47,8 +47,8 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>190</width>
-        <height>409</height>
+        <width>0</width>
+        <height>0</height>
        </size>
       </property>
       <property name="maximumSize">
@@ -305,6 +305,12 @@
     </item>
     <item row="2" column="0">
      <widget class="QGroupBox" name="serialControl">
+      <property name="minimumSize">
+       <size>
+        <width>190</width>
+        <height>0</height>
+       </size>
+      </property>
       <property name="title">
        <string>Serial Control</string>
       </property>
