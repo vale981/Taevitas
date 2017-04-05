@@ -16,7 +16,7 @@
   This class is a wrapper around the AVIRecorder from PTGrey to abstract and implement signals.
  */
 
-class RecorderError {
+class RecorderError : QObject {
         Q_OBJECT
 
     public:
