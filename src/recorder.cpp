@@ -159,7 +159,6 @@ RecorderError Recorder::verifyRecDir() {
 }
 
 void Recorder::appendFrame( FlyCapture2::Image * image ) {
-    emit RecorderError( RecorderError::CANT_OPEN_STATFILE );
     write_lock.lock();
     qDebug() << "Writing Frame...";
 
@@ -170,7 +169,7 @@ void Recorder::appendFrame( FlyCapture2::Image * image ) {
     Error app_err = recorder.AVIAppend( image );
     if ( app_err != PGRERROR_OK ) {
         write_lock.unlock();
-        emit writeError( app_err );
+        emit writeError( app_err.GetDescription() );
         return;
     }
 
@@ -179,7 +178,7 @@ void Recorder::appendFrame( FlyCapture2::Image * image ) {
         app_err = image->Save( ( record_dir.path() + "/frames/" + recName + "_" + QString::number( frame_n ) + ".tiff"  ).toStdString().c_str(), &frame_options );
         if ( app_err != PGRERROR_OK ) {
             write_lock.unlock();
-            emit writeError( app_err );
+            emit writeError( app_err.GetDescription() );
             return;
         }
     }
