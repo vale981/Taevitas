@@ -159,6 +159,7 @@ RecorderError Recorder::verifyRecDir() {
 }
 
 void Recorder::appendFrame( FlyCapture2::Image * image ) {
+    emit RecorderError( RecorderError::CANT_OPEN_STATFILE );
     write_lock.lock();
     qDebug() << "Writing Frame...";
 

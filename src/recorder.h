@@ -16,9 +16,7 @@
   This class is a wrapper around the AVIRecorder from PTGrey to abstract and implement signals.
  */
 
-class RecorderError : QObject {
-        Q_OBJECT
-
+class RecorderError {
     public:
         enum _RecorderError {
             INVALID_PROJECT_DIRECTORY,
