@@ -74,7 +74,7 @@ class MainWindow : public QMainWindow {
         void frameCaptured( FlyCapture2::Image * image );
         void frameSaved( FlyCapture2::Image * image );
         void handleCaptureError( QString err );
-        void handleWriteError( FlyCapture2::Error err );
+        void handleWriteError( QString err );
 
         void fit();
 

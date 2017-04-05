@@ -157,6 +157,6 @@ class Recorder : public QObject {
 
     signals:
         void frameSaved( FlyCapture2::Image * image );
-        void writeError( FlyCapture2::Error err );
+        void writeError( QString err );
 };
 #endif //RECORDER_H

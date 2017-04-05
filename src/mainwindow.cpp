@@ -484,7 +484,7 @@ void MainWindow::handleCaptureError( QString err ) {
         startStopRecording();
 }
 
-void MainWindow::handleWriteError( FlyCapture2::Error err ) {
+void MainWindow::handleWriteError( QString err ) {
     showError( err );
     startStopRecording();
 }
