@@ -98,7 +98,7 @@ class Recorder : public QObject {
         }
 
         bool dirSet() {
-            return pDirSet && !baseDir.absolutePath().isEmpty();
+            return pDirSet;
         }
 
         bool captureFrames() {
