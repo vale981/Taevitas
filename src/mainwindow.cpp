@@ -155,6 +155,7 @@ void MainWindow::setStatus( STATUS status ) {
             ui->cameraSelector->setProperty( "enabled", true );
             ui->recStats->hide();
 
+            qDebug() <<  recorder.dirSet() ;
             // Note: Suboptimal
             if ( recorder.dirSet() )
                 enableStart();
