@@ -114,6 +114,9 @@ MainWindow::MainWindow( QWidget * parent ) :
 
     // Make the UI Fit nicely
     fit();
+
+    // Enable Preset Start
+    enableStart();
 }
 
 MainWindow::~MainWindow() {
@@ -154,11 +157,6 @@ void MainWindow::setStatus( STATUS status ) {
             ui->startButton->setText( "Start" );
             ui->cameraSelector->setProperty( "enabled", true );
             ui->recStats->hide();
-
-            qDebug() <<  recorder.dirSet() ;
-            // Note: Suboptimal
-            if ( recorder.dirSet() )
-                enableStart();
 
             qDebug( "Connected...." );
             break;
