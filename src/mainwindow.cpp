@@ -370,7 +370,6 @@ void MainWindow::togglePreview( bool checked ) {
 
     if ( checked ) {
         ui->preview_widget->setProperty( "enabled", true );
-        resize = true;
 
         // Start Capturing for preview
         try {
