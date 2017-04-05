@@ -360,7 +360,8 @@ void MainWindow::fillSerialPorts() {
             ui->serialSelector->addItem( info.portName() );
         }
 
-        selectSerialPort( 0 );
+        if ( !comm.isConnected() )
+            selectSerialPort( 0 );
     }
 
 }
