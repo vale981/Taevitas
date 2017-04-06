@@ -58,7 +58,8 @@ public:
     QCheckBox *saveFrames;
     QPushButton *startButton;
     QPushButton *preview_button;
-    QCheckBox *flipPreview;
+    QCheckBox *flipPreviewV;
+    QCheckBox *flipPreviewH;
     QGroupBox *groupBox_2;
     QVBoxLayout *verticalLayout_2;
     QLabel *statusLabel;
@@ -231,10 +232,15 @@ public:
 
         verticalLayout_4->addWidget(preview_button);
 
-        flipPreview = new QCheckBox(recOptions);
-        flipPreview->setObjectName(QStringLiteral("flipPreview"));
+        flipPreviewV = new QCheckBox(recOptions);
+        flipPreviewV->setObjectName(QStringLiteral("flipPreviewV"));
 
-        verticalLayout_4->addWidget(flipPreview, 0, Qt::AlignHCenter);
+        verticalLayout_4->addWidget(flipPreviewV, 0, Qt::AlignHCenter);
+
+        flipPreviewH = new QCheckBox(recOptions);
+        flipPreviewH->setObjectName(QStringLiteral("flipPreviewH"));
+
+        verticalLayout_4->addWidget(flipPreviewH, 0, Qt::AlignHCenter);
 
 
         verticalLayout->addWidget(recOptions);
@@ -362,7 +368,8 @@ public:
         saveFrames->setText(QApplication::translate("MainWindow", "  Save Frames", Q_NULLPTR));
         startButton->setText(QApplication::translate("MainWindow", "Start", Q_NULLPTR));
         preview_button->setText(QApplication::translate("MainWindow", "Preview Camera", Q_NULLPTR));
-        flipPreview->setText(QApplication::translate("MainWindow", "Flip Preview", Q_NULLPTR));
+        flipPreviewV->setText(QApplication::translate("MainWindow", "Flip  Vertical", Q_NULLPTR));
+        flipPreviewH->setText(QApplication::translate("MainWindow", "Flip Horizontal", Q_NULLPTR));
         groupBox_2->setTitle(QApplication::translate("MainWindow", "Status", Q_NULLPTR));
         statusLabel->setText(QApplication::translate("MainWindow", "Waiting.", Q_NULLPTR));
         label_3->setText(QApplication::translate("MainWindow", "Frames", Q_NULLPTR));

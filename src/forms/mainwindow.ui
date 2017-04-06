@@ -230,9 +230,16 @@
            </widget>
           </item>
           <item alignment="Qt::AlignHCenter">
-           <widget class="QCheckBox" name="flipPreview">
+           <widget class="QCheckBox" name="flipPreviewV">
             <property name="text">
-             <string>Flip Preview</string>
+             <string>Flip  Vertical</string>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QCheckBox" name="flipPreviewH">
+            <property name="text">
+             <string>Flip Horizontal</string>
             </property>
            </widget>
           </item>

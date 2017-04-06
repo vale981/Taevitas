@@ -256,11 +256,11 @@ void MainWindow::displayPreview( FlyCapture2::Image * last_capture ) {
     last_preview_image = last_preview_image.scaledToHeight( 500 );
     ui->preview_widget->setFixedSize( last_preview_image.width(), last_preview_image.height() );
 
+    // Flip if wanted.
+    last_preview_image = last_preview_image.mirrored( ui->flipPreviewH->isChecked(), ui->flipPreviewV->isChecked() );
+
     last_preview.convertFromImage( last_preview_image );
     ui->preview_widget->setPixmap( last_preview );
-
-    if ( ui->flipPreview->isChecked() )
-        last_preview_image = last_preview_image.mirrored();
 
     if ( resize ) {
         fit();
