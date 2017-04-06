@@ -229,6 +229,13 @@
             </property>
            </widget>
           </item>
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QCheckBox" name="flipPreview">
+            <property name="text">
+             <string>Flip Preview</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>

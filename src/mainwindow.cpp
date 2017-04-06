@@ -259,6 +259,9 @@ void MainWindow::displayPreview( FlyCapture2::Image * last_capture ) {
     last_preview.convertFromImage( last_preview_image );
     ui->preview_widget->setPixmap( last_preview );
 
+    if ( ui->flipPreview->isChecked() )
+        last_preview_image = last_preview_image.mirrored();
+
     if ( resize ) {
         fit();
         resize = false;
