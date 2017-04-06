@@ -265,6 +265,11 @@ void MainWindow::displayPreview( FlyCapture2::Image * last_capture ) {
     }
 }
 
+void MainWindow::deleteImage( FlyCapture2::Image * image ) {
+    QTimer::singleShot( 0, this, [image]() {
+        delete image;
+    } );
+}
 
 void MainWindow::startStopRecording() {
     if ( !recorder.isRecording() ) {
@@ -444,7 +449,7 @@ void MainWindow::frameCaptured( FlyCapture2::Image * image ) {
         ui->buffer->display( image_buffer->length() );
         emit saveFrame( image );
     } else
-        delete image;
+        deleteImage( image );
 
     m.unlock();
     return;
@@ -460,7 +465,7 @@ void MainWindow::frameSaved( FlyCapture2::Image * image ) {
 
     for ( int i = 0; i < image_buffer->length(); i++ ) {
         if ( ( *image_buffer )[i] == image ) {
-            delete ( *image_buffer )[i];
+            deleteImage( ( *image_buffer )[i] );
             image_buffer->remove( i );
             break;
         }

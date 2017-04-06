@@ -57,6 +57,9 @@ class MainWindow : public QMainWindow {
         // Show an Image in the Preview Widget.
         void displayPreview( FlyCapture2::Image * last_capture );
 
+        // Deletes Image on next Event Loop Cycle
+        void deleteImage( FlyCapture2::Image * image );
+
     private slots:
         void startStopRecording();
 
