@@ -185,7 +185,7 @@ void MainWindow::setStatus( STATUS status ) {
 }
 
 void MainWindow::showError( QString error ) {
-    QMetaObject::invokeMethod( this, [this, error] {
+    QTimer::singleShot( 0, this, [this, error] {
         QMessageBox errBox;
         errBox.setParent( this );
         errBox.critical( 0, "Error", "An Error has occured:\n" + error );
