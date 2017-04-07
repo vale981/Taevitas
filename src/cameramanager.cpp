@@ -100,7 +100,6 @@ void CameraManager::stopCapture() {
 
     grabber->wait();
 
-
     is_capturing = false;
 }
 
