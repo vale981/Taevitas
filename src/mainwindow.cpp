@@ -185,11 +185,11 @@ void MainWindow::setStatus( STATUS status ) {
 }
 
 void MainWindow::showError( QString error ) {
-    QMessageBox errBox;
-    errBox.setParent( this );
-    errBox.critical( 0, "Error", "An Error has occured:\n" + error );
-    errBox.setFixedSize( 500, 200 );
-    errBox.exec();
+    QMessageBox * errBox = new QMessageBox;
+    errBox->setParent( this );
+    errBox->critical( 0, "Error", "An Error has occured:\n" + error );
+    errBox->setFixedSize( 500, 200 );
+    errBox->open( errBox, &QMessageBox::deleteLater );
 }
 
 void MainWindow::showError( FlyCapture2::Error error ) {
