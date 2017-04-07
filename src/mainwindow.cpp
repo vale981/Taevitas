@@ -18,7 +18,7 @@ MainWindow::MainWindow( QWidget * parent ) :
     comm( this ),
     resize { false } {
     ui->setupUi( this );
-    showError( "Test" );
+
     // Set Scene and Hide Preview Widget
     ui->preview_widget->hide();
 
