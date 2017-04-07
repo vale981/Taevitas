@@ -119,6 +119,11 @@ MainWindow::MainWindow( QWidget * parent ) :
     // Start recording
     connect( ui->startButton, &QPushButton::clicked, this, &MainWindow::startStopRecording );
 
+    // SelectFps
+    connect( ui->fps_box, &QSpinBox::valueChanged, this, [this] ( int fps ) {
+        recorder.setFrameRate( fps );
+    } );
+
     // Enable Preset Start
     enableStart();
 }
@@ -154,6 +159,10 @@ void MainWindow::setStatus( STATUS status ) {
             ui->statusLabel->setText( "Waiting..." );
             ui->startButton->setText( "Start" );
             ui->recStats->hide();
+
+            ui->projectName->setProperty( "enabled", true );
+            ui->fps_box->setProperty( "enabled", true );
+
             break;
         case CONNECTED:
             enableRecOptions();
@@ -161,6 +170,8 @@ void MainWindow::setStatus( STATUS status ) {
             ui->startButton->setText( "Start" );
             ui->cameraSelector->setProperty( "enabled", true );
             ui->recStats->hide();
+            ui->projectName->setProperty( "enabled", true );
+            ui->fps_box->setProperty( "enabled", true );
 
             qDebug( "Connected...." );
             break;
@@ -168,6 +179,8 @@ void MainWindow::setStatus( STATUS status ) {
             ui->timeCaptured->display( QString( "00:00" ) );
             ui->framesCaptured->display( 0 );
             ui->cameraSelector->setProperty( "enabled", false );
+            ui->projectName->setProperty( "enabled", false );
+            ui->fps_box->setProperty( "enabled", false );
 
             ui->statusLabel->setText( "Recording!" );
             ui->startButton->setText( "Stop" );
