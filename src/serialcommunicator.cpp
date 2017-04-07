@@ -26,7 +26,7 @@ bool SerialCommunicator::selectPort( const QSerialPortInfo &info ) {
 // NOTE: Maybe Nicer
 void SerialCommunicator::write( QByteArray data ) {
     if ( !port.isOpen() )
-        emit portClosed;
+        emit portClosed();
 
     port.write( data.append( '\n' ) );
 }
