@@ -41,6 +41,9 @@ MainWindow::MainWindow( QWidget * parent ) :
     // Set default name
     ui->projectName->setText( "Taevitas_Rec_" + QDateTime::currentDateTime().toString( "dd_MM_yyyy_hh_mm_ss" ) );
 
+    // Make the UI Fit nicely
+    fit();
+
     // Move Recorder into another thread
     recThread = new QThread();
     recorder.moveToThread( recThread );
@@ -111,9 +114,6 @@ MainWindow::MainWindow( QWidget * parent ) :
 
     // Start recording
     connect( ui->startButton, &QPushButton::clicked, this, &MainWindow::startStopRecording );
-
-    // Make the UI Fit nicely
-    fit();
 
     // Enable Preset Start
     enableStart();
