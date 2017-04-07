@@ -190,7 +190,7 @@ void MainWindow::showError( QString error ) {
     errBox->critical( 0, "Error", "An Error has occured:\n" + error );
     errBox->setFixedSize( 500, 200 );
     errBox->setWindowModality( Qt::NonModal );
-    errBox->open( errBox, SLOT( deleteLater() ) );
+    errBox->show( errBox, SLOT( deleteLater() ) );
 }
 
 void MainWindow::showError( FlyCapture2::Error error ) {
