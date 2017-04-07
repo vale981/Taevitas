@@ -79,6 +79,13 @@ MainWindow::MainWindow( QWidget * parent ) :
         ui->serialMon->insertPlainText( QString( "%1: " ).arg( QDateTime::currentDateTime().toString() ).append( data ) );
     } );
 
+    connect( &comm, &SerialCommunicator::portClosed, this, [this] () {
+        showError( "Serial Port Closed!" );
+        // Note: Method for that. Nice to have.
+        ui->serialControl->setProperty( "visible", false );
+    } );
+
+
     // Camera selected
     connect( ui->cameraSelector, static_cast<void( QComboBox::* )( int )>( &QComboBox::activated ), this, &MainWindow::cameraSelected );
 

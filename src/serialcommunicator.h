@@ -51,6 +51,7 @@ class SerialCommunicator : public QObject {
 
     signals:
         void dataRead( QByteArray data );
+        void portClosed();
 };
 
 bool SerialCommunicator::selectPort( const int index ) {
