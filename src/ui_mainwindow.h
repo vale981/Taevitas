@@ -202,6 +202,8 @@ public:
         sizePolicy4.setVerticalStretch(0);
         sizePolicy4.setHeightForWidth(fps_box->sizePolicy().hasHeightForWidth());
         fps_box->setSizePolicy(sizePolicy4);
+        fps_box->setMinimum(1);
+        fps_box->setMaximum(300.99);
         fps_box->setValue(18);
 
         formLayout_2->setWidget(0, QFormLayout::FieldRole, fps_box);
