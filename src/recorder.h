@@ -93,7 +93,7 @@ class Recorder : public QObject {
             return options.frameRate;
         }
 
-        void setFrameRate( unsigned int frame_rate ) {
+        void setFrameRate( float frame_rate ) {
             options.frameRate = frame_rate;
         }
 

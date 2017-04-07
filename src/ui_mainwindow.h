@@ -15,6 +15,7 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
+#include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
@@ -26,7 +27,6 @@
 #include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
-#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -54,7 +54,7 @@ public:
     QLineEdit *projectName;
     QFormLayout *formLayout_2;
     QLabel *label_2;
-    QSpinBox *fps_box;
+    QDoubleSpinBox *fps_box;
     QCheckBox *saveFrames;
     QPushButton *startButton;
     QPushButton *preview_button;
@@ -195,7 +195,7 @@ public:
 
         formLayout_2->setWidget(0, QFormLayout::LabelRole, label_2);
 
-        fps_box = new QSpinBox(recOptions);
+        fps_box = new QDoubleSpinBox(recOptions);
         fps_box->setObjectName(QStringLiteral("fps_box"));
         QSizePolicy sizePolicy4(QSizePolicy::Minimum, QSizePolicy::Preferred);
         sizePolicy4.setHorizontalStretch(0);

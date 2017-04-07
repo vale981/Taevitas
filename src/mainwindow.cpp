@@ -119,11 +119,6 @@ MainWindow::MainWindow( QWidget * parent ) :
     // Start recording
     connect( ui->startButton, &QPushButton::clicked, this, &MainWindow::startStopRecording );
 
-    // SelectFps
-    connect( ui->fps_box, &QSpinBox::valueChanged, this, [this] ( int fps ) {
-        recorder.setFrameRate( fps );
-    } );
-
     // Enable Preset Start
     enableStart();
 }
@@ -297,6 +292,8 @@ void MainWindow::startStopRecording() {
     if ( !recorder.isRecording() ) {
         // NOTE: UNCRITICAL Maybe allow dynamic setting...
         ui->saveFrames->setProperty( "enabled", false );
+
+        recorder.setFrameRate( ui->fps_box->value() );
 
         // NOTE: That is ugly. Maybe I should wrap it into my own Error/Exception Class!
         try {
