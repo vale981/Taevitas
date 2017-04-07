@@ -189,7 +189,9 @@ void MainWindow::showError( QString error ) {
     errBox->setParent( this );
     errBox->critical( 0, "Error", "An Error has occured:\n" + error );
     errBox->setFixedSize( 500, 200 );
-    errBox->open( errBox, &QMessageBox::deleteLater );
+    errBox->open( this, [errBox]( QAbstractButton * ) {
+        errBox->deleteLater();
+    } );
 }
 
 void MainWindow::showError( FlyCapture2::Error error ) {
