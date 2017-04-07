@@ -41,9 +41,6 @@ MainWindow::MainWindow( QWidget * parent ) :
     // Set default name
     ui->projectName->setText( "Taevitas_Rec_" + QDateTime::currentDateTime().toString( "dd_MM_yyyy_hh_mm_ss" ) );
 
-    // Make the UI Fit nicely
-    fit();
-
     // Move Recorder into another thread
     recThread = new QThread();
     recorder.moveToThread( recThread );
