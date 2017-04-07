@@ -48,6 +48,7 @@ UI_DIR = src/
 win32 {
 	win32:CONFIG(release, debug|release): LIBS += -L$$PWD/'../../../Program Files/Point Grey Research/FlyCapture2/lib/' -lFlyCapture2
 	else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/'../../../Program Files/Point Grey Research/FlyCapture2/lib/' -lFlyCapture2d
+        RC_ICONS += icon.ico
 }
 
 unix: LIBS += -L$$PWD/third_party/lib/ -lflycapture
