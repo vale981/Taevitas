@@ -189,7 +189,7 @@ void MainWindow::showError( QString error ) {
     errBox->setParent( this );
     errBox->critical( 0, "Error", "An Error has occured:\n" + error );
     errBox->setFixedSize( 500, 200 );
-    errBox->setModal( false );
+    errBox->setWindowModality( Qt::NonModal );
     errBox->open( errBox, SLOT( deleteLater() ) );
 }
 
